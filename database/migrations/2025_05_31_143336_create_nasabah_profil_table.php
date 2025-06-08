@@ -35,7 +35,6 @@ return new class extends Migration
             $table->string('email_nasabah', 100)->nullable();
             $table->string('jenis_kelamin_nasabah', 10)->nullable();
             $table->string('status_kawin_nasabah', 20)->nullable();
-            $table->string('pendidikan_terakhir_nasabah', 10)->nullable();
             $table->string('nama_ibu_nasabah', 100)->nullable();
             $table->string('nama_organisasi_nasabah', 100)->nullable();
             $table->string('jabatan_organisasi_nasabah', 100)->nullable();

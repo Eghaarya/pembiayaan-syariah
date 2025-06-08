@@ -100,20 +100,20 @@
                                             <tr class="text-wrap">
                                                 {{-- Keterangan --}}
                                                 <td
-                                                    class="@if ($multiguna->total_character >= 7) text-success @elseif($multiguna->total_character >= 4) text-warning @else text-danger @endif">
-                                                    @if ($multiguna->total_character >= 7)
+                                                    class="@if ($multiguna->total_character >= 15) text-success @elseif($multiguna->total_character >= 10) text-warning @else text-danger @endif">
+                                                    @if ($multiguna->total_character >= 15)
                                                         Disetujui
-                                                    @elseif ($multiguna->total_character >= 4)
+                                                    @elseif ($multiguna->total_character >= 10)
                                                         Disetujui Bersyarat
                                                     @else
                                                         Ditolak
                                                     @endif
                                                 </td>
                                                 <td
-                                                    class="@if ($multiguna->total_capacity >= 86) text-success @elseif($multiguna->total_capacity >= 70) text-warning @else text-danger @endif">
-                                                    @if ($multiguna->total_capacity >= 86)
+                                                    class="@if ($multiguna->total_capacity >= 50) text-success @elseif($multiguna->total_capacity >= 30) text-warning @else text-danger @endif">
+                                                    @if ($multiguna->total_capacity >= 50)
                                                         Disetujui
-                                                    @elseif ($multiguna->total_capacity >= 70)
+                                                    @elseif ($multiguna->total_capacity >= 30)
                                                         Disetujui Bersyarat
                                                     @else
                                                         Ditolak

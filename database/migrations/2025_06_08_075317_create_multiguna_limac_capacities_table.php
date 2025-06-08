@@ -17,6 +17,17 @@ return new class extends Migration
             $table->string('kode_nasabah');
             $table->string('nama_nasabah', 100)->nullable();
 
+            $table->string('memiliki_jabatan_rangkap', 10)->nullable();
+            $table->string('publik_figur', 10)->nullable();
+            $table->string('pemegang_jabatan_tertinggi', 10)->nullable();
+            $table->string('bukan_pemegang_jabatan_tertinggi', 10)->nullable();
+            $table->string('non_jabatan', 10)->nullable();
+            $table->string('mendapat_rumah_dinas', 10)->nullable();
+            $table->string('mendapat_mobil_dinas', 10)->nullable();
+            $table->string('mendapat_sepeda_motor_dinas', 10)->nullable();
+            $table->string('mendapat_fasilitas_pinjaman_uang', 10)->nullable();
+            $table->string('belum_mendapat_fasilitas_dinas', 10)->nullable();
+
             $table->string('username')->nullable();
             $table->string('kode_tempat')->nullable();
             $table->timestamps();

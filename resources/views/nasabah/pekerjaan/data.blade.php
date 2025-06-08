@@ -33,6 +33,7 @@
                                             <th class="text-info p-2 px-3">Usia Nasabah</th>
                                             <th class="p-2 px-3">Usia Prapensiun Nasabah</th>
                                             <th class="p-2 px-3">Usia Pensiun Nasabah</th>
+                                            <th class="text-info p-2 px-3">Sisa Pensiun Nasabah</th>
                                             <th class="p-2 px-3">Nama Atasan Nasabah</th>
                                             <th class="p-2 px-3">No Telp Atasan Nasabah</th>
                                             <th class="p-2 px-3">Jenis Pekerjaan Atasan Nasabah</th>
@@ -92,7 +93,7 @@
                                             <th class="p-2 px-3">No Telp Supplier Tiga Usaha</th>
                                         </tr>
                                         <tr>
-                                            <th class="bg-white text-secondary p-1 pl-2" colspan="27">1.
+                                            <th class="bg-white text-secondary p-1 pl-2" colspan="28">1.
                                                 Pekerjaan Nasabah
                                             </th>
                                             <th class="bg-white text-secondary p-1 pl-2" colspan="24">2. Pekerjaan
@@ -151,6 +152,8 @@
                                                     {{ $nasabah->usia_prapensiun_nasabah }}</td>
                                                 <td class="align-middle text-wrap p-1">
                                                     {{ $nasabah->usia_pensiun_nasabah }}</td>
+                                                <td class="align-middle text-wrap p-1">
+                                                    {{ $nasabah->sisa_pensiun_nasabah }}</td>
                                                 <td class="align-middle text-wrap p-1">{{ $nasabah->nama_atasan_nasabah }}
                                                 </td>
                                                 <td class="align-middle text-wrap p-1">

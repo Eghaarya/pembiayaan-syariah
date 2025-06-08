@@ -22,14 +22,11 @@
                                             <th rowspan="3" class="align-middle p-2">Kode Pengajuan</th>
                                             <th rowspan="3" class="align-middle p-2">Kode Nasabah</th>
                                             <th rowspan="3" class="align-middle p-2">Nama Nasabah</th>
-                                            <th colspan="7" class="align-middle p-2">Data Aset/ Kekayaan</th>
-                                            <th rowspan="3" class="align-middle p-2">% Besarnya Urbun</th>
+                                            <th colspan="5" class="align-middle p-2">Pembiayaan</th>
                                         </tr>
                                         <tr class="text-center border border-dark">
                                             <th class="bg-white text-secondary">Jenis Akad</th>
                                             <th class="bg-white text-secondary">Tujuan Penggunaan</th>
-                                            <th class="bg-white text-secondary">Harga Jual Barang</th>
-                                            <th class="bg-white text-secondary">Urbun/ Uang muka</th>
                                             <th class="bg-white text-secondary">Harga Beli Bank</th>
                                             <th class="bg-white text-secondary">Jangka Waktu Pembiayaan</th>
                                             <th class="bg-white text-secondary">Margin Bank</th>
@@ -38,29 +35,26 @@
                                     </thead>
 
                                     <tbody>
-                                        @forelse ($murabahah_limac_capital as $index => $item)
+                                        @forelse ($multiguna_limac_capital as $index => $item)
                                             <tr>
                                                 <td class="text-center align-middle text-wrap p-2">
-                                                    <a href="{{ route('murabahah.limac.capital.edit', $item->kode_pengajuan) }}"
+                                                    <a href="{{ route('multiguna.limac.capital.edit', $item->kode_pengajuan) }}"
                                                         class="text-warning" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 </td>
                                                 <td class="text-center align-middle text-wrap p-2">
-                                                    {{ $murabahah_limac_capital->firstItem() + $index }}</td>
+                                                    {{ $multiguna_limac_capital->firstItem() + $index }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_pengajuan }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_nasabah }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->nama_nasabah }}</td>
 
                                                 <td class="align-middle text-wrap p-2">{{ $item->jenis_akad }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->tujuan_penggunaan }}</td>
-                                                <td class="align-middle text-wrap p-2">{{ $item->harga_jual_barang }}</td>
-                                                <td class="align-middle text-wrap p-2">{{ $item->urbun_uangmuka }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->harga_beli_bank }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->jangka_waktu_pembiayaan }}
                                                 </td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->margin_bank }}</td>
-                                                <td class="align-middle text-wrap p-2">{{ $item->besarnya_urbun }}</td>
                                             </tr>
                                         @empty
                                             <tr>
@@ -73,7 +67,7 @@
 
                             {{-- Pagination --}}
                             <div class="d-flex justify-content-start mt-3">
-                                {{ $murabahah_limac_capital->links() }}
+                                {{ $multiguna_limac_capital->links() }}
                             </div>
                         </div>
 

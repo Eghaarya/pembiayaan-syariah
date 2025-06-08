@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('kode_nasabah');
             $table->string('nama_nasabah', 100)->nullable();
 
+            $table->string('jenis_akad', 100)->nullable();
+            $table->string('jenis_pembiayaan', 100)->nullable();
+            $table->string('tujuan_penggunaan', 100)->nullable();
+            $table->string('harga_beli_bank', 50)->nullable();
+            $table->string('jangka_waktu_pembiayaan', 5)->nullable();
+            $table->string('margin_bank', 50)->nullable();
+
             $table->string('username')->nullable();
             $table->string('kode_tempat')->nullable();
             $table->timestamps();

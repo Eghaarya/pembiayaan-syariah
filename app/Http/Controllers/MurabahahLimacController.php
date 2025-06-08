@@ -236,8 +236,18 @@ class MurabahahLimacController extends Controller
                 'pembayaran_nonkolektif' => $request->pembayaran_nonkolektif,
             ]);
 
-        $pekerjaan = NasabahPekerjaan::where('kode_nasabah', $request->kode_nasabah)->first();
+        $score = 0;
+        $scoreCapacity = [
+            'tempatkerja_kelokasi_bank',
+            'tempatkerja_kelokasi_agunan',
+            'pembayaran_kolektif',
+            'pembayaran_nonkolektif',
+        ];
+        foreach ($scoreCapacity as $field) {
+            $score += (int) $request->$field;
+        }
 
+        $pekerjaan = NasabahPekerjaan::where('kode_nasabah', $request->kode_nasabah)->first();
         $scorePekerjaan = [
             'skala_perusahaan_nasabah',
             'jenis_pekerjaan_nasabah',
@@ -249,22 +259,10 @@ class MurabahahLimacController extends Controller
             'tanggungan_nasabah',
         ];
 
-        $scoreCapacity = [
-            'tempatkerja_kelokasi_bank',
-            'tempatkerja_kelokasi_agunan',
-            'pembayaran_kolektif',
-            'pembayaran_nonkolektif',
-        ];
-
-        $score = 0;
         foreach ($scorePekerjaan as $field) {
             if (preg_match('/\((\d+)\)/', $pekerjaan->$field ?? '', $matches)) {
                 $score += (int) $matches[1];
             }
-        }
-
-        foreach ($scoreCapacity as $field) {
-            $score += (int) $request->$field;
         }
 
         MurabahahPengajuan::where('kode_pengajuan', $kode_pengajuan)
@@ -478,6 +476,8 @@ class MurabahahLimacController extends Controller
             ]);
 
         $points = [
+            'jenis_sertifikat_hak',
+
             'lokasi_perumahan',
             'kenyamanan',
             'lokasi_agunan',

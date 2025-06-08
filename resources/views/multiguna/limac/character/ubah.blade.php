@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
+
         <div class="pcoded-wrapper">
             <div class="pcoded-content">
                 <div class="card card-social">
@@ -13,17 +15,15 @@
                                     method="POST">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="kode_nasabah" value="{{ $pengajuan->kode_nasabah }}">
 
                                     <nav>
                                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                             <button class="nav-link active" id="nav-1-tab" data-toggle="tab"
                                                 data-target="#nav-1" type="button" role="tab" aria-controls="nav-1"
-                                                aria-selected="true">Hubungan dengan Bank Syariah</button>
+                                                aria-selected="true">Karakter Nasabah</button>
                                             <button class="nav-link" id="nav-2-tab" data-toggle="tab" data-target="#nav-2"
                                                 type="button" role="tab" aria-controls="nav-2"
-                                                aria-selected="true">Karakter Nasabah</button>
-                                            <button class="nav-link" id="nav-3-tab" data-toggle="tab" data-target="#nav-3"
-                                                type="button" role="tab" aria-controls="nav-3"
                                                 aria-selected="true">Data Checking Nasabah</button>
                                         </div>
                                     </nav>
@@ -31,120 +31,6 @@
                                     <div class="tab-content p-3" id="nav-tabContent">
                                         <div class="tab-pane fade show active" id="nav-1" role="tabpanel"
                                             aria-labelledby="nav-1-tab">
-                                            <div class="row g-3 mb-3">
-
-                                                <div class="col-md-6 mt-2">
-                                                    <label class="form-label fw-bold text-info d-block">Apakah nasabah
-                                                        memiliki rekening di bank ini?</label>
-                                                    @php
-                                                        $punyaOptions = ['Tidak (0)', 'Iya Punya (1)'];
-                                                        $selectedPunya = old(
-                                                            'punya_rekening_nasabah',
-                                                            $pengajuan->punya_rekening_nasabah ?? '',
-                                                        );
-                                                    @endphp
-
-                                                    @foreach ($punyaOptions as $label)
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="punya_rekening_nasabah"
-                                                                id="punya{{ strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $label)) }}"
-                                                                value="{{ $label }}"
-                                                                {{ $selectedPunya == $label ? 'checked' : '' }}>
-                                                            <label class="form-check-label"
-                                                                for="punya{{ strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $label)) }}">
-                                                                {{ $label }}
-                                                            </label>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-
-                                                <div class="col-md-6 mt-2">
-                                                    <label class="form-label fw-bold text-info d-block">Tahun Menjadi
-                                                        Nasabah</label>
-                                                    @php
-                                                        $tahunOptions = [
-                                                            '<1 Tahun (1)',
-                                                            '1-3 Tahun (2)',
-                                                            '>3 Tahun (3)',
-                                                        ];
-                                                        $selectedTahun = old(
-                                                            'tahun_menjadi_nasabah',
-                                                            $pengajuan->tahun_menjadi_nasabah ?? '',
-                                                        );
-                                                    @endphp
-
-                                                    @foreach ($tahunOptions as $label)
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="tahun_menjadi_nasabah"
-                                                                id="tahun{{ strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $label)) }}"
-                                                                value="{{ $label }}"
-                                                                {{ $selectedTahun == $label ? 'checked' : '' }}>
-                                                            <label class="form-check-label"
-                                                                for="tahun{{ strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $label)) }}">
-                                                                {{ $label }}
-                                                            </label>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-
-                                                <div class="col-md-6 mt-2">
-                                                    <label class="form-label fw-bold text-dark d-block">Jenis Layanan
-                                                        Nasabah</label>
-                                                    @php
-                                                        $jenisLayanan = old(
-                                                            'jenis_layanan_nasabah',
-                                                            $pengajuan->jenis_layanan_nasabah ?? '',
-                                                        );
-                                                    @endphp
-
-                                                    @foreach (['Giro', 'Tabungan', 'Deposito', 'Pembiayaan', 'Lainnya'] as $option)
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="jenis_layanan_nasabah"
-                                                                id="layanan{{ $option }}"
-                                                                value="{{ $option }}"
-                                                                {{ $jenisLayanan == $option ? 'checked' : '' }}>
-                                                            <label class="form-check-label"
-                                                                for="layanan{{ $option }}">{{ $option }}</label>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-
-                                                <div class="col-md-6 mt-2">
-                                                    <label class="form-label fw-bold text-info d-block">Mutasi Rekening Di
-                                                        Bank UMSIDA Syariah / Performance Sebagai Nasabah Bank UMSIDA
-                                                        Syariah</label>
-                                                    @php
-                                                        $mutasiOptions = [
-                                                            'Mutasi Rekening Aktif (2)',
-                                                            'Mutasi Rekening Tidak Aktif (1)',
-                                                        ];
-                                                        $selectedMutasi = old(
-                                                            'mutasi_rekening_nasabah',
-                                                            $pengajuan->mutasi_rekening_nasabah ?? '',
-                                                        );
-                                                    @endphp
-
-                                                    @foreach ($mutasiOptions as $label)
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="mutasi_rekening_nasabah"
-                                                                id="mutasi{{ strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $label)) }}"
-                                                                value="{{ $label }}"
-                                                                {{ $selectedMutasi == $label ? 'checked' : '' }}>
-                                                            <label class="form-check-label"
-                                                                for="mutasi{{ strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $label)) }}">
-                                                                {{ $label }}
-                                                            </label>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="nav-2" role="tabpanel"
-                                            aria-labelledby="nav-2-tab">
                                             <h6>Personality/ Kepribadian</h6>
                                             <div class="row g-3 mb-3">
                                                 @php
@@ -225,8 +111,7 @@
                                                                     name="{{ $field }}" id="{{ $inputId }}"
                                                                     value="{{ $option }}"
                                                                     {{ $selected == $option ? 'checked' : '' }}>
-                                                                <label class="form-check-label"
-                                                                    for="{{ $inputId }}">
+                                                                <label class="form-check-label" for="{{ $inputId }}">
                                                                     {{ $option }}
                                                                 </label>
                                                             </div>
@@ -235,9 +120,17 @@
                                                 @endforeach
 
                                             </div>
+                                            <div class="d-flex gap-2 justify-content-start mt-3" id="nav-tab"
+                                                role="tablist">
+                                                <a href="{{ route('multiguna.limac.character.data') }}"
+                                                    class="btn btn-secondary">
+                                                    ← Kembali
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="tab-pane fade" id="nav-3" role="tabpanel"
-                                            aria-labelledby="nav-3-tab">
+
+                                        <div class="tab-pane fade" id="nav-2" role="tabpanel"
+                                            aria-labelledby="nav-2-tab">
                                             <h6 class="border-bottom pb-2">Data Checking Nasabah</h6>
 
                                             {{-- Tabel Data Checking Nasabah --}}
@@ -431,10 +324,6 @@
 
                                             <div class="d-flex gap-2 justify-content-start mt-3" id="nav-tab"
                                                 role="tablist">
-                                                <a href="{{ route('multiguna.limac.character.data') }}"
-                                                    class="btn btn-secondary">
-                                                    ← Kembali
-                                                </a>
                                                 <button type="submit" class="btn btn-warning">
                                                     <i class="fas fa-save me-2"></i> Simpan Perubahan
                                                     {{ ucwords(str_replace('_', ' ', explode('.', Route::currentRouteName())[2] ?? '')) }}

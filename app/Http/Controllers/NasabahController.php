@@ -71,7 +71,6 @@ class NasabahController extends Controller
                 'email_nasabah'              => $request->email_nasabah ?? null,
                 'jenis_kelamin_nasabah'      => $request->jenis_kelamin_nasabah ?? null,
                 'status_kawin_nasabah'       => $request->status_kawin_nasabah ?? null,
-                'pendidikan_terakhir_nasabah' => $request->pendidikan_terakhir_nasabah ?? null,
                 'nama_ibu_nasabah'           => $request->nama_ibu_nasabah ?? null,
                 'nama_organisasi_nasabah'    => $request->nama_organisasi_nasabah ?? null,
                 'jabatan_organisasi_nasabah' => $request->jabatan_organisasi_nasabah ?? null,
@@ -108,7 +107,6 @@ class NasabahController extends Controller
             NasabahPekerjaan::create([
                 'kode_nasabah' => $kodeNasabah,
                 'nama_nasabah' => $request->nama_nasabah,
-                'pendidikan_terakhir_nasabah' => $request->pendidikan_terakhir_nasabah,
                 'username'     => $user->username,
                 'kode_tempat'  => $user->kode_tempat,
             ]);
@@ -116,7 +114,7 @@ class NasabahController extends Controller
             return redirect()->route('nasabah.profil.data')->with('success', '✅ Data nasabah berhasil ditambahkan.');
         } catch (QueryException $e) {
             // Redirect balik dengan pesan error
-            return redirect()->route('nasabah.profil.data')->with('error', $e . '❌ Gagal menambahkan data nasabah. Silakan coba lagi.');
+            return redirect()->route('nasabah.profil.data')->with('error',  '❌ Gagal menambahkan data nasabah. Silakan coba lagi.');
         }
     }
 
@@ -129,12 +127,18 @@ class NasabahController extends Controller
             ->where('kode_nasabah', $kode_nasabah)
             ->first();
 
-        if (
-            ($nasabah_auth->username !== $user->username &&
-                $nasabah_auth->kode_tempat !== $user->kode_tempat) &&
-            $user->tipe_akun !== 'admin'
-        ) {
-            abort(404);
+        if (!$nasabah_auth) {
+            abort(404, 'Data pengajuan tidak ditemukan.');
+        }
+
+        if ($user->tipe_akun === 'pengajar') {
+            if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
+                abort(404);
+            }
+        } elseif ($user->tipe_akun === 'siswa') {
+            if ($nasabah_auth->username !== $user->username) {
+                abort(404);
+            }
         }
 
         $nasabah_profil = NasabahProfil::where('kode_nasabah', $kode_nasabah)->firstOrFail();
@@ -180,7 +184,6 @@ class NasabahController extends Controller
                 'email_nasabah' => $request->email_nasabah,
                 'jenis_kelamin_nasabah' => $request->jenis_kelamin_nasabah,
                 'status_kawin_nasabah' => $request->status_kawin_nasabah,
-                'pendidikan_terakhir_nasabah' => $request->pendidikan_terakhir_nasabah,
                 'nama_ibu_nasabah' => $request->nama_ibu_nasabah,
                 'nama_organisasi_nasabah' => $request->nama_organisasi_nasabah,
                 'jabatan_organisasi_nasabah' => $request->jabatan_organisasi_nasabah,
@@ -209,23 +212,6 @@ class NasabahController extends Controller
                 'mutasi_rekening_nasabah'      => $request->mutasi_rekening_nasabah,
             ]);
 
-            $existingCharacter = MultigunaLimacCharacter::where('kode_nasabah', $kode_nasabah);
-
-            if ($existingCharacter) {
-                $existingCharacter->update([
-                    'punya_rekening_nasabah'     => $request->punya_rekening_nasabah,
-                    'tahun_menjadi_nasabah'      => $request->tahun_menjadi_nasabah,
-                    'jenis_layanan_nasabah'      => $request->jenis_layanan_nasabah,
-                    'mutasi_rekening_nasabah'    => $request->mutasi_rekening_nasabah,
-                ]);
-            }
-
-            $nasabah_pekerjaan = NasabahPekerjaan::where('kode_nasabah', $kode_nasabah)->firstOrFail();
-            $nasabah_pekerjaan->update([
-                'pendidikan_terakhir_nasabah' => $request->pendidikan_terakhir_nasabah,
-
-            ]);
-
             return redirect()->route('nasabah.profil.data')->with('success', '✅ Data nasabah berhasil diperbarui.');
         } catch (QueryException $e) {
             // Redirect balik dengan pesan error
@@ -241,12 +227,18 @@ class NasabahController extends Controller
             ->where('kode_nasabah', $kode_nasabah)
             ->first();
 
-        if (
-            ($nasabah_auth->username !== $user->username &&
-                $nasabah_auth->kode_tempat !== $user->kode_tempat) &&
-            $user->tipe_akun !== 'admin'
-        ) {
-            abort(404);
+        if (!$nasabah_auth) {
+            abort(404, 'Data pengajuan tidak ditemukan.');
+        }
+
+        if ($user->tipe_akun === 'pengajar') {
+            if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
+                abort(404);
+            }
+        } elseif ($user->tipe_akun === 'siswa') {
+            if ($nasabah_auth->username !== $user->username) {
+                abort(404);
+            }
         }
 
         $nasabah_profil = NasabahProfil::where('kode_nasabah', $kode_nasabah)->firstOrFail();
@@ -285,12 +277,18 @@ class NasabahController extends Controller
             ->where('kode_nasabah', $kode_nasabah)
             ->first();
 
-        if (
-            ($nasabah_auth->username !== $user->username &&
-                $nasabah_auth->kode_tempat !== $user->kode_tempat) &&
-            $user->tipe_akun !== 'admin'
-        ) {
-            abort(404);
+        if (!$nasabah_auth) {
+            abort(404, 'Data pengajuan tidak ditemukan.');
+        }
+
+        if ($user->tipe_akun === 'pengajar') {
+            if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
+                abort(404);
+            }
+        } elseif ($user->tipe_akun === 'siswa') {
+            if ($nasabah_auth->username !== $user->username) {
+                abort(404);
+            }
         }
 
         $nasabah_pekerjaan = NasabahPekerjaan::where('kode_nasabah', $kode_nasabah)->firstOrFail();
@@ -334,6 +332,7 @@ class NasabahController extends Controller
                 'usia_nasabah' => $request->usia_nasabah,
                 'usia_prapensiun_nasabah' => $request->usia_prapensiun_nasabah,
                 'usia_pensiun_nasabah' => $request->usia_pensiun_nasabah,
+                'sisa_pensiun_nasabah' => $request->sisa_pensiun_nasabah,
                 'nama_atasan_nasabah' => $request->nama_atasan_nasabah,
                 'notelp_atasan_nasabah' => $request->notelp_atasan_nasabah,
                 'jenispekerjaan_atasan_nasabah' => $request->jenispekerjaan_atasan_nasabah,
@@ -391,12 +390,6 @@ class NasabahController extends Controller
                 'nama_suppliertiga_usaha' => $request->nama_suppliertiga_usaha,
                 'alamat_suppliertiga_usaha' => $request->alamat_suppliertiga_usaha,
                 'notelp_suppliertiga_usaha' => $request->notelp_suppliertiga_usaha,
-            ]);
-
-            $nasabah_profil = NasabahProfil::where('kode_nasabah', $kode_nasabah)->firstOrFail();
-            $nasabah_profil->update([
-                'pendidikan_terakhir_nasabah' => $request->pendidikan_terakhir_nasabah,
-
             ]);
 
             return redirect()->route('nasabah.pekerjaan.data')->with('success', '✅ Data nasabah berhasil diperbarui.');

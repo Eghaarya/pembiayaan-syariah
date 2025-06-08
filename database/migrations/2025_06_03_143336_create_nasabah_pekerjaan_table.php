@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('usia_nasabah', 50)->nullable();
             $table->string('usia_prapensiun_nasabah', 10)->nullable();
             $table->string('usia_pensiun_nasabah', 10)->nullable();
+            $table->string('sisa_pensiun_nasabah', 50)->nullable();
             $table->string('nama_atasan_nasabah', 100)->nullable();
             $table->string('notelp_atasan_nasabah', 20)->nullable();
             $table->string('jenispekerjaan_atasan_nasabah', 100)->nullable();

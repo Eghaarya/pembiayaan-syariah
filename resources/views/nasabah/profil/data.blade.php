@@ -38,7 +38,6 @@
                                             <th class="p-2 px-3">Alamat Email</th>
                                             <th class="p-2 px-3">Jenis Kelamin</th>
                                             <th class="p-2 px-3">Status Kawin</th>
-                                            <th class="text-info p-2 px-3">Pendidikan Terakhir</th>
                                             <th class="p-2 px-3">Nama Ibu</th>
                                             <th class="p-2 px-3">Nama Organisasi</th>
                                             <th class="p-2 px-3">Jabatan Organisasi</th>
@@ -64,7 +63,7 @@
                                             <th class="text-info p-2 px-3">Mutasi Rekening</th>
                                         </tr>
                                         <tr>
-                                            <th class="bg-white text-secondary p-1 pl-2" colspan="33">1.
+                                            <th class="bg-white text-secondary p-1 pl-2" colspan="32">1.
                                                 Identitas Nasabah
                                             </th>
                                             <th class="bg-white text-secondary p-1 pl-2" colspan="6">2. Identitas
@@ -140,8 +139,6 @@
                                                     {{ $nasabah->jenis_kelamin_nasabah }}</td>
                                                 <td class="align-middle text-wrap p-1">{{ $nasabah->status_kawin_nasabah }}
                                                 </td>
-                                                <td class="align-middle text-wrap p-1">
-                                                    {{ $nasabah->pendidikan_terakhir_nasabah }}</td>
                                                 <td class="align-middle text-wrap p-1">{{ $nasabah->nama_ibu_nasabah }}
                                                 </td>
                                                 <td class="align-middle text-wrap p-1">

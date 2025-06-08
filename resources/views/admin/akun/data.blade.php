@@ -27,7 +27,13 @@
                                         @forelse ($akuns as $index => $akun)
                                             <tr>
                                                 <td>{{ $index + 1 }}</td>
-                                                <td>{{ $akun->username }}</td>
+                                                <td>
+                                                    {{ $akun->username }}
+                                                    @if ($akun->username == Auth::user()->username)
+                                                        <span class="text-success font-weight-bold font-italic">(akun
+                                                            anda)</span>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $akun->tipe_akun }}</td>
                                                 <td>{{ $akun->kode_tempat }}</td>
                                                 <td>

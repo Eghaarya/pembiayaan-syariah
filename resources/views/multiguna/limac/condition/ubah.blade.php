@@ -9,7 +9,7 @@
                     <div class="card-block border-bottom p-3">
                         <div class="row mb-2">
                             <div class="col-12">
-                                <form action="{{ route('murabahah.limac.condition.update', $pengajuan->kode_pengajuan) }}"
+                                <form action="{{ route('multiguna.limac.condition.update', $pengajuan->kode_pengajuan) }}"
                                     method="POST">
                                     @csrf
                                     @method('PUT')
@@ -81,7 +81,7 @@
                                             </div>
                                             <div class="d-flex gap-2 justify-content-start mt-3" id="nav-tab"
                                                 role="tablist">
-                                                <a href="{{ route('murabahah.limac.capacity.data') }}"
+                                                <a href="{{ route('multiguna.limac.capacity.data') }}"
                                                     class="btn btn-secondary">
                                                     ← Kembali
                                                 </a>

@@ -95,17 +95,10 @@ class MultigunaPengajuanController extends Controller
                 'kode_tempat'    => $user->kode_tempat,
             ]);
 
-            $profil = NasabahProfil::where('kode_nasabah', $kodeNasabah)->first();
             MultigunaLimacCharacter::create([
                 'kode_pengajuan' => $kodePengajuan,
                 'kode_nasabah'   => $kodeNasabah,
                 'nama_nasabah'   => $namaNasabah,
-
-                'punya_rekening_nasabah' => $profil->punya_rekening_nasabah,
-                'tahun_menjadi_nasabah' => $profil->tahun_menjadi_nasabah,
-                'jenis_layanan_nasabah' => $profil->jenis_layanan_nasabah,
-                'mutasi_rekening_nasabah' => $profil->mutasi_rekening_nasabah,
-
 
                 'username'       => $user->username,
                 'kode_tempat'    => $user->kode_tempat,
@@ -248,8 +241,8 @@ class MultigunaPengajuanController extends Controller
             }
         }
 
-        $nasabah_profil = MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)->firstOrFail();
-        $nasabah_profil->delete();
+        $multiguna_pengajuan = MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)->firstOrFail();
+        $multiguna_pengajuan->delete();
 
         return redirect()->route('multiguna.pengajuan.data')->with('success', 'Data nasabah berhasil dihapus.');
     }

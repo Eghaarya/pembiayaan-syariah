@@ -342,7 +342,7 @@
                                                         maxlength="10" placeholder="Masukkan usia prapensiun"
                                                         value="{{ old('usia_prapensiun_nasabah', $nasabah_pekerjaan->usia_prapensiun_nasabah) }}">
                                                 </div>
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-3 mt-2">
                                                     <label for="usia_pensiun_nasabah"
                                                         class="form-label fw-bold text-dark">Usia Pensiun Nasabah</label>
                                                     <input type="text" class="form-control" id="usia_pensiun_nasabah"
@@ -350,6 +350,36 @@
                                                         placeholder="Masukkan usia pensiun"
                                                         value="{{ old('usia_pensiun_nasabah', $nasabah_pekerjaan->usia_pensiun_nasabah) }}">
                                                 </div>
+
+                                                <div class="col-md-3 mt-2">
+                                                    <label for="sisa_pensiun_nasabah"
+                                                        class="form-label fw-bold text-info">Sisa Pensiun Nasabah</label>
+
+                                                    @php
+                                                        $sisaPensiunOptions = [
+                                                            '10-20 TH (3)',
+                                                            '21-30 TH (4)',
+                                                            '>31 TH (5)',
+                                                        ];
+
+                                                        $selectedSisaPensiun = old(
+                                                            'sisa_pensiun_nasabah',
+                                                            $nasabah_pekerjaan->sisa_pensiun_nasabah,
+                                                        );
+                                                    @endphp
+
+                                                    <select class="form-control" id="sisa_pensiun_nasabah"
+                                                        name="sisa_pensiun_nasabah">
+                                                        <option value="">-- Pilih Usia --</option>
+                                                        @foreach ($sisaPensiunOptions as $label)
+                                                            <option value="{{ $label }}"
+                                                                {{ $selectedSisaPensiun == $label ? 'selected' : '' }}>
+                                                                {{ $label }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
                                                 <div class="col-md-6 mt-2">
                                                     <label for="nama_atasan_nasabah"
                                                         class="form-label fw-bold text-dark">Nama Atasan Nasabah</label>
@@ -713,7 +743,7 @@
                                                         value="{{ old('mulai_bekerja_pasangan', $nasabah_pekerjaan->mulai_bekerja_pasangan) }}">
                                                 </div>
 
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-3 mt-2">
                                                     <label for="lamabekerja_tahun_pasangan"
                                                         class="form-label fw-bold text-dark">Lama Bekerja (Tahun)
                                                         Pasangan</label>
@@ -723,7 +753,7 @@
                                                         value="{{ old('lamabekerja_tahun_pasangan', $nasabah_pekerjaan->lamabekerja_tahun_pasangan) }}">
                                                 </div>
 
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-3 mt-2">
                                                     <label for="lamabekerja_bulan_pasangan"
                                                         class="form-label fw-bold text-dark">Lama Bekerja (Bulan)
                                                         Pasangan</label>
@@ -763,7 +793,7 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-3 mt-2">
                                                     <label for="totalbekerja_tahun_pasangan"
                                                         class="form-label fw-bold text-dark">Total Bekerja (Tahun)
                                                         Pasangan</label>
@@ -774,7 +804,7 @@
                                                         value="{{ old('totalbekerja_tahun_pasangan', $nasabah_pekerjaan->totalbekerja_tahun_pasangan) }}">
                                                 </div>
 
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-3 mt-2">
                                                     <label for="totalbekerja_bulan_pasangan"
                                                         class="form-label fw-bold text-dark">Total Bekerja (Bulan)
                                                         Pasangan</label>
@@ -856,7 +886,7 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-md-6 mt-2">
+                                                <div class="col-md-3 mt-2">
                                                     <label for="usia_prapensiun_pasangan"
                                                         class="form-label fw-bold text-dark">Usia Prapensiun
                                                         Pasangan</label>
@@ -969,11 +999,9 @@
                                                     <label for="pengalaman_perusahaanlain_pasangan"
                                                         class="form-label fw-bold text-dark">Pengalaman Perusahaan Lain
                                                         Pasangan</label>
-                                                    <input type="text" class="form-control"
-                                                        id="pengalaman_perusahaanlain_pasangan"
-                                                        name="pengalaman_perusahaanlain_pasangan" maxlength="200"
-                                                        placeholder="Masukkan pengalaman perusahaan lain pasangan"
-                                                        value="{{ old('pengalaman_perusahaanlain_pasangan', $nasabah_pekerjaan->pengalaman_perusahaanlain_pasangan) }}">
+
+                                                    <textarea class="form-control" id="pengalaman_perusahaanlain_pasangan" name="pengalaman_perusahaanlain_pasangan"
+                                                        maxlength="200" placeholder="Masukkan pengalaman perusahaan lain">{{ old('pengalaman_perusahaanlain_pasangan', $nasabah_pekerjaan->pengalaman_perusahaanlain_pasangan) }}</textarea>
                                                 </div>
 
                                             </div>

@@ -23,7 +23,6 @@
                                             <th rowspan="3" class="align-middle p-2">Kode Nasabah</th>
                                             <th rowspan="3" class="align-middle p-2">Nama Nasabah</th>
 
-                                            <th colspan="4" class="align-middle p-2">Hubungan dengan Bank Syariah</th>
                                             <th colspan="10" class="align-middle p-2 bg-white">Karakter Nasabah</th>
 
                                             <th colspan="9" class="align-middle p-2">Checking Nasabah 1</th>
@@ -42,10 +41,6 @@
                                         </tr>
 
                                         <tr class="text-center border border-dark">
-                                            <th class="bg-white text-info">Punya Rekening Nasabah</th>
-                                            <th class="bg-white text-info">Tahun Menjadi Nasabah</th>
-                                            <th class="bg-white text-secondary">Jenis Layanan Nasabah</th>
-                                            <th class="bg-white text-info">Mutasi Rekening Nasabah</th>
 
                                             <th class="bg-white text-info">Responsif & Komunikatif</th>
                                             <th class="bg-white text-info">Mudah Dihubungi</th>
@@ -86,15 +81,6 @@
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_pengajuan }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_nasabah }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->nama_nasabah }}</td>
-
-                                                <td class="align-middle text-wrap p-2">{{ $item->punya_rekening_nasabah }}
-                                                </td>
-                                                <td class="align-middle text-wrap p-2">{{ $item->tahun_menjadi_nasabah }}
-                                                </td>
-                                                <td class="align-middle text-wrap p-2">{{ $item->jenis_layanan_nasabah }}
-                                                </td>
-                                                <td class="align-middle text-wrap p-2">{{ $item->mutasi_rekening_nasabah }}
-                                                </td>
 
                                                 <td class="align-middle text-wrap p-2">{{ $item->responsif_komunikatif }}
                                                 </td>

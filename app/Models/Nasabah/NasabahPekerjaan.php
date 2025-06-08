@@ -29,6 +29,7 @@ class NasabahPekerjaan extends Model
         'usia_nasabah',
         'usia_prapensiun_nasabah',
         'usia_pensiun_nasabah',
+        'sisa_pensiun_nasabah',
         'nama_atasan_nasabah',
         'notelp_atasan_nasabah',
         'jenispekerjaan_atasan_nasabah',

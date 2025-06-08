@@ -14,6 +14,10 @@ class MultigunaLimacCondition extends Model
         'kode_nasabah',
         'nama_nasabah',
 
+        'ketahanan_usaha_berdiri',
+        'bidang_usaha_langka',
+        'cakupan_wilayah_skala_usaha',
+
         'username',
         'kode_tempat',
     ];

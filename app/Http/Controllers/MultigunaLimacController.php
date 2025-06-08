@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Nasabah\NasabahProfil;
 use Illuminate\Database\QueryException;
-use App\Models\Multiguna\Limac\MultigunaLimacCondition;
+use App\Models\Nasabah\NasabahPekerjaan;
 use App\Models\Multiguna\Limac\MultigunaLimacCapital;
 use App\Models\Multiguna\Limac\MultigunaLimacCapacity;
-use App\Models\Multiguna\Limac\MultigunaLimacCharacter;
-use App\Models\Multiguna\Limac\MultigunaLimacCollateral;
 use App\Models\Multiguna\Pengajuan\MultigunaPengajuan;
-use App\Models\Nasabah\NasabahPekerjaan;
+use App\Models\Multiguna\Limac\MultigunaLimacCharacter;
+use App\Models\Multiguna\Limac\MultigunaLimacCondition;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateral;
 
 class MultigunaLimacController extends Controller
 {
@@ -178,6 +179,20 @@ class MultigunaLimacController extends Controller
 
         $pengajuan->update($data);
 
+        $profil = NasabahProfil::where('kode_nasabah', $request->kode_nasabah)->first();
+        $scoreProfil = [
+            'punya_rekening_nasabah',
+            'tahun_menjadi_nasabah',
+            'jenis_layanan_nasabah',
+            'mutasi_rekening_nasabah',
+        ];
+
+        foreach ($scoreProfil as $field) {
+            if (preg_match('/\((\d+)\)/', $profil->$field ?? '', $matches)) {
+                $score += (int) $matches[1];
+            }
+        }
+
         MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
             ->update(['total_character' => $score]);
 
@@ -258,41 +273,56 @@ class MultigunaLimacController extends Controller
 
         MultigunaLimacCapacity::where('kode_pengajuan', $kode_pengajuan)
             ->update([
-                'tempatkerja_kelokasi_bank' => $request->tempatkerja_kelokasi_bank,
-                'tempatkerja_kelokasi_agunan' => $request->tempatkerja_kelokasi_agunan,
-                'pembayaran_kolektif' => $request->pembayaran_kolektif,
-                'pembayaran_nonkolektif' => $request->pembayaran_nonkolektif,
+                'memiliki_jabatan_rangkap' => $request->memiliki_jabatan_rangkap,
+                'publik_figur' => $request->publik_figur,
+                'pemegang_jabatan_tertinggi' => $request->pemegang_jabatan_tertinggi,
+                'bukan_pemegang_jabatan_tertinggi' => $request->bukan_pemegang_jabatan_tertinggi,
+                'non_jabatan' => $request->non_jabatan,
+
+                'mendapat_rumah_dinas' => $request->mendapat_rumah_dinas,
+                'mendapat_mobil_dinas' => $request->mendapat_mobil_dinas,
+                'mendapat_sepeda_motor_dinas' => $request->mendapat_sepeda_motor_dinas,
+                'mendapat_fasilitas_pinjaman_uang' => $request->mendapat_fasilitas_pinjaman_uang,
+                'belum_mendapat_fasilitas_dinas' => $request->belum_mendapat_fasilitas_dinas,
             ]);
 
-        $pekerjaan = NasabahPekerjaan::where('kode_nasabah', $request->kode_nasabah)->first();
+        $scoreCapacity = [
+            'tempatkerja_kelokasi_bank',
+            'memiliki_jabatan_rangkap',
+            'publik_figur',
+            'pemegang_jabatan_tertinggi',
+            'bukan_pemegang_jabatan_tertinggi',
+            'non_jabatan',
 
+            'mendapat_rumah_dinas',
+            'mendapat_mobil_dinas',
+            'mendapat_sepeda_motor_dinas',
+            'mendapat_fasilitas_pinjaman_uang',
+            'belum_mendapat_fasilitas_dinas',
+        ];
+
+        $score = 0;
+        foreach ($scoreCapacity as $field) {
+            $score += (int) $request->$field;
+        }
+
+        $pekerjaan = NasabahPekerjaan::where('kode_nasabah', $request->kode_nasabah)->first();
         $scorePekerjaan = [
+            'bidang_perusahaan_nasabah',
             'skala_perusahaan_nasabah',
             'jenis_pekerjaan_nasabah',
             'jabatan_pekerjaan_nasabah',
             'pengalaman_perusahaan_nasabah',
             'pendidikan_terakhir_nasabah',
             'usia_nasabah',
-            'sumber_penghasilan_nasabah',
-            'tanggungan_nasabah',
+            'sisa_pensiun_nasabah',
+            'perjanjian_kerjasama_nasabah',
         ];
 
-        $scoreCapacity = [
-            'tempatkerja_kelokasi_bank',
-            'tempatkerja_kelokasi_agunan',
-            'pembayaran_kolektif',
-            'pembayaran_nonkolektif',
-        ];
-
-        $score = 0;
         foreach ($scorePekerjaan as $field) {
             if (preg_match('/\((\d+)\)/', $pekerjaan->$field ?? '', $matches)) {
                 $score += (int) $matches[1];
             }
-        }
-
-        foreach ($scoreCapacity as $field) {
-            $score += (int) $request->$field;
         }
 
         MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
@@ -378,23 +408,20 @@ class MultigunaLimacController extends Controller
         MultigunaLimacCapital::where('kode_pengajuan', $kode_pengajuan)
             ->update([
                 'jenis_akad' => $request->jenis_akad,
+                'jenis_pembiayaan' => $request->jenis_pembiayaan,
                 'tujuan_penggunaan' => $request->tujuan_penggunaan,
-                'harga_jual_barang' => $request->harga_jual_barang,
-                'urbun_uangmuka' => $request->urbun_uangmuka,
                 'harga_beli_bank' => $request->harga_beli_bank,
                 'jangka_waktu_pembiayaan' => $request->jangka_waktu_pembiayaan,
                 'margin_bank' => $request->margin_bank,
-                'besarnya_urbun' => $request->besarnya_urbun,
-
             ]);
 
         $score = 0;
-        $score += (int) (preg_match('/\((\d+)\)/', $request->besarnya_urbun, $m) ? $m[1] : 0);
+        // $score += (int) (preg_match('/\((\d+)\)/', $request->besarnya_urbun, $m) ? $m[1] : 0);
 
-        MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
-            ->update([
-                'total_capital' => $score,
-            ]);
+        // MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
+        //     ->update([
+        //         'total_capital' => $score,
+        //     ]);
 
         return redirect()->route('multiguna.limac.capital.data')
             ->with('success', '✅ Data berhasil diperbarui dan total score :' . $score . ' disimpan.');
@@ -473,56 +500,30 @@ class MultigunaLimacController extends Controller
 
         MultigunaLimacCollateral::where('kode_pengajuan', $kode_pengajuan)
             ->update([
-                'jenis_sertifikat_hak'       => $request->jenis_sertifikat_hak,
-                'nomor_sertifikat'           => $request->nomor_sertifikat,
-                'tanggal_penerbitan'         => $request->tanggal_penerbitan,
-                'instansi_yang_menerbitkan'  => $request->instansi_yang_menerbitkan,
-                'nama_pemegang_hak'          => $request->nama_pemegang_hak,
-                'lama_tgl_akhir_hak_berlaku' => $request->lama_tgl_akhir_hak_berlaku,
-                'surat_ukur_nomor'           => $request->surat_ukur_nomor,
-                'tanggal_ukur'               => $request->tanggal_ukur,
-                'asal_agunan'                => $request->asal_agunan,
-                'luas_agunan'                => $request->luas_agunan,
-                'letak_agunan'               => $request->letak_agunan,
-                'batas_utara_agunan'         => $request->batas_utara_agunan,
-                'batas_timur_agunan'         => $request->batas_timur_agunan,
-                'batas_selatan_agunan'       => $request->batas_selatan_agunan,
-                'batas_barat_agunan'         => $request->batas_barat_agunan,
+                'sk_pengangkatan_pegawai_tetap' => $request->sk_pengangkatan_pegawai_tetap,
+                'sk_jabatan_terakhir_terkini'   => $request->sk_jabatan_terakhir_terkini,
 
-                'lokasi_perumahan'           => $request->lokasi_perumahan,
-                'kenyamanan'                 => $request->kenyamanan,
-                'lokasi_agunan'              => $request->lokasi_agunan,
-                'jarak_fasum_fasos'          => $request->jarak_fasum_fasos,
-                'fasilitas_perumahan'        => $request->fasilitas_perumahan,
-                'jenis_jalan_lingkungan'     => $request->jenis_jalan_lingkungan,
-                'jarak_ke_jalan_provinsi'    => $request->jarak_ke_jalan_provinsi,
-                'jenis_dan_kondisi_jalan'    => $request->jenis_dan_kondisi_jalan,
-                'kondisi_jalan_ke_kota'      => $request->kondisi_jalan_ke_kota,
-                'resiko_bencana_hidup'       => $request->resiko_bencana_hidup,
-                'kontribusi_pemohon_dp'      => $request->kontribusi_pemohon_dp,
-                'pertumbuhan_agunan'          => $request->pertumbuhan_agunan,
-                'kondisi_wilayah_agunan'     => $request->kondisi_wilayah_agunan,
             ]);
 
         $points = [
-            'lokasi_perumahan',
-            'kenyamanan',
-            'lokasi_agunan',
-            'jarak_fasum_fasos',
-            'fasilitas_perumahan',
-            'jenis_jalan_lingkungan',
-            'jarak_ke_jalan_provinsi',
-            'jenis_dan_kondisi_jalan',
-            'kondisi_jalan_ke_kota',
-            'resiko_bencana_hidup',
-            'kontribusi_pemohon_dp',
-            'pertumbuhan_agunan',
-            'kondisi_wilayah_agunan',
+            'sk_pengangkatan_pegawai_tetap',
+            'sk_jabatan_terakhir_terkini',
         ];
 
         $score = 0;
         foreach ($points as $point) {
             if (preg_match('/\((\d+)\)/', $request->$point, $matches)) {
+                $score += (int) $matches[1];
+            }
+        }
+
+        $pekerjaan = NasabahPekerjaan::where('kode_nasabah', $request->kode_nasabah)->first();
+        $scorePekerjaan = [
+            'perjanjian_kerjasama_nasabah',
+        ];
+
+        foreach ($scorePekerjaan as $field) {
+            if (preg_match('/\((\d+)\)/', $pekerjaan->$field ?? '', $matches)) {
                 $score += (int) $matches[1];
             }
         }

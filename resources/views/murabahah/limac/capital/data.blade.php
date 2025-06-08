@@ -22,7 +22,7 @@
                                             <th rowspan="3" class="align-middle p-2">Kode Pengajuan</th>
                                             <th rowspan="3" class="align-middle p-2">Kode Nasabah</th>
                                             <th rowspan="3" class="align-middle p-2">Nama Nasabah</th>
-                                            <th colspan="7" class="align-middle p-2">Data Aset/ Kekayaan</th>
+                                            <th colspan="8" class="align-middle p-2">Pembiayaan</th>
                                             <th rowspan="3" class="align-middle p-2">% Besarnya Urbun</th>
                                         </tr>
                                         <tr class="text-center border border-dark">

@@ -14,6 +14,13 @@ class MultigunaLimacCapital extends Model
         'kode_nasabah',
         'nama_nasabah',
 
+        'jenis_akad',
+        'jenis_pembiayaan',
+        'tujuan_penggunaan',
+        'harga_beli_bank',
+        'jangka_waktu_pembiayaan',
+        'margin_bank',
+
         'username',
         'kode_tempat',
     ];

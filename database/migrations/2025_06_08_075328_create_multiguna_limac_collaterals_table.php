@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('kode_nasabah');
             $table->string('nama_nasabah', 100)->nullable();
 
+            $table->string('sk_pengangkatan_pegawai_tetap', 50)->nullable();
+            $table->string('sk_jabatan_terakhir_terkini', 50)->nullable();
+
             $table->string('username')->nullable();
             $table->string('kode_tempat')->nullable();
             $table->timestamps();

@@ -14,6 +14,9 @@ class MultigunaLimacCollateral extends Model
         'kode_nasabah',
         'nama_nasabah',
 
+        'sk_pengangkatan_pegawai_tetap',
+        'sk_jabatan_terakhir_terkini',
+
         'username',
         'kode_tempat',
     ];

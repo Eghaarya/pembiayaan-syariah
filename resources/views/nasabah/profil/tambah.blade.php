@@ -227,39 +227,6 @@
                                                     @endforeach
                                                 </div>
 
-                                                <!-- Pendidikan Terakhir -->
-                                                <div class="col-md-6 mt-2">
-                                                    <label class="form-label fw-bold text-info d-block">Pendidikan
-                                                        Terakhir Nasabah</label>
-                                                    @php
-                                                        $pendidikanOptions = [
-                                                            'SD (1)',
-                                                            'SMP (2)',
-                                                            'SMA (3)',
-                                                            'D1 (4)',
-                                                            'D2 (5)',
-                                                            'D3 (6)',
-                                                            'D4 (7)',
-                                                            'S1 (7)',
-                                                            'S2 (8)',
-                                                            'S3 (9)',
-                                                        ];
-                                                    @endphp
-
-                                                    @foreach ($pendidikanOptions as $label)
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="pendidikan_terakhir_nasabah"
-                                                                id="pendidikan{{ strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $label)) }}"
-                                                                value="{{ $label }}">
-                                                            <label class="form-check-label"
-                                                                for="pendidikan{{ strtoupper(preg_replace('/[^a-zA-Z0-9]/', '', $label)) }}">
-                                                                {{ $label }}
-                                                            </label>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-
                                                 <!-- Nama Ibu -->
                                                 <div class="col-md-6 mt-2">
                                                     <label class="form-label fw-bold text-dark"

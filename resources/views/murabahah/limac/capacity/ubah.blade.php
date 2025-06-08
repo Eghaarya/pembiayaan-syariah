@@ -13,6 +13,7 @@
                                     method="POST">
                                     @csrf
                                     @method('PUT')
+                                    <input type="hidden" name="kode_nasabah" value="{{ $pengajuan->kode_nasabah }}">
 
                                     <nav>
                                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -35,8 +36,6 @@
                                         <div class="tab-pane fade show active" id="nav-1" role="tabpanel"
                                             aria-labelledby="nav-1-tab">
                                             <h6 class="border-bottom pb-2">Perincian Rekening Tabungan</h6>
-                                            <input type="hidden" name="kode_nasabah"
-                                                value="{{ $pengajuan->kode_nasabah }}">
 
                                             <div class="d-flex gap-2 justify-content-start mt-3" id="nav-tab"
                                                 role="tablist">
@@ -49,15 +48,11 @@
                                         <div class="tab-pane fade" id="nav-2" role="tabpanel"
                                             aria-labelledby="nav-2-tab">
                                             <h6 class="border-bottom pb-2">Kondisi Keuangan</h6>
-                                            <input type="hidden" name="kode_nasabah"
-                                                value="{{ $pengajuan->kode_nasabah }}">
 
                                         </div>
                                         <div class="tab-pane fade" id="nav-3" role="tabpanel"
                                             aria-labelledby="nav-3-tab">
                                             <h6 class="border-bottom pb-2">Kemauan Membayar</h6>
-                                            <input type="hidden" name="kode_nasabah"
-                                                value="{{ $pengajuan->kode_nasabah }}">
 
                                             <div class="row g-3 mb-3">
                                                 <div class="col-md-6 mt-2">
@@ -178,8 +173,6 @@
                                         <div class="tab-pane fade" id="nav-4" role="tabpanel"
                                             aria-labelledby="nav-4-tab">
                                             <h6 class="border-bottom pb-2">Perhitungan Nilai Pembiayaan</h6>
-                                            <input type="hidden" name="kode_nasabah"
-                                                value="{{ $pengajuan->kode_nasabah }}">
 
 
                                             <div class="d-flex gap-2 justify-content-start mt-3" id="nav-tab"

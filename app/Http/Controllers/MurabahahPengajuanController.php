@@ -251,8 +251,8 @@ class MurabahahPengajuanController extends Controller
             }
         }
 
-        $nasabah_profil = MurabahahPengajuan::where('kode_pengajuan', $kode_pengajuan)->firstOrFail();
-        $nasabah_profil->delete();
+        $mudharabah_pengajuan = MurabahahPengajuan::where('kode_pengajuan', $kode_pengajuan)->firstOrFail();
+        $mudharabah_pengajuan->delete();
 
         return redirect()->route('murabahah.pengajuan.data')->with('success', 'Data nasabah berhasil dihapus.');
     }

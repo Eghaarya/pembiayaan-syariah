@@ -21,7 +21,7 @@
                                                 aria-selected="true">Data Aset/ Kekayaan</button>
                                             <button class="nav-link" id="nav-2-tab" data-toggle="tab" data-target="#nav-2"
                                                 type="button" role="tab" aria-controls="nav-2"
-                                                aria-selected="true">Urbun Pembiayaan</button>
+                                                aria-selected="true">Pembiayaan</button>
                                         </div>
                                     </nav>
 
@@ -40,7 +40,7 @@
                                         </div>
                                         <div class="tab-pane fade" id="nav-2" role="tabpanel"
                                             aria-labelledby="nav-2-tab">
-                                            <h6 class="border-bottom pb-2">Urbun Pembiayaan</h6>
+                                            <h6 class="border-bottom pb-2">Pembiayaan</h6>
 
                                             <div class="row g-3 mb-3">
 
@@ -55,7 +55,7 @@
 
                                                 <div class="col-md-6 mt-2">
                                                     <label class="form-label fw-bold text-dark" for="jenis_pembiayaan">
-                                                        Tujuan Penggunaan
+                                                        Jenis Pembiayaan
                                                     </label>
                                                     <select class="form-control" id="jenis_pembiayaan"
                                                         name="jenis_pembiayaan">
@@ -170,14 +170,19 @@
                                                     <div id="margin_tahun_output" class="mt-1">—</div>
                                                 </div>
 
-                                                <div class="col-md-3 mt-2">
+                                                <div class="col-md-2 mt-2">
                                                     <label class="form-label fw-bold text-dark">Nominal Margin Bank</label>
                                                     <div id="margin_nominal_output" class="mt-1">—</div>
                                                 </div>
 
-                                                <div class="col-md-3 mt-2">
+                                                <div class="col-md-2 mt-2">
                                                     <label class="form-label fw-bold text-dark">Harga Jual Bank</label>
                                                     <div id="harga_jual_output" class="mt-1">—</div>
+                                                </div>
+
+                                                <div class="col-md-2 mt-2">
+                                                    <label class="form-label fw-bold text-dark">Angsuran Bank</label>
+                                                    <div id="angsuran_bank_output" class="mt-1">—</div>
                                                 </div>
 
                                                 <div class="col-md-6 mt-2">
@@ -233,7 +238,6 @@
     <!-- [ Main Content ] end -->
 
     <script>
-        // Menghitung jangka waktu dalam bulan
         function updateBulan() {
             const tahunInput = document.getElementById('jangka_waktu_pembiayaan').value;
             const bulanOutput = document.getElementById('jangka_waktu_bulan');
@@ -246,8 +250,7 @@
             }
         }
 
-        // Menghitung margin bank per tahun dan nominal margin
-        function updateMarginOutput() {
+        function updateOutput() {
             const marginInput = document.getElementById('margin_bank');
             const waktuInput = document.getElementById('jangka_waktu_pembiayaan');
             const hargaInput = document.getElementById('harga_beli_bank');
@@ -255,40 +258,45 @@
             const marginTahunOutput = document.getElementById('margin_tahun_output');
             const nominalOutput = document.getElementById('margin_nominal_output');
             const hargaJualOutput = document.getElementById('harga_jual_output');
+            const angsuranOutput = document.getElementById('angsuran_bank_output');
 
             const marginPerBulan = parseFloat(marginInput?.value) || 0;
             const jangkaTahun = parseFloat(waktuInput?.value) || 0;
             const hargaBeli = parseFloat(hargaInput?.value) || 0;
 
-            // Hitung margin per tahun
+            const jangkaBulan = jangkaTahun * 12;
+
             const marginTahun = marginPerBulan * jangkaTahun;
             marginTahunOutput.innerText = jangkaTahun > 0 ? `${marginTahun.toFixed(2)}%` : '—';
 
-            // Hitung nominal margin dan harga jual jika semua valid
             if (marginPerBulan > 0 && jangkaTahun > 0 && hargaBeli > 0) {
                 const nominalMargin = (marginTahun / 100) * hargaBeli;
                 const hargaJual = hargaBeli + nominalMargin;
 
                 nominalOutput.innerText = `Rp ${nominalMargin.toLocaleString('id-ID')}`;
                 hargaJualOutput.innerText = `Rp ${hargaJual.toLocaleString('id-ID')}`;
+
+                // Hitung angsuran bank
+                const angsuran = hargaJual / jangkaBulan;
+                angsuranOutput.innerText = `Rp ${angsuran.toLocaleString('id-ID', { minimumFractionDigits: 0 })}`;
             } else {
                 nominalOutput.innerText = '—';
                 hargaJualOutput.innerText = '—';
+                angsuranOutput.innerText = '—';
             }
         }
 
-        // Inisialisasi saat halaman dimuat dan setiap input berubah
         document.addEventListener('DOMContentLoaded', function() {
             updateBulan();
-            updateMarginOutput();
+            updateOutput();
 
             document.getElementById('jangka_waktu_pembiayaan').addEventListener('input', () => {
                 updateBulan();
-                updateMarginOutput();
+                updateOutput();
             });
 
-            document.getElementById('margin_bank').addEventListener('input', updateMarginOutput);
-            document.getElementById('harga_beli_bank').addEventListener('input', updateMarginOutput);
+            document.getElementById('margin_bank').addEventListener('input', updateOutput);
+            document.getElementById('harga_beli_bank').addEventListener('input', updateOutput);
         });
     </script>
 @endsection

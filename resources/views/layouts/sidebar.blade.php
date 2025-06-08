@@ -41,19 +41,19 @@
 
                 {{-- (1). Pengajuan Murabahah --}}
                 <li
-                    class="nav-item pcoded-hasmenu {{ Route::is('murabahah.pengajuan.*') ? 'active pcoded-trigger' : '' }}">
+                    class="nav-item pcoded-hasmenu {{ Route::is('murabahah.pengajuan.*') || Route::is('murabahah.limac.*') ? 'active pcoded-trigger' : '' }}">
                     <a href="#!" class="nav-link">
                         <span class="pcoded-micon"><i class="feather icon-credit-card"></i></span>
                         <span class="pcoded-mtext">(1). Murabahah</span>
                     </a>
-                    <ul class="pcoded-submenu">
+                    <ul class="pcoded-submenu {{ Route::is('murabahah.limac.*') ? 'active pcoded-trigger' : '' }}">
                         <li class="nav-item {{ Route::is('murabahah.pengajuan.*') ? 'active' : '' }}">
                             <a href="{{ route('murabahah.pengajuan.data') }}"
                                 class="nav-link {{ Route::is('murabahah.pengajuan.*') ? 'active' : '' }}">
                                 <span class="pcoded-mtext">Buat Pengajuan</span>
                             </a>
                         </li>
-                        <li class="pcoded-hasmenu">
+                        <li class="pcoded-hasmenu {{ Route::is('murabahah.limac.*') ? 'active pcoded-trigger' : '' }}">
                             <a href="#!">5 C</a>
                             <ul class="pcoded-submenu">
                                 <li class="nav-item {{ Route::is('murabahah.limac.character.*') ? 'active' : '' }}">
@@ -99,9 +99,9 @@
                     </ul>
                 </li>
 
-                {{-- (1). Pengajuan Multiguna --}}
+                {{-- (2). Pengajuan Multiguna --}}
                 <li
-                    class="nav-item pcoded-hasmenu {{ Route::is('multiguna.pengajuan.*') ? 'active pcoded-trigger' : '' }}">
+                    class="nav-item pcoded-hasmenu {{ Route::is('multiguna.pengajuan.*') || Route::is('multiguna.limac.*') ? 'active pcoded-trigger' : '' }}">
                     <a href="#!" class="nav-link">
                         <span class="pcoded-micon"><i class="feather icon-credit-card"></i></span>
                         <span class="pcoded-mtext">(2). Multiguna</span>
@@ -113,7 +113,7 @@
                                 <span class="pcoded-mtext">Buat Pengajuan</span>
                             </a>
                         </li>
-                        <li class="pcoded-hasmenu">
+                        <li class="pcoded-hasmenu {{ Route::is('multiguna.limac.*') ? 'active pcoded-trigger' : '' }}">
                             <a href="#!">5 C</a>
                             <ul class="pcoded-submenu">
                                 <li class="nav-item {{ Route::is('multiguna.limac.character.*') ? 'active' : '' }}">

@@ -16,6 +16,8 @@
                                 </div>
                                 <div class="row g-3 mb-3">
                                     @php
+                                        use Carbon\Carbon;
+
                                         $marginPerBulan = floatval($angsuran->margin_bank);
                                         $jangkaTahun = floatval($angsuran->jangka_waktu_pembiayaan);
                                         $hargaBeli = floatval($angsuran->harga_beli_bank);
@@ -26,12 +28,16 @@
 
                                         $jangkaBulan = $jangkaTahun * 12;
                                         $angsuranPerBulan = $jangkaBulan != 0 ? $hargaJualBank / $jangkaBulan : 0;
+
+                                        $tanggalPencairan = Carbon::parse($pengajuan->tanggal_pencairan);
+                                        $tanggalAngsuran = $tanggalPencairan->copy()->addMonth();
+                                        $tanggalBerakhirAngsuran = $tanggalPencairan->copy()->addMonths($jangkaBulan);
                                     @endphp
 
                                     <div class="col-md-3 mt-2">
                                         <label for="nama_nasabah">Nama Pemohon</label>
                                     </div>
-                                    <div class="col-md-9 mt-2" id="nama_nasabah">: <span
+                                    <div class="col-md-3 mt-2" id="nama_nasabah">: <span
                                             class="font-weight-bold">{{ $angsuran->nama_nasabah }}</span></div>
 
                                     <div class="col-md-3 mt-2">
@@ -39,6 +45,12 @@
                                     </div>
                                     <div class="col-md-3 mt-2" id="jenis_akad">: <span
                                             class="font-weight-bold">{{ $angsuran->jenis_akad }}</span></div>
+
+                                    <div class="col-md-3 mt-2">
+                                        <label for="jenis_akad">Jenis Pembiayaan</label>
+                                    </div>
+                                    <div class="col-md-3 mt-2" id="jenis_akad">: <span
+                                            class="font-weight-bold">{{ $angsuran->jenis_pembiayaan }}</span></div>
 
                                     <div class="col-md-3 mt-2">
                                         <label for="tujuan_penggunaan">Tujuan untuk</label>
@@ -106,6 +118,27 @@
                                     </div>
                                     <div class="col-md-3 mt-2" id="angsuran_per_bulan">: <span class="font-weight-bold">Rp
                                             {{ number_format($angsuranPerBulan, 0, ',', '.') }}</span></div>
+                                </div>
+                                <div class="row g-3 border-top mb-3">
+                                    <div class="col-md-3 mt-2">
+                                        <label for="tanggal_pencairan">Tanggal Pencairan</label>
+                                    </div>
+                                    <div class="col-md-9 mt-2" id="tanggal_pencairan">: <span class="font-weight-bold">
+                                            {{ $tanggalPencairan->format('d-M-Y') }}</span></div>
+
+                                    <div class="col-md-3 mt-2">
+                                        <label for="tanggal_angsuran_pertama">Tanggal Pertama kali angsuran</label>
+                                    </div>
+                                    <div class="col-md-9 mt-2" id="tanggal_angsuran_pertama">: <span
+                                            class="font-weight-bold">
+                                            {{ $tanggalAngsuran->format('d-M-Y') }}</span></div>
+
+                                    <div class="col-md-3 mt-2">
+                                        <label for="tanggal_angsuran_terakhir">Tanggal Berakhir Angsuran</label>
+                                    </div>
+                                    <div class="col-md-9 mt-2" id="tanggal_angsuran_terakhir">: <span
+                                            class="font-weight-bold">
+                                            {{ $tanggalBerakhirAngsuran->format('d-M-Y') }}</span></div>
 
                                 </div>
                             </div>
@@ -113,12 +146,8 @@
                     </div>
                     <div class="card-block border-bottom p-3">
                         @php
-                            use Carbon\Carbon;
 
                             // Data dasar
-                            $tanggalPencairan = Carbon::parse($pengajuan->tanggal_pencairan);
-                            $tanggalAngsuran = $tanggalPencairan->copy()->addMonth(); // angsuran pertama 1 bulan setelah pencairan
-
                             $hargaBeliBank = floatval($angsuran->harga_beli_bank);
                             $jangkaTahun = floatval($angsuran->jangka_waktu_pembiayaan);
                             $jangkaBulan = $jangkaTahun * 12;
@@ -160,7 +189,7 @@
                                     @for ($i = 1; $i <= $jangkaBulan; $i++)
                                         <tr class="text-center">
                                             <td>{{ $i }}</td>
-                                            <td>{{ $tanggalAngsuran->format('d-m-Y') }}</td>
+                                            <td>{{ $tanggalAngsuran->format('d-M-Y') }}</td>
                                             <td>Rp {{ number_format($pokokPerBulan, 0, ',', '.') }}</td>
                                             <td>Rp {{ number_format($marginPerBulanNominal, 0, ',', '.') }}</td>
                                             <td>Rp {{ number_format($totalAngsuranPerBulan, 0, ',', '.') }}</td>

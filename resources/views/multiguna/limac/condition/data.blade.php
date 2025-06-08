@@ -39,16 +39,16 @@
                                     </thead>
 
                                     <tbody>
-                                        @forelse ($murabahah_limac_condition as $index => $item)
+                                        @forelse ($multiguna_limac_condition as $index => $item)
                                             <tr>
                                                 <td class="text-center align-middle text-wrap p-2">
-                                                    <a href="{{ route('murabahah.limac.condition.edit', $item->kode_pengajuan) }}"
+                                                    <a href="{{ route('multiguna.limac.condition.edit', $item->kode_pengajuan) }}"
                                                         class="text-warning" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 </td>
                                                 <td class="text-center align-middle text-wrap p-2">
-                                                    {{ $murabahah_limac_condition->firstItem() + $index }}</td>
+                                                    {{ $multiguna_limac_condition->firstItem() + $index }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_pengajuan }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_nasabah }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->nama_nasabah }}</td>
@@ -72,7 +72,7 @@
 
                             {{-- Pagination --}}
                             <div class="d-flex justify-content-start mt-3">
-                                {{ $murabahah_limac_condition->links() }}
+                                {{ $multiguna_limac_condition->links() }}
                             </div>
                         </div>
 

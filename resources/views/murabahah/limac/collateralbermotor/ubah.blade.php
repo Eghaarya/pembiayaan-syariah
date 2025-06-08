@@ -19,7 +19,7 @@
                                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                             <button class="nav-link active" id="nav-1-tab" data-toggle="tab"
                                                 data-target="#nav-1" type="button" role="tab" aria-controls="nav-1"
-                                                aria-selected="true">Legalitas Obyek / Agunan Pembiayaan</button>
+                                                aria-selected="true">Scooring Collateral Bermotor</button>
                                         </div>
 
                                     </nav>
@@ -27,7 +27,7 @@
                                     <div class="tab-content p-3" id="nav-tabContent">
                                         <div class="tab-pane fade show active" id="nav-1" role="tabpanel"
                                             aria-labelledby="nav-1-tab">
-                                            <h6 class="border-bottom pb-2">Scooring Condition of Economy</h6>
+                                            <h6 class="border-bottom pb-2">Scooring Collateral Bermotor</h6>
 
                                             <div class="row g-3 mb-3">
                                                 @php
