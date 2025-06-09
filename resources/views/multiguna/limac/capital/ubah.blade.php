@@ -147,6 +147,37 @@
                                                     <div id="angsuran_bank_output" class="mt-1">—</div>
                                                 </div>
 
+                                                <div class="col-md-6 mt-2">
+                                                    <label class="form-label fw-bold text-info" for="besarnya_urbun">
+                                                        Besarnya Urbun
+                                                    </label>
+                                                    <select class="form-control" id="besarnya_urbun"
+                                                        name="besarnya_urbun">
+                                                        @php
+                                                            $urbunOptions = [
+                                                                '--',
+                                                                '0% dari harga agunan (1)',
+                                                                '0-30% dari harga agunan (7)',
+                                                                '30%-50% dari harga agunan (8)',
+                                                                '50%-99% dari harga agunan (10)',
+                                                            ];
+                                                            $selectedUrbun = old(
+                                                                'besarnya_urbun',
+                                                                $pengajuan->besarnya_urbun ?? '',
+                                                            );
+                                                        @endphp
+
+                                                        <option value="" disabled
+                                                            {{ $selectedUrbun == '' ? 'selected' : '' }}>-- Pilih Besarnya
+                                                            Urbun --</option>
+                                                        @foreach ($urbunOptions as $option)
+                                                            <option value="{{ $option }}"
+                                                                {{ $selectedUrbun == $option ? 'selected' : '' }}>
+                                                                {{ $option }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
                                             </div>
 
                                             <div class="d-flex gap-2 justify-content-start mt-3" id="nav-tab"

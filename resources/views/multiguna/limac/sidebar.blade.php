@@ -134,24 +134,10 @@
                                         <span class="pcoded-mtext">Capital</span>
                                     </a>
                                 </li>
-                                <li class="nav-item {{ Route::is('multiguna.limac.collateralsk.*') ? 'active' : '' }}">
-                                    <a href="{{ route('multiguna.limac.collateralsk.data') }}"
-                                        class="nav-link {{ Route::is('multiguna.limac.collateralsk.*') ? 'active' : '' }}">
-                                        <span class="pcoded-mtext">Collateral SK</span>
-                                    </a>
-                                </li>
-                                <li
-                                    class="nav-item {{ Route::is('multiguna.limac.collateralproperti.*') ? 'active' : '' }}">
-                                    <a href="{{ route('multiguna.limac.collateralproperti.data') }}"
-                                        class="nav-link {{ Route::is('multiguna.limac.collateralproperti.*') ? 'active' : '' }}">
-                                        <span class="pcoded-mtext">Collateral Properti</span>
-                                    </a>
-                                </li>
-                                <li
-                                    class="nav-item {{ Route::is('multiguna.limac.collateralbermotor.*') ? 'active' : '' }}">
-                                    <a href="{{ route('multiguna.limac.collateralbermotor.data') }}"
-                                        class="nav-link {{ Route::is('multiguna.limac.collateralbermotor.*') ? 'active' : '' }}">
-                                        <span class="pcoded-mtext">Collateral Bermotor</span>
+                                <li class="nav-item {{ Route::is('multiguna.limac.collateral.*') ? 'active' : '' }}">
+                                    <a href="{{ route('multiguna.limac.collateral.data') }}"
+                                        class="nav-link {{ Route::is('multiguna.limac.collateral.*') ? 'active' : '' }}">
+                                        <span class="pcoded-mtext">Collateral</span>
                                     </a>
                                 </li>
                                 <li class="nav-item {{ Route::is('multiguna.limac.condition.*') ? 'active' : '' }}">

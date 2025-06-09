@@ -12,7 +12,9 @@ use App\Models\Multiguna\Limac\MultigunaLimacCapacity;
 use App\Models\Multiguna\Pengajuan\MultigunaPengajuan;
 use App\Models\Multiguna\Limac\MultigunaLimacCharacter;
 use App\Models\Multiguna\Limac\MultigunaLimacCondition;
-use App\Models\Multiguna\Limac\MultigunaLimacCollateral;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralSk;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralProperti;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralBermotor;
 
 class MultigunaPengajuanController extends Controller
 {
@@ -122,7 +124,25 @@ class MultigunaPengajuanController extends Controller
                 'kode_tempat'    => $user->kode_tempat,
             ]);
 
-            MultigunaLimacCollateral::create([
+            MultigunaLimacCollateralSk::create([
+                'kode_pengajuan' => $kodePengajuan,
+                'kode_nasabah'   => $kodeNasabah,
+                'nama_nasabah'   => $namaNasabah,
+
+                'username'       => $user->username,
+                'kode_tempat'    => $user->kode_tempat,
+            ]);
+
+            MultigunaLimacCollateralProperti::create([
+                'kode_pengajuan' => $kodePengajuan,
+                'kode_nasabah'   => $kodeNasabah,
+                'nama_nasabah'   => $namaNasabah,
+
+                'username'       => $user->username,
+                'kode_tempat'    => $user->kode_tempat,
+            ]);
+
+            MultigunaLimacCollateralBermotor::create([
                 'kode_pengajuan' => $kodePengajuan,
                 'kode_nasabah'   => $kodeNasabah,
                 'nama_nasabah'   => $namaNasabah,

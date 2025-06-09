@@ -17,27 +17,32 @@
                                 <table class="table border table-bordered text-center">
                                     <thead>
                                         <tr>
-                                            <th rowspan="2" class="align-middle p-2">Aksi</th>
-                                            <th rowspan="2" class="align-middle p-2">No.</th>
-                                            <th rowspan="2" class="align-middle p-2">Kode Pengajuan</th>
-                                            <th rowspan="2" class="align-middle p-2">Kode Nasabah</th>
-                                            <th rowspan="2" class="align-middle p-2">Nama Nasabah</th>
-                                            <th rowspan="2" class="align-middle p-2">Tanggal Pengajuan</th>
-                                            <th colspan="5" class="align-middle p-2">Penilaian Total</th>
-                                            <th rowspan="2" class="align-middle p-2">Keputusan</th>
-                                            <th rowspan="2" class="align-middle p-2">Tanggal Pencairan</th>
-                                            <th rowspan="2" class="align-middle p-2">Jadwal Angsuran</th>
+                                            <th rowspan="3" class="align-middle p-2">Aksi</th>
+                                            <th rowspan="3" class="align-middle p-2">No.</th>
+                                            <th rowspan="3" class="align-middle p-2">Kode Pengajuan</th>
+                                            <th rowspan="3" class="align-middle p-2">Kode Nasabah</th>
+                                            <th rowspan="3" class="align-middle p-2">Nama Nasabah</th>
+                                            <th rowspan="3" class="align-middle p-2">Tanggal Pengajuan</th>
+                                            <th colspan="7" class="align-middle p-2">Rekomendasi Keputusan</th>
+                                            <th rowspan="3" class="align-middle p-2">Keputusan</th>
+                                            <th rowspan="3" class="align-middle p-2">Tanggal Pencairan</th>
+                                            <th rowspan="3" class="align-middle p-2">Jadwal Angsuran</th>
                                         </tr>
                                         <tr>
-                                            <th class="align-middle bg-white text-secondary p-1">Character
+                                            <th rowspan="2" class="align-middle bg-white text-secondary p-1">Character
                                             </th>
-                                            <th class="align-middle bg-white text-secondary p-1">Capacity
+                                            <th rowspan="2" class="align-middle bg-white text-secondary p-1">Capacity
                                             </th>
-                                            <th class="align-middle bg-white text-secondary p-1">Capital</th>
-                                            <th class="align-middle bg-white text-secondary p-1">Collateral
+                                            <th rowspan="2" class="align-middle bg-white text-secondary p-1">Capital</th>
+                                            <th colspan="3" class="align-middle bg-white text-secondary p-1">Collateral
                                             </th>
-                                            <th class="align-middle bg-white text-secondary p-1">Condition
+                                            <th rowspan="2" class="align-middle bg-white text-secondary p-1">Condition
                                             </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="align-middle bg-white text-secondary p-1">SK</th>
+                                            <th class="align-middle bg-white text-secondary p-1">Properti</th>
+                                            <th class="align-middle bg-white text-secondary p-1">Bermotor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,7 +81,9 @@
                                                 <td>{{ $multiguna->total_character }}</td>
                                                 <td>{{ $multiguna->total_capacity }}</td>
                                                 <td>{{ $multiguna->total_capital }}</td>
-                                                <td>{{ $multiguna->total_collateral }}</td>
+                                                <td>{{ $multiguna->total_collateralsk }}</td>
+                                                <td>{{ $multiguna->total_collateralproperti }}</td>
+                                                <td>{{ $multiguna->total_collateralbermotor }}</td>
                                                 <td>{{ $multiguna->total_condition }}</td>
                                                 <td rowspan="2"
                                                     class="align-middle {{ $multiguna->keputusan == 'disetujui' ? 'text-success' : '' }}">
@@ -130,10 +137,30 @@
                                                     @endif
                                                 </td>
                                                 <td
-                                                    class="@if ($multiguna->total_collateral >= 31) text-success @elseif($multiguna->total_collateral >= 16) text-warning @else text-danger @endif">
-                                                    @if ($multiguna->total_collateral >= 31)
+                                                    class="@if ($multiguna->total_collateralsk >= 2) text-success @elseif($multiguna->total_collateralsk >= 1) text-warning @else text-danger @endif">
+                                                    @if ($multiguna->total_collateralsk >= 2)
                                                         Disetujui
-                                                    @elseif ($multiguna->total_collateral >= 16)
+                                                    @elseif ($multiguna->total_collateralsk >= 1)
+                                                        Disetujui Bersyarat
+                                                    @else
+                                                        Ditolak
+                                                    @endif
+                                                </td>
+                                                <td
+                                                    class="@if ($multiguna->total_collateralproperti >= 31) text-success @elseif($multiguna->total_collateralproperti >= 16) text-warning @else text-danger @endif">
+                                                    @if ($multiguna->total_collateralproperti >= 31)
+                                                        Disetujui
+                                                    @elseif ($multiguna->total_collateralproperti >= 16)
+                                                        Disetujui Bersyarat
+                                                    @else
+                                                        Ditolak
+                                                    @endif
+                                                </td>
+                                                <td
+                                                    class="@if ($multiguna->total_collateralbermotor >= 13) text-success @elseif($multiguna->total_collateralbermotor >= 6) text-warning @else text-danger @endif">
+                                                    @if ($multiguna->total_collateralbermotor >= 13)
+                                                        Disetujui
+                                                    @elseif ($multiguna->total_collateralbermotor >= 6)
                                                         Disetujui Bersyarat
                                                     @else
                                                         Ditolak
@@ -152,7 +179,7 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="13" class="text-center">Data nasabah tidak ditemukan.</td>
+                                                <td colspan="50" class="text-center">Data nasabah tidak ditemukan.</td>
                                             </tr>
                                         @endforelse
                                     </tbody>

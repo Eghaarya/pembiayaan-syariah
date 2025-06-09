@@ -21,6 +21,8 @@ class MultigunaLimacCapital extends Model
         'jangka_waktu_pembiayaan',
         'margin_bank',
 
+        'besarnya_urbun',
+
         'username',
         'kode_tempat',
     ];

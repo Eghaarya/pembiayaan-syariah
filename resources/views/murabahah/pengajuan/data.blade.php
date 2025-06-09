@@ -23,7 +23,7 @@
                                             <th rowspan="3" class="align-middle p-2">Kode Nasabah</th>
                                             <th rowspan="3" class="align-middle p-2">Nama Nasabah</th>
                                             <th rowspan="3" class="align-middle p-2">Tanggal Pengajuan</th>
-                                            <th colspan="6" class="align-middle p-2">Penilaian Total</th>
+                                            <th colspan="6" class="align-middle p-2">Rekomendasi Keputusan</th>
                                             <th rowspan="3" class="align-middle p-2">Keputusan</th>
                                             <th rowspan="3" class="align-middle p-2">Tanggal Pencairan</th>
                                             <th rowspan="3" class="align-middle p-2">Jadwal Angsuran</th>
@@ -115,8 +115,8 @@
                                                     @endif
                                                 </td>
                                                 <td
-                                                    class="@if ($murabahah->total_capacity >= 86) text-success @elseif($murabahah->total_capacity >= 70) text-warning @else text-danger @endif">
-                                                    @if ($murabahah->total_capacity >= 86)
+                                                    class="@if ($murabahah->total_capacity >= 85) text-success @elseif($murabahah->total_capacity >= 70) text-warning @else text-danger @endif">
+                                                    @if ($murabahah->total_capacity >= 85)
                                                         Disetujui
                                                     @elseif ($murabahah->total_capacity >= 70)
                                                         Disetujui Bersyarat

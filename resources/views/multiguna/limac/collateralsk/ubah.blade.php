@@ -9,7 +9,7 @@
                     <div class="card-block border-bottom p-3">
                         <div class="row mb-2">
                             <div class="col-12">
-                                <form action="{{ route('multiguna.limac.collateral.update', $pengajuan->kode_pengajuan) }}"
+                                <form action="{{ route('multiguna.limac.collateralsk.update', $pengajuan->kode_pengajuan) }}"
                                     method="POST">
                                     @csrf
                                     @method('PUT')
@@ -19,7 +19,7 @@
                                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                             <button class="nav-link active" id="nav-1-tab" data-toggle="tab"
                                                 data-target="#nav-1" type="button" role="tab" aria-controls="nav-1"
-                                                aria-selected="true">Scooring Collateral</button>
+                                                aria-selected="true">Scooring Collateral SK</button>
                                         </div>
 
                                     </nav>

@@ -20,7 +20,9 @@ class MultigunaPengajuan extends Model
         'total_character',
         'total_capacity',
         'total_capital',
-        'total_collateral',
+        'total_collateralsk',
+        'total_collateralproperti',
+        'total_collateralbermotor',
         'total_condition',
         'keputusan',
 

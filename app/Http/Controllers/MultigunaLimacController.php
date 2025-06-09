@@ -12,7 +12,9 @@ use App\Models\Multiguna\Limac\MultigunaLimacCapacity;
 use App\Models\Multiguna\Pengajuan\MultigunaPengajuan;
 use App\Models\Multiguna\Limac\MultigunaLimacCharacter;
 use App\Models\Multiguna\Limac\MultigunaLimacCondition;
-use App\Models\Multiguna\Limac\MultigunaLimacCollateral;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralSk;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralProperti;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralBermotor;
 
 class MultigunaLimacController extends Controller
 {
@@ -287,7 +289,6 @@ class MultigunaLimacController extends Controller
             ]);
 
         $scoreCapacity = [
-            'tempatkerja_kelokasi_bank',
             'memiliki_jabatan_rangkap',
             'publik_figur',
             'pemegang_jabatan_tertinggi',
@@ -303,7 +304,11 @@ class MultigunaLimacController extends Controller
 
         $score = 0;
         foreach ($scoreCapacity as $field) {
-            $score += (int) $request->$field;
+            $value = $request->$field;
+
+            if (preg_match('/\((\d+)\)/', $value, $matches)) {
+                $score += (int) $matches[1];
+            }
         }
 
         $pekerjaan = NasabahPekerjaan::where('kode_nasabah', $request->kode_nasabah)->first();
@@ -413,42 +418,43 @@ class MultigunaLimacController extends Controller
                 'harga_beli_bank' => $request->harga_beli_bank,
                 'jangka_waktu_pembiayaan' => $request->jangka_waktu_pembiayaan,
                 'margin_bank' => $request->margin_bank,
+                'besarnya_urbun' => $request->besarnya_urbun,
             ]);
 
         $score = 0;
-        // $score += (int) (preg_match('/\((\d+)\)/', $request->besarnya_urbun, $m) ? $m[1] : 0);
+        $score += (int) (preg_match('/\((\d+)\)/', $request->besarnya_urbun, $m) ? $m[1] : 0);
 
-        // MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
-        //     ->update([
-        //         'total_capital' => $score,
-        //     ]);
+        MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
+            ->update([
+                'total_capital' => $score,
+            ]);
 
         return redirect()->route('multiguna.limac.capital.data')
             ->with('success', '✅ Data berhasil diperbarui dan total score :' . $score . ' disimpan.');
     }
 
-    // 4.1 Collateral
-    public function indexLimacCollateral()
+    // 4.1 CollateralSk
+    public function indexLimacCollateralSk()
     {
         $user = Auth::user();
 
         if ($user->tipe_akun == 'siswa') {
-            $multiguna_limac_collateral = MultigunaLimacCollateral::where('username', $user->username)
+            $multiguna_limac_collateralsk = MultigunaLimacCollateralSk::where('username', $user->username)
                 ->where('kode_tempat', $user->kode_tempat)
                 ->paginate(5);
         } elseif ($user->tipe_akun == 'pengajar') {
-            $multiguna_limac_collateral = MultigunaLimacCollateral::where('kode_tempat', $user->kode_tempat)
+            $multiguna_limac_collateralsk = MultigunaLimacCollateralSk::where('kode_tempat', $user->kode_tempat)
                 ->paginate(5);
         } elseif ($user->tipe_akun == 'admin') {
-            $multiguna_limac_collateral = MultigunaLimacCollateral::paginate(5);
+            $multiguna_limac_collateralsk = MultigunaLimacCollateralSk::paginate(5);
         } else {
-            $multiguna_limac_collateral = collect();
+            $multiguna_limac_collateralsk = collect();
         }
 
-        return view('multiguna.limac.collateral.data', compact('multiguna_limac_collateral'));
+        return view('multiguna.limac.collateralsk.data', compact('multiguna_limac_collateralsk'));
     }
 
-    public function editCollateral($kode_pengajuan)
+    public function editCollateralSk($kode_pengajuan)
     {
         // autentikasi
         $user = Auth::user();
@@ -471,11 +477,11 @@ class MultigunaLimacController extends Controller
             }
         }
 
-        $pengajuan = MultigunaLimacCollateral::where('kode_pengajuan', $kode_pengajuan)->firstOrFail();
-        return view('multiguna.limac.collateral.ubah', compact('pengajuan'));
+        $pengajuan = MultigunaLimacCollateralSk::where('kode_pengajuan', $kode_pengajuan)->firstOrFail();
+        return view('multiguna.limac.collateralsk.ubah', compact('pengajuan'));
     }
 
-    public function updateCollateral(Request $request, $kode_pengajuan)
+    public function updateCollateralSk(Request $request, $kode_pengajuan)
     {
         // autentikasi
         $user = Auth::user();
@@ -498,7 +504,7 @@ class MultigunaLimacController extends Controller
             }
         }
 
-        MultigunaLimacCollateral::where('kode_pengajuan', $kode_pengajuan)
+        MultigunaLimacCollateralSk::where('kode_pengajuan', $kode_pengajuan)
             ->update([
                 'sk_pengangkatan_pegawai_tetap' => $request->sk_pengangkatan_pegawai_tetap,
                 'sk_jabatan_terakhir_terkini'   => $request->sk_jabatan_terakhir_terkini,
@@ -530,10 +536,262 @@ class MultigunaLimacController extends Controller
 
         MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
             ->update([
-                'total_collateral' => $score,
+                'total_collateralsk' => $score,
             ]);
 
-        return redirect()->route('multiguna.limac.collateral.data')
+        return redirect()->route('multiguna.limac.collateralsk.data')
+            ->with('success', '✅ Data berhasil diperbarui dan total score :' . $score . ' disimpan.');
+    }
+
+    // 4.2 Collateral Properti
+    public function indexLimacCollateralProperti()
+    {
+        $user = Auth::user();
+
+        if ($user->tipe_akun == 'siswa') {
+            $multiguna_limac_collateralproperti = MultigunaLimacCollateralProperti::where('username', $user->username)
+                ->where('kode_tempat', $user->kode_tempat)
+                ->paginate(5);
+        } elseif ($user->tipe_akun == 'pengajar') {
+            $multiguna_limac_collateralproperti = MultigunaLimacCollateralProperti::where('kode_tempat', $user->kode_tempat)
+                ->paginate(5);
+        } elseif ($user->tipe_akun == 'admin') {
+            $multiguna_limac_collateralproperti = MultigunaLimacCollateralProperti::paginate(5);
+        } else {
+            $multiguna_limac_collateralproperti = collect();
+        }
+
+        return view('multiguna.limac.collateralproperti.data', compact('multiguna_limac_collateralproperti'));
+    }
+
+    public function editCollateralProperti($kode_pengajuan)
+    {
+        // autentikasi
+        $user = Auth::user();
+
+        $multiguna_pengajuan = MultigunaPengajuan::select('username', 'kode_tempat')
+            ->where('kode_pengajuan', $kode_pengajuan)
+            ->first();
+
+        if (!$multiguna_pengajuan) {
+            abort(404, 'Data pengajuan tidak ditemukan.');
+        }
+
+        if ($user->tipe_akun === 'pengajar') {
+            if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
+                abort(404);
+            }
+        } elseif ($user->tipe_akun === 'siswa') {
+            if ($multiguna_pengajuan->username !== $user->username) {
+                abort(404);
+            }
+        }
+
+        $pengajuan = MultigunaLimacCollateralProperti::where('kode_pengajuan', $kode_pengajuan)->firstOrFail();
+        return view('multiguna.limac.collateralproperti.ubah', compact('pengajuan'));
+    }
+
+    public function updateCollateralProperti(Request $request, $kode_pengajuan)
+    {
+        // autentikasi
+        $user = Auth::user();
+
+        $multiguna_pengajuan = MultigunaPengajuan::select('username', 'kode_tempat')
+            ->where('kode_pengajuan', $kode_pengajuan)
+            ->first();
+
+        if (!$multiguna_pengajuan) {
+            abort(404, 'Data pengajuan tidak ditemukan.');
+        }
+
+        if ($user->tipe_akun === 'pengajar') {
+            if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
+                abort(404);
+            }
+        } elseif ($user->tipe_akun === 'siswa') {
+            if ($multiguna_pengajuan->username !== $user->username) {
+                abort(404);
+            }
+        }
+
+        MultigunaLimacCollateralProperti::where('kode_pengajuan', $kode_pengajuan)
+            ->update([
+                'jenis_sertifikat_hak'       => $request->jenis_sertifikat_hak,
+                'nomor_sertifikat'           => $request->nomor_sertifikat,
+                'tanggal_penerbitan'         => $request->tanggal_penerbitan,
+                'instansi_yang_menerbitkan'  => $request->instansi_yang_menerbitkan,
+                'nama_pemegang_hak'          => $request->nama_pemegang_hak,
+                'lama_tgl_akhir_hak_berlaku' => $request->lama_tgl_akhir_hak_berlaku,
+                'surat_ukur_nomor'           => $request->surat_ukur_nomor,
+                'tanggal_ukur'               => $request->tanggal_ukur,
+                'asal_agunan'                => $request->asal_agunan,
+                'luas_agunan'                => $request->luas_agunan,
+                'letak_agunan'               => $request->letak_agunan,
+                'batas_utara_agunan'         => $request->batas_utara_agunan,
+                'batas_timur_agunan'         => $request->batas_timur_agunan,
+                'batas_selatan_agunan'       => $request->batas_selatan_agunan,
+                'batas_barat_agunan'         => $request->batas_barat_agunan,
+
+                'lokasi_perumahan'           => $request->lokasi_perumahan,
+                'kenyamanan'                 => $request->kenyamanan,
+                'lokasi_agunan'              => $request->lokasi_agunan,
+                'jarak_fasum_fasos'          => $request->jarak_fasum_fasos,
+                'fasilitas_perumahan'        => $request->fasilitas_perumahan,
+                'jenis_jalan_lingkungan'     => $request->jenis_jalan_lingkungan,
+                'jarak_ke_jalan_provinsi'    => $request->jarak_ke_jalan_provinsi,
+                'jenis_dan_kondisi_jalan'    => $request->jenis_dan_kondisi_jalan,
+                'kondisi_jalan_ke_kota'      => $request->kondisi_jalan_ke_kota,
+                'resiko_bencana_hidup'       => $request->resiko_bencana_hidup,
+                'kontribusi_pemohon_dp'      => $request->kontribusi_pemohon_dp,
+                'pertumbuhan_agunan'          => $request->pertumbuhan_agunan,
+                'kondisi_wilayah_agunan'     => $request->kondisi_wilayah_agunan,
+            ]);
+
+        $points = [
+            'jenis_sertifikat_hak',
+
+            'lokasi_perumahan',
+            'kenyamanan',
+            'lokasi_agunan',
+            'jarak_fasum_fasos',
+            'fasilitas_perumahan',
+            'jenis_jalan_lingkungan',
+            'jarak_ke_jalan_provinsi',
+            'jenis_dan_kondisi_jalan',
+            'kondisi_jalan_ke_kota',
+            'resiko_bencana_hidup',
+            'kontribusi_pemohon_dp',
+            'pertumbuhan_agunan',
+            'kondisi_wilayah_agunan',
+        ];
+
+        $score = 0;
+        foreach ($points as $point) {
+            if (preg_match('/\((\d+)\)/', $request->$point, $matches)) {
+                $score += (int) $matches[1];
+            }
+        }
+
+        MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
+            ->update([
+                'total_collateralproperti' => $score,
+            ]);
+
+        return redirect()->route('multiguna.limac.collateralproperti.data')
+            ->with('success', '✅ Data berhasil diperbarui dan total score :' . $score . ' disimpan.');
+    }
+
+    // 4.3 Collateral Bermotor
+    public function indexLimacCollateralBermotor()
+    {
+        $user = Auth::user();
+
+        if ($user->tipe_akun == 'siswa') {
+            $multiguna_limac_collateralbermotor = MultigunaLimacCollateralBermotor::where('username', $user->username)
+                ->where('kode_tempat', $user->kode_tempat)
+                ->paginate(5);
+        } elseif ($user->tipe_akun == 'pengajar') {
+            $multiguna_limac_collateralbermotor = MultigunaLimacCollateralBermotor::where('kode_tempat', $user->kode_tempat)
+                ->paginate(5);
+        } elseif ($user->tipe_akun == 'admin') {
+            $multiguna_limac_collateralbermotor = MultigunaLimacCollateralBermotor::paginate(5);
+        } else {
+            $multiguna_limac_collateralbermotor = collect();
+        }
+
+        return view('multiguna.limac.collateralbermotor.data', compact('multiguna_limac_collateralbermotor'));
+    }
+
+    public function editCollateralbermotor($kode_pengajuan)
+    {
+        // autentikasi
+        $user = Auth::user();
+
+        $multiguna_pengajuan = MultigunaPengajuan::select('username', 'kode_tempat')
+            ->where('kode_pengajuan', $kode_pengajuan)
+            ->first();
+
+        if (!$multiguna_pengajuan) {
+            abort(404, 'Data pengajuan tidak ditemukan.');
+        }
+
+        if ($user->tipe_akun === 'pengajar') {
+            if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
+                abort(404);
+            }
+        } elseif ($user->tipe_akun === 'siswa') {
+            if ($multiguna_pengajuan->username !== $user->username) {
+                abort(404);
+            }
+        }
+
+        $pengajuan = MultigunaLimacCollateralbermotor::where('kode_pengajuan', $kode_pengajuan)->firstOrFail();
+        return view('multiguna.limac.collateralbermotor.ubah', compact('pengajuan'));
+    }
+
+    public function updateCollateralbermotor(Request $request, $kode_pengajuan)
+    {
+        // autentikasi
+        $user = Auth::user();
+
+        $multiguna_pengajuan = MultigunaPengajuan::select('username', 'kode_tempat')
+            ->where('kode_pengajuan', $kode_pengajuan)
+            ->first();
+
+        if (!$multiguna_pengajuan) {
+            abort(404, 'Data pengajuan tidak ditemukan.');
+        }
+
+        if ($user->tipe_akun === 'pengajar') {
+            if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
+                abort(404);
+            }
+        } elseif ($user->tipe_akun === 'siswa') {
+            if ($multiguna_pengajuan->username !== $user->username) {
+                abort(404);
+            }
+        }
+
+        MultigunaLimacCollateralbermotor::where('kode_pengajuan', $kode_pengajuan)
+            ->update([
+                'tujuan_penggunaan' => $request->tujuan_penggunaan,
+                'jenis_kendaraan' => $request->jenis_kendaraan,
+                'status_agunan_kendaraan' => $request->status_agunan_kendaraan,
+                'nomor_stnk_agunan' => $request->nomor_stnk_agunan,
+                'nama_pemilik_agunan' => $request->nama_pemilik_agunan,
+                'alamat_pemilik_agunan' => $request->alamat_pemilik_agunan,
+                'merk_agunan' => $request->merk_agunan,
+                'tipe_agunan' => $request->tipe_agunan,
+                'bahan_bakar' => $request->bahan_bakar,
+                'warna_agunan' => $request->warna_agunan,
+                'isi_silinder' => $request->isi_silinder,
+                'nomor_rangka_agunan' => $request->nomor_rangka_agunan,
+                'nomor_mesin_agunan' => $request->nomor_mesin_agunan,
+                'tahun_pembuatan' => $request->tahun_pembuatan,
+                'masa_berlaku' => $request->masa_berlaku,
+            ]);
+
+        $points = [
+            'tujuan_penggunaan',
+            'jenis_kendaraan',
+            'status_agunan_kendaraan',
+            'tipe_agunan',
+            'bahan_bakar',
+        ];
+
+        $score = 0;
+        foreach ($points as $point) {
+            if (preg_match('/\((\d+)\)/', $request->$point, $matches)) {
+                $score += (int) $matches[1];
+            }
+        }
+
+        MultigunaPengajuan::where('kode_pengajuan', $kode_pengajuan)
+            ->update([
+                'total_collateralbermotor' => $score,
+            ]);
+
+        return redirect()->route('multiguna.limac.collateralbermotor.data')
             ->with('success', '✅ Data berhasil diperbarui dan total score :' . $score . ' disimpan.');
     }
 

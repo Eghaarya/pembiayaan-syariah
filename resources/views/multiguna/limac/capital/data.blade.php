@@ -23,6 +23,7 @@
                                             <th rowspan="3" class="align-middle p-2">Kode Nasabah</th>
                                             <th rowspan="3" class="align-middle p-2">Nama Nasabah</th>
                                             <th colspan="5" class="align-middle p-2">Pembiayaan</th>
+                                            <th rowspan="3" class="align-middle text-info p-2">% Besarnya Urbun</th>
                                         </tr>
                                         <tr class="text-center border border-dark">
                                             <th class="bg-white text-secondary">Jenis Akad</th>
@@ -55,6 +56,7 @@
                                                 <td class="align-middle text-wrap p-2">{{ $item->jangka_waktu_pembiayaan }}
                                                 </td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->margin_bank }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->besarnya_urbun }}</td>
                                             </tr>
                                         @empty
                                             <tr>

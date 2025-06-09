@@ -228,13 +228,78 @@ class MurabahahLimacController extends Controller
             }
         }
 
-        MurabahahLimacCapacity::where('kode_pengajuan', $kode_pengajuan)
-            ->update([
-                'tempatkerja_kelokasi_bank' => $request->tempatkerja_kelokasi_bank,
-                'tempatkerja_kelokasi_agunan' => $request->tempatkerja_kelokasi_agunan,
-                'pembayaran_kolektif' => $request->pembayaran_kolektif,
-                'pembayaran_nonkolektif' => $request->pembayaran_nonkolektif,
-            ]);
+        $dataUpdate = [
+            'nama_bank_nasabah' => $request->nama_bank_nasabah,
+            'no_bank_account_nasabah' => $request->no_bank_account_nasabah,
+            'nama_bank_pasangan' => $request->nama_bank_pasangan,
+            'no_bank_account_pasangan' => $request->no_bank_account_pasangan,
+        ];
+
+        for ($i = 1; $i <= 3; $i++) {
+            // perincian rekening tabungan
+            $dataUpdate["tanggal_nasabah_bulan_{$i}"] = $request->input("tanggal_nasabah_bulan_{$i}");
+            $dataUpdate["saldo_awal_nasabah_bulan_{$i}"] = $request->input("saldo_awal_nasabah_bulan_{$i}");
+            $dataUpdate["total_debet_nasabah_bulan_{$i}"] = $request->input("total_debet_nasabah_bulan_{$i}");
+            $dataUpdate["total_kredit_nasabah_bulan_{$i}"] = $request->input("total_kredit_nasabah_bulan_{$i}");
+            $dataUpdate["saldo_akhir_nasabah_bulan_{$i}"] = $request->input("saldo_akhir_nasabah_bulan_{$i}");
+
+            $dataUpdate["tanggal_pasangan_bulan_{$i}"] = $request->input("tanggal_pasangan_bulan_{$i}");
+            $dataUpdate["saldo_awal_pasangan_bulan_{$i}"] = $request->input("saldo_awal_pasangan_bulan_{$i}");
+            $dataUpdate["total_debet_pasangan_bulan_{$i}"] = $request->input("total_debet_pasangan_bulan_{$i}");
+            $dataUpdate["total_kredit_pasangan_bulan_{$i}"] = $request->input("total_kredit_pasangan_bulan_{$i}");
+            $dataUpdate["saldo_akhir_pasangan_bulan_{$i}"] = $request->input("saldo_akhir_pasangan_bulan_{$i}");
+
+            // Kondisi keuangan
+            $dataUpdate["jenis_pinjaman_nasabah_{$i}"] = $request->input("jenis_pinjaman_nasabah_{$i}");
+            $dataUpdate["limit_nasabah_{$i}"] = $request->input("limit_nasabah_{$i}");
+            $dataUpdate["jangka_waktu_nasabah_{$i}"] = $request->input("jangka_waktu_nasabah_{$i}");
+            $dataUpdate["sisa_hutang_nasabah_{$i}"] = $request->input("sisa_hutang_nasabah_{$i}");
+            $dataUpdate["kreditur_nasabah_{$i}"] = $request->input("kreditur_nasabah_{$i}");
+            $dataUpdate["agunan_nasabah_{$i}"] = $request->input("agunan_nasabah_{$i}");
+
+            $dataUpdate["jenis_pinjaman_pasangan_{$i}"] = $request->input("jenis_pinjaman_pasangan_{$i}");
+            $dataUpdate["limit_pasangan_{$i}"] = $request->input("limit_pasangan_{$i}");
+            $dataUpdate["jangka_waktu_pasangan_{$i}"] = $request->input("jangka_waktu_pasangan_{$i}");
+            $dataUpdate["sisa_hutang_pasangan_{$i}"] = $request->input("sisa_hutang_pasangan_{$i}");
+            $dataUpdate["kreditur_pasangan_{$i}"] = $request->input("kreditur_pasangan_{$i}");
+            $dataUpdate["agunan_pasangan_{$i}"] = $request->input("agunan_pasangan_{$i}");
+        }
+
+        $dataUpdate = array_merge($dataUpdate, [
+            'penghasilan_nasabah' => $request->penghasilan_nasabah,
+            'keterangan_penghasilan_nasabah' => $request->keterangan_penghasilan_nasabah,
+            'penghasilan_pasangan' => $request->penghasilan_pasangan,
+            'keterangan_penghasilan_pasangan' => $request->keterangan_penghasilan_pasangan,
+            'sumber_penghasilan_lain' => $request->sumber_penghasilan_lain,
+            'keterangan_sumber_penghasilan_lain' => $request->keterangan_sumber_penghasilan_lain,
+            'biaya_sewa_rumah' => $request->biaya_sewa_rumah,
+            'keterangan_biaya_sewa_rumah' => $request->keterangan_biaya_sewa_rumah,
+            'biaya_makan' => $request->biaya_makan,
+            'keterangan_biaya_makan' => $request->keterangan_biaya_makan,
+            'biaya_transportasi' => $request->biaya_transportasi,
+            'keterangan_biaya_transportasi' => $request->keterangan_biaya_transportasi,
+            'biaya_pendidikan' => $request->biaya_pendidikan,
+            'keterangan_biaya_pendidikan' => $request->keterangan_biaya_pendidikan,
+            'biaya_listrik_air_gas' => $request->biaya_listrik_air_gas,
+            'keterangan_biaya_listrik_air_gas' => $request->keterangan_biaya_listrik_air_gas,
+            'angsuran_pinjaman' => $request->angsuran_pinjaman,
+            'keterangan_angsuran_pinjaman' => $request->keterangan_angsuran_pinjaman,
+            'premi_asuransi' => $request->premi_asuransi,
+            'keterangan_premi_asuransi' => $request->keterangan_premi_asuransi,
+            'tabungan_berjangka' => $request->tabungan_berjangka,
+            'keterangan_tabungan_berjangka' => $request->keterangan_tabungan_berjangka,
+            'pengeluaran_lain' => $request->pengeluaran_lain,
+            'keterangan_pengeluaran_lain' => $request->keterangan_pengeluaran_lain,
+
+            'jangka_waktu_pembiayaan' => $request->jangka_waktu_pembiayaan,
+
+            'tempatkerja_kelokasi_bank' => $request->tempatkerja_kelokasi_bank,
+            'tempatkerja_kelokasi_agunan' => $request->tempatkerja_kelokasi_agunan,
+            'pembayaran_kolektif' => $request->pembayaran_kolektif,
+            'pembayaran_nonkolektif' => $request->pembayaran_nonkolektif,
+        ]);
+
+        MurabahahLimacCapacity::where('kode_pengajuan', $kode_pengajuan)->update($dataUpdate);
 
         $score = 0;
         $scoreCapacity = [

@@ -5,7 +5,7 @@ namespace App\Models\Multiguna\Limac;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MultigunaLimacCollateral extends Model
+class MultigunaLimacCollateralSk extends Model
 {
     use HasFactory;
 

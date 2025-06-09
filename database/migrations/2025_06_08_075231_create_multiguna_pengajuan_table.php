@@ -22,7 +22,9 @@ return new class extends Migration
             $table->integer('total_character')->default(0);
             $table->integer('total_capacity')->default(0);
             $table->integer('total_capital')->default(0);
-            $table->integer('total_collateral')->default(0);
+            $table->integer('total_collateralsk')->default(0);
+            $table->integer('total_collateralproperti')->default(0);
+            $table->integer('total_collateralbermotor')->default(0);
             $table->integer('total_condition')->default(0);
 
             $table->string('keputusan', 50)->nullable();

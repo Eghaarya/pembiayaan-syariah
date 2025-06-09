@@ -22,7 +22,7 @@
                                             <th rowspan="2" class="align-middle p-2">Kode Pengajuan</th>
                                             <th rowspan="2" class="align-middle p-2">Kode Nasabah</th>
                                             <th rowspan="2" class="align-middle p-2">Nama Nasabah</th>
-                                            <th colspan="2" class="align-middle p-2">Scooring Collateral
+                                            <th colspan="2" class="align-middle p-2">Scooring Collateral SK
                                             </th>
                                         </tr>
                                         <tr class="text-center border border-dark">
@@ -33,16 +33,16 @@
                                     </thead>
 
                                     <tbody>
-                                        @forelse ($multiguna_limac_collateral as $index => $item)
+                                        @forelse ($multiguna_limac_collateralsk as $index => $item)
                                             <tr>
                                                 <td class="text-center align-middle text-wrap p-2">
-                                                    <a href="{{ route('multiguna.limac.collateral.edit', $item->kode_pengajuan) }}"
+                                                    <a href="{{ route('multiguna.limac.collateralsk.edit', $item->kode_pengajuan) }}"
                                                         class="text-warning" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 </td>
                                                 <td class="text-center align-middle text-wrap p-2">
-                                                    {{ $multiguna_limac_collateral->firstItem() + $index }}</td>
+                                                    {{ $multiguna_limac_collateralsk->firstItem() + $index }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_pengajuan }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_nasabah }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->nama_nasabah }}</td>
@@ -64,7 +64,7 @@
 
                             {{-- Pagination --}}
                             <div class="d-flex justify-content-start mt-3">
-                                {{ $multiguna_limac_collateral->links() }}
+                                {{ $multiguna_limac_collateralsk->links() }}
                             </div>
                         </div>
 

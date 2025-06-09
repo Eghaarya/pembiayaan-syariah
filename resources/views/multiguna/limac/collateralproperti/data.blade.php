@@ -1,0 +1,143 @@
+@extends('layouts.app')
+
+@section('content')
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="card card-social">
+                    <div class="card-block border-bottom">
+                        <div class="row">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h6 class="m-0">
+                                    {{ ucwords(str_replace('_', ' ', explode('.', Route::currentRouteName())[2] ?? '')) }}
+                                </h6>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-sm">
+                                    <thead>
+                                        <tr class="text-center">
+                                            <th rowspan="2" class="align-middle p-2">Aksi</th>
+                                            <th rowspan="2" class="align-middle p-2">No</th>
+                                            <th rowspan="2" class="align-middle p-2">Kode Pengajuan</th>
+                                            <th rowspan="2" class="align-middle p-2">Kode Nasabah</th>
+                                            <th rowspan="2" class="align-middle p-2">Nama Nasabah</th>
+                                            <th colspan="15" class="align-middle p-2">Legalitas Obyek/ Agunan Pembiayaan
+                                            <th colspan="13" class="align-middle p-2">Marketabilitas Agunan
+                                            </th>
+                                        </tr>
+                                        <tr class="text-center border border-dark">
+                                            <th class="bg-white text-info">Jenis Sertifikat Hak</th>
+                                            <th class="bg-white text-secondary">Nomor Sertifikat</th>
+                                            <th class="bg-white text-secondary">Tanggal Penerbitan</th>
+                                            <th class="bg-white text-secondary">Instansi yang Menerbitkan</th>
+                                            <th class="bg-white text-secondary">Nama Pemegang Hak</th>
+                                            <th class="bg-white text-secondary">Lama & Tgl Akhir Hak Berlalu</th>
+                                            <th class="bg-white text-secondary">Surat Ukur Nomor</th>
+                                            <th class="bg-white text-secondary">Tanggal Ukur</th>
+                                            <th class="bg-white text-secondary">Asal Agunan</th>
+                                            <th class="bg-white text-secondary">Luas Agunan</th>
+                                            <th class="bg-white text-secondary">Letak Agunan</th>
+                                            <th class="bg-white text-secondary">Batas Utara Agunan</th>
+                                            <th class="bg-white text-secondary">Batas Timur Agunan</th>
+                                            <th class="bg-white text-secondary">Batas Selatan Agunan</th>
+                                            <th class="bg-white text-secondary">Batas Barat Agunan</th>
+
+                                            <th class="bg-white text-info">Lokasi Perumahan</th>
+                                            <th class="bg-white text-info">Kenyamanan</th>
+                                            <th class="bg-white text-info">Lokasi Agunan</th>
+                                            <th class="bg-white text-info">Jarak Fasum Fasos</th>
+                                            <th class="bg-white text-info">Fasilitas Perumahan</th>
+                                            <th class="bg-white text-info">Jeni Jalan Lingkungan</th>
+                                            <th class="bg-white text-info">Jarak ke Jalan Provinsi</th>
+                                            <th class="bg-white text-info">Jenis dan Kondisi Jalan</th>
+                                            <th class="bg-white text-info">Kondisi Jalan ke Kota</th>
+                                            <th class="bg-white text-info">Resiko Bencana Hidup</th>
+                                            <th class="bg-white text-info">Kontribusi Pemohon DP</th>
+                                            <th class="bg-white text-info">Pertumbuhan Agunan</th>
+                                            <th class="bg-white text-info">Kondisi Wilayah Agunan</th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                        @forelse ($multiguna_limac_collateralproperti as $index => $item)
+                                            <tr>
+                                                <td class="text-center align-middle text-wrap p-2">
+                                                    <a href="{{ route('multiguna.limac.collateralproperti.edit', $item->kode_pengajuan) }}"
+                                                        class="text-warning" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center align-middle text-wrap p-2">
+                                                    {{ $multiguna_limac_collateralproperti->firstItem() + $index }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->kode_pengajuan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->kode_nasabah }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->nama_nasabah }}</td>
+
+                                                <td class="align-middle text-wrap p-2">{{ $item->jenis_sertifikat_hak }}
+                                                </td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->nomor_sertifikat }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->tanggal_penerbitan }}</td>
+                                                <td class="align-middle text-wrap p-2">
+                                                    {{ $item->instansi_yang_menerbitkan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->nama_pemegang_hak }}</td>
+                                                <td class="align-middle text-wrap p-2">
+                                                    {{ $item->lama_tgl_akhir_hak_berlaku }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->surat_ukur_nomor }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->tanggal_ukur }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->asal_agunan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->luas_agunan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->letak_agunan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->batas_utara_agunan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->batas_timur_agunan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->batas_selatan_agunan }}
+                                                </td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->batas_barat_agunan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->lokasi_perumahan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->kenyamanan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->lokasi_agunan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->jarak_fasum_fasos }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->fasilitas_perumahan }}
+                                                </td>
+
+                                                <td class="align-middle text-wrap p-2">{{ $item->jenis_jalan_lingkungan }}
+                                                </td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->jarak_ke_jalan_provinsi }}
+                                                </td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->jenis_dan_kondisi_jalan }}
+                                                </td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->kondisi_jalan_ke_kota }}
+                                                </td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->resiko_bencana_hidup }}
+                                                </td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->kontribusi_pemohon_dp }}
+                                                </td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->pertumbuhan_agunan }}</td>
+                                                <td class="align-middle text-wrap p-2">{{ $item->kondisi_wilayah_agunan }}
+                                                </td>
+
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="134" class="text-start">Data tidak ditemukan.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {{-- Pagination --}}
+                            <div class="d-flex justify-content-start mt-3">
+                                {{ $multiguna_limac_collateralproperti->links() }}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+@endsection

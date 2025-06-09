@@ -119,10 +119,20 @@ Route::middleware('auth')->group(function () {
                 Route::get('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'editCapital'])->name('edit');
                 Route::put('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'updateCapital'])->name('update');
             });
-            Route::prefix('collateral')->name('collateral.')->group(function () {
-                Route::get('/data', [MultigunaLimacController::class, 'indexLimacCollateral'])->name('data');
-                Route::get('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'editCollateral'])->name('edit');
-                Route::put('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'updateCollateral'])->name('update');
+            Route::prefix('collateralsk')->name('collateralsk.')->group(function () {
+                Route::get('/data', [MultigunaLimacController::class, 'indexLimacCollateralsk'])->name('data');
+                Route::get('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'editCollateralSk'])->name('edit');
+                Route::put('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'updateCollateralSk'])->name('update');
+            });
+            Route::prefix('collateralproperti')->name('collateralproperti.')->group(function () {
+                Route::get('/data', [MultigunaLimacController::class, 'indexLimacCollateralProperti'])->name('data');
+                Route::get('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'editCollateralProperti'])->name('edit');
+                Route::put('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'updateCollateralProperti'])->name('update');
+            });
+            Route::prefix('collateralbermotor')->name('collateralbermotor.')->group(function () {
+                Route::get('/data', [MultigunaLimacController::class, 'indexLimacCollateralBermotor'])->name('data');
+                Route::get('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'editCollateralBermotor'])->name('edit');
+                Route::put('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'updateCollateralBermotor'])->name('update');
             });
             Route::prefix('condition')->name('condition.')->group(function () {
                 Route::get('/data', [MultigunaLimacController::class, 'indexLimacCondition'])->name('data');

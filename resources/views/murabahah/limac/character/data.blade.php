@@ -55,14 +55,14 @@
 
                                     <tbody>
                                         @forelse ($murabahah_limac_character as $index => $item)
-                                            <tr>
-                                                <td class="text-center align-middle text-wrap p-2">
+                                            <tr class="text-center">
+                                                <td class="align-middle text-wrap p-2">
                                                     <a href="{{ route('murabahah.limac.character.edit', $item->kode_pengajuan) }}"
                                                         class="text-warning" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                 </td>
-                                                <td class="text-center align-middle text-wrap p-2">
+                                                <td class="align-middle text-wrap p-2">
                                                     {{ $murabahah_limac_character->firstItem() + $index }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_pengajuan }}</td>
                                                 <td class="align-middle text-wrap p-2">{{ $item->kode_nasabah }}</td>

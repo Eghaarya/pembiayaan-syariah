@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('multiguna_limac_collaterals', function (Blueprint $table) {
+        Schema::create('multiguna_limac_collateral_sks', function (Blueprint $table) {
             $table->id();
             $table->string('kode_pengajuan')->unique();
             $table->string('kode_nasabah');
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('multiguna_limac_collaterals');
+        Schema::dropIfExists('multiguna_limac_collateral_sks');
     }
 };
