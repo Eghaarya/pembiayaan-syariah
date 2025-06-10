@@ -34,7 +34,7 @@
 
                                     <tbody>
                                         @forelse ($multiguna_limac_collateralsk as $index => $item)
-                                            <tr>
+                                            <tr class="text-center">
                                                 <td class="text-center align-middle text-wrap p-2">
                                                     <a href="{{ route('multiguna.limac.collateralsk.edit', $item->kode_pengajuan) }}"
                                                         class="text-warning" title="Edit">

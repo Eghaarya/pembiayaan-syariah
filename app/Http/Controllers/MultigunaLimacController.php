@@ -273,20 +273,77 @@ class MultigunaLimacController extends Controller
             }
         }
 
-        MultigunaLimacCapacity::where('kode_pengajuan', $kode_pengajuan)
-            ->update([
-                'memiliki_jabatan_rangkap' => $request->memiliki_jabatan_rangkap,
-                'publik_figur' => $request->publik_figur,
-                'pemegang_jabatan_tertinggi' => $request->pemegang_jabatan_tertinggi,
-                'bukan_pemegang_jabatan_tertinggi' => $request->bukan_pemegang_jabatan_tertinggi,
-                'non_jabatan' => $request->non_jabatan,
+        $dataUpdate = [
+            'memiliki_jabatan_rangkap' => $request->memiliki_jabatan_rangkap,
+            'publik_figur' => $request->publik_figur,
+            'pemegang_jabatan_tertinggi' => $request->pemegang_jabatan_tertinggi,
+            'bukan_pemegang_jabatan_tertinggi' => $request->bukan_pemegang_jabatan_tertinggi,
+            'non_jabatan' => $request->non_jabatan,
 
-                'mendapat_rumah_dinas' => $request->mendapat_rumah_dinas,
-                'mendapat_mobil_dinas' => $request->mendapat_mobil_dinas,
-                'mendapat_sepeda_motor_dinas' => $request->mendapat_sepeda_motor_dinas,
-                'mendapat_fasilitas_pinjaman_uang' => $request->mendapat_fasilitas_pinjaman_uang,
-                'belum_mendapat_fasilitas_dinas' => $request->belum_mendapat_fasilitas_dinas,
-            ]);
+            'mendapat_rumah_dinas' => $request->mendapat_rumah_dinas,
+            'mendapat_mobil_dinas' => $request->mendapat_mobil_dinas,
+            'mendapat_sepeda_motor_dinas' => $request->mendapat_sepeda_motor_dinas,
+            'mendapat_fasilitas_pinjaman_uang' => $request->mendapat_fasilitas_pinjaman_uang,
+            'belum_mendapat_fasilitas_dinas' => $request->belum_mendapat_fasilitas_dinas,
+
+            'nama_bank_nasabah' => $request->nama_bank_nasabah,
+            'no_bank_account_nasabah' => $request->no_bank_account_nasabah,
+            'nama_bank_pasangan' => $request->nama_bank_pasangan,
+            'no_bank_account_pasangan' => $request->no_bank_account_pasangan,
+        ];
+
+        for ($i = 1; $i <= 3; $i++) {
+            // perincian rekening tabungan
+            $dataUpdate["tanggal_nasabah_bulan_{$i}"] = $request->input("tanggal_nasabah_bulan_{$i}");
+            $dataUpdate["saldo_awal_nasabah_bulan_{$i}"] = $request->input("saldo_awal_nasabah_bulan_{$i}");
+            $dataUpdate["total_debet_nasabah_bulan_{$i}"] = $request->input("total_debet_nasabah_bulan_{$i}");
+            $dataUpdate["total_kredit_nasabah_bulan_{$i}"] = $request->input("total_kredit_nasabah_bulan_{$i}");
+            $dataUpdate["saldo_akhir_nasabah_bulan_{$i}"] = $request->input("saldo_akhir_nasabah_bulan_{$i}");
+
+            $dataUpdate["tanggal_pasangan_bulan_{$i}"] = $request->input("tanggal_pasangan_bulan_{$i}");
+            $dataUpdate["saldo_awal_pasangan_bulan_{$i}"] = $request->input("saldo_awal_pasangan_bulan_{$i}");
+            $dataUpdate["total_debet_pasangan_bulan_{$i}"] = $request->input("total_debet_pasangan_bulan_{$i}");
+            $dataUpdate["total_kredit_pasangan_bulan_{$i}"] = $request->input("total_kredit_pasangan_bulan_{$i}");
+            $dataUpdate["saldo_akhir_pasangan_bulan_{$i}"] = $request->input("saldo_akhir_pasangan_bulan_{$i}");
+
+            // Kondisi keuangan
+            $dataUpdate["jenis_pinjaman_nasabah_{$i}"] = $request->input("jenis_pinjaman_nasabah_{$i}");
+            $dataUpdate["limit_nasabah_{$i}"] = $request->input("limit_nasabah_{$i}");
+            $dataUpdate["jangka_waktu_nasabah_{$i}"] = $request->input("jangka_waktu_nasabah_{$i}");
+            $dataUpdate["sisa_hutang_nasabah_{$i}"] = $request->input("sisa_hutang_nasabah_{$i}");
+            $dataUpdate["kreditur_nasabah_{$i}"] = $request->input("kreditur_nasabah_{$i}");
+            $dataUpdate["agunan_nasabah_{$i}"] = $request->input("agunan_nasabah_{$i}");
+
+            $dataUpdate["jenis_pinjaman_pasangan_{$i}"] = $request->input("jenis_pinjaman_pasangan_{$i}");
+            $dataUpdate["limit_pasangan_{$i}"] = $request->input("limit_pasangan_{$i}");
+            $dataUpdate["jangka_waktu_pasangan_{$i}"] = $request->input("jangka_waktu_pasangan_{$i}");
+            $dataUpdate["sisa_hutang_pasangan_{$i}"] = $request->input("sisa_hutang_pasangan_{$i}");
+            $dataUpdate["kreditur_pasangan_{$i}"] = $request->input("kreditur_pasangan_{$i}");
+            $dataUpdate["agunan_pasangan_{$i}"] = $request->input("agunan_pasangan_{$i}");
+        }
+
+        $dataUpdate = array_merge($dataUpdate, [
+            'gaji_pokok' => $request->gaji_pokok,
+            'tunjangan_penghasilan' => $request->tunjangan_penghasilan,
+            'tunjangan_kesejahteraan' => $request->tunjangan_kesejahteraan,
+            'tunjangan_struktural' => $request->tunjangan_struktural,
+            'tunjangan_fungsional' => $request->tunjangan_fungsional,
+            'tunjangan_suami_istri' => $request->tunjangan_suami_istri,
+            'tunjangan_anak' => $request->tunjangan_anak,
+            'tunjangan_beras' => $request->tunjangan_beras,
+            'tunjangan_lain_lain' => $request->tunjangan_lain_lain,
+            'tunjangan_pengobatan' => $request->tunjangan_pengobatan,
+            'penerimaan_lain_lain' => $request->penerimaan_lain_lain,
+            'simpanan_wajib' => $request->simpanan_wajib,
+            'iuran_koperasi' => $request->iuran_koperasi,
+            'iuran_bpjs' => $request->iuran_bpjs,
+            'potongan_lain_lain' => $request->potongan_lain_lain,
+            'pajak_penghasilan_pph21' => $request->pajak_penghasilan_pph21,
+            'angsuran_pinjaman_lain' => $request->angsuran_pinjaman_lain,
+
+        ]);
+
+        MultigunaLimacCapacity::where('kode_pengajuan', $kode_pengajuan)->update($dataUpdate);
 
         $scoreCapacity = [
             'memiliki_jabatan_rangkap',
@@ -410,16 +467,45 @@ class MultigunaLimacController extends Controller
         }
 
         // Update data di MultigunaLimacCapital
+        $dataUpdate = [];
+
+        for ($i = 1; $i <= 3; $i++) {
+            $dataUpdate['aktiva_lancar_keterangan_' . $i] = $request->input('aktiva_lancar_keterangan_' . $i);
+            $dataUpdate['aktiva_lancar_nilai_' . $i] = $request->input('aktiva_lancar_nilai_' . $i);
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            $dataUpdate['tanah_lokasi_' . $i] = $request->input('tanah_lokasi_' . $i);
+            $dataUpdate['tanah_luas_tanah_bangunan_' . $i] = $request->input('tanah_luas_tanah_bangunan_' . $i);
+            $dataUpdate['tanah_status_' . $i] = $request->input('tanah_status_' . $i);
+            $dataUpdate['tanah_atas_nama_' . $i] = $request->input('tanah_atas_nama_' . $i);
+            $dataUpdate['tanah_nilai_' . $i] = $request->input('tanah_nilai_' . $i);
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            $dataUpdate['kendaraan_jenis_merek_' . $i] = $request->input('kendaraan_jenis_merek_' . $i);
+            $dataUpdate['kendaraan_tahun_pembuatan_' . $i] = $request->input('kendaraan_tahun_pembuatan_' . $i);
+            $dataUpdate['kendaraan_atas_nama_' . $i] = $request->input('kendaraan_atas_nama_' . $i);
+            $dataUpdate['kendaraan_nilai_' . $i] = $request->input('kendaraan_nilai_' . $i);
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            $dataUpdate['lain_jenis_' . $i] = $request->input('lain_jenis_' . $i);
+            $dataUpdate['lain_lokasi_' . $i] = $request->input('lain_lokasi_' . $i);
+            $dataUpdate['lain_atas_nama_' . $i] = $request->input('lain_atas_nama_' . $i);
+            $dataUpdate['lain_nilai_' . $i] = $request->input('lain_nilai_' . $i);
+        }
+
+        $dataUpdate['jenis_akad'] = $request->jenis_akad;
+        $dataUpdate['jenis_pembiayaan'] = $request->jenis_pembiayaan;
+        $dataUpdate['tujuan_penggunaan'] = $request->tujuan_penggunaan;
+        $dataUpdate['harga_beli_bank'] = $request->harga_beli_bank;
+        $dataUpdate['jangka_waktu_pembiayaan'] = $request->jangka_waktu_pembiayaan;
+        $dataUpdate['margin_bank'] = $request->margin_bank;
+        $dataUpdate['besarnya_urbun'] = $request->besarnya_urbun;
+
         MultigunaLimacCapital::where('kode_pengajuan', $kode_pengajuan)
-            ->update([
-                'jenis_akad' => $request->jenis_akad,
-                'jenis_pembiayaan' => $request->jenis_pembiayaan,
-                'tujuan_penggunaan' => $request->tujuan_penggunaan,
-                'harga_beli_bank' => $request->harga_beli_bank,
-                'jangka_waktu_pembiayaan' => $request->jangka_waktu_pembiayaan,
-                'margin_bank' => $request->margin_bank,
-                'besarnya_urbun' => $request->besarnya_urbun,
-            ]);
+            ->update($dataUpdate);
 
         $score = 0;
         $score += (int) (preg_match('/\((\d+)\)/', $request->besarnya_urbun, $m) ? $m[1] : 0);
@@ -631,6 +717,37 @@ class MultigunaLimacController extends Controller
                 'batas_timur_agunan'         => $request->batas_timur_agunan,
                 'batas_selatan_agunan'       => $request->batas_selatan_agunan,
                 'batas_barat_agunan'         => $request->batas_barat_agunan,
+
+                'aksesibilitas_lokasi_agunan' => $request->aksesibilitas_lokasi_agunan,
+                'keterangan_lingkungan_agunan_tanah' => $request->keterangan_lingkungan_agunan_tanah,
+                'keterangan_lingkungan_agunan_kawasan' => $request->keterangan_lingkungan_agunan_kawasan,
+                'penggunaan_agunan_saat_ini' => $request->penggunaan_agunan_saat_ini,
+                'harga_sewa_per_tahun' => $request->harga_sewa_per_tahun,
+                'agunan_punya_akses_jalan_besar' => $request->agunan_punya_akses_jalan_besar,
+                'agunan_aktiva_warisan_belum_dibagi' => $request->agunan_aktiva_warisan_belum_dibagi,
+
+                'memiliki_imb' => $request->memiliki_imb,
+                'tahun_pembuatan_bangunan' => $request->tahun_pembuatan_bangunan,
+                'perkiraan_biaya_pembangunan' => $request->perkiraan_biaya_pembangunan,
+                'keterangan_konstruksi_bangunan' => $request->keterangan_konstruksi_bangunan,
+                'luas_efektif' => $request->luas_efektif,
+                'jumlah_lantai' => $request->jumlah_lantai,
+                'pondasi' => $request->pondasi,
+                'lantai' => $request->lantai,
+                'konstruksi' => $request->konstruksi,
+                'dinding' => $request->dinding,
+                'dinding_pemisah' => $request->dinding_pemisah,
+                'kusen' => $request->kusen,
+                'pintu' => $request->pintu,
+                'jendela_ventilasi' => $request->jendela_ventilasi,
+                'plafond' => $request->plafond,
+                'konstruksi_atap' => $request->konstruksi_atap,
+                'penutup_atap' => $request->penutup_atap,
+                'instalasi_air' => $request->instalasi_air,
+                'instalasi_listrik' => $request->instalasi_listrik,
+                'perawatan' => $request->perawatan,
+                'kondisi_sarana_dan_emplasemen' => $request->kondisi_sarana_dan_emplasemen,
+                'informasi_lain_kondisi_bangunan' => $request->informasi_lain_kondisi_bangunan,
 
                 'lokasi_perumahan'           => $request->lokasi_perumahan,
                 'kenyamanan'                 => $request->kenyamanan,

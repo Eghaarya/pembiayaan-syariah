@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- [ Main Content ] start -->
+    <!-- [ Main Content ] -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
             <div class="pcoded-content">
@@ -194,7 +194,127 @@
                                             <div class="row g-3 mb-3">
 
                                                 <div class="col-md-6 mt-2">
+                                                    <label>Aksesibilitas Lokasi Agunan</label>
+                                                    @php
+                                                        $opsiAksesibilitas = ['mudah', 'cukup', 'sulit'];
+                                                    @endphp
+                                                    <select name="aksesibilitas_lokasi_agunan" class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiAksesibilitas as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('aksesibilitas_lokasi_agunan', $pengajuan->aksesibilitas_lokasi_agunan) == $opsi ? 'selected' : '' }}>
+                                                                {{ ucfirst($opsi) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Keterangan Mengenai Keadaan Lingkungan Agunan (tanah)</label>
+                                                    @php
+                                                        $opsiLingkunganTanah = [
+                                                            'darat',
+                                                            'sawah',
+                                                            'rawa-rawa',
+                                                            'pesisir pantai',
+                                                        ];
+                                                    @endphp
+                                                    <select name="keterangan_lingkungan_agunan_tanah"
+                                                        class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiLingkunganTanah as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('keterangan_lingkungan_agunan_tanah', $pengajuan->keterangan_lingkungan_agunan_tanah) == $opsi ? 'selected' : '' }}>
+                                                                {{ ucfirst($opsi) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Keterangan Mengenai Keadaan Lingkungan Agunan (Terletak di
+                                                        Kawasan)</label>
+                                                    @php
+                                                        $opsiLingkunganKawasan = ['pemukiman', 'niaga', 'pertanian'];
+                                                    @endphp
+                                                    <select name="keterangan_lingkungan_agunan_kawasan"
+                                                        class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiLingkunganKawasan as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('keterangan_lingkungan_agunan_kawasan', $pengajuan->keterangan_lingkungan_agunan_kawasan) == $opsi ? 'selected' : '' }}>
+                                                                {{ ucfirst($opsi) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Penggunaan Agunan Saat Ini</label>
+                                                    @php
+                                                        $opsiPenggunaanAgunan = [
+                                                            'rumah tempat tinggal',
+                                                            'Kosong',
+                                                            'Disewakan',
+                                                        ];
+                                                    @endphp
+                                                    <select name="penggunaan_agunan_saat_ini" class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiPenggunaanAgunan as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('penggunaan_agunan_saat_ini', $pengajuan->penggunaan_agunan_saat_ini) == $opsi ? 'selected' : '' }}>
+                                                                {{ ucfirst($opsi) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Harga Sewanya per Tahun <span
+                                                            class="text-warning font-italic">(jika
+                                                            disewakan)</span></label>
+                                                    <input type="number" name="harga_sewa_per_tahun"
+                                                        class="form-control"
+                                                        value="{{ old('harga_sewa_per_tahun', $pengajuan->harga_sewa_per_tahun) }}">
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Apakah Agunan Mempunyai Jalan Keluar ke Jalan Besar</label>
+                                                    @php
+                                                        $opsiAksesJalan = [
+                                                            'di tepi jalan besar, akses keluar masuk mudah dan jalan cukup lebar',
+                                                            'cukup dekat',
+                                                            'jauh',
+                                                        ];
+                                                    @endphp
+                                                    <select name="agunan_punya_akses_jalan_besar" class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiAksesJalan as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('agunan_punya_akses_jalan_besar', $pengajuan->agunan_punya_akses_jalan_besar) == $opsi ? 'selected' : '' }}>
+                                                                {{ ucfirst($opsi) }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Apakah Agunan Termasuk Aktiva Warisan yang Belum Dibagi</label>
+                                                    @php
+                                                        $opsiWarisan = ['Tidak', 'Ya'];
+                                                    @endphp
+                                                    <select name="agunan_aktiva_warisan_belum_dibagi"
+                                                        class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiWarisan as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('agunan_aktiva_warisan_belum_dibagi', $pengajuan->agunan_aktiva_warisan_belum_dibagi) == $opsi ? 'selected' : '' }}>
+                                                                {{ $opsi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="nav-3" role="tabpanel"
@@ -203,7 +323,128 @@
 
                                             <div class="row g-3 mb-3">
                                                 <div class="col-md-6 mt-2">
+                                                    <label>IMB (Izin Mendirikan Bangunan)</label>
+                                                    <input type="text" name="memiliki_imb" class="form-control"
+                                                        value="{{ old('memiliki_imb', $pengajuan->memiliki_imb) }}">
                                                 </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Tahun Pembuatan Bangunan</label>
+                                                    <input type="text" name="tahun_pembuatan_bangunan"
+                                                        class="form-control"
+                                                        value="{{ old('tahun_pembuatan_bangunan', $pengajuan->tahun_pembuatan_bangunan) }}">
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Perkiraan Biaya Pembangunan pada Tahun Tersebut (Rp.)</label>
+                                                    <input type="number" name="perkiraan_biaya_pembangunan"
+                                                        class="form-control"
+                                                        value="{{ old('perkiraan_biaya_pembangunan', $pengajuan->perkiraan_biaya_pembangunan) }}">
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Keterangan Konstruksi Bangunan</label>
+                                                    @php
+                                                        $opsiKonstruksiBangunan = [
+                                                            'Ada Bangunan',
+                                                            'Tidak ada bangunan',
+                                                        ];
+                                                    @endphp
+                                                    <select name="keterangan_konstruksi_bangunan" class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiKonstruksiBangunan as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('keterangan_konstruksi_bangunan', $pengajuan->keterangan_konstruksi_bangunan) == $opsi ? 'selected' : '' }}>
+                                                                {{ $opsi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+
+                                                @php
+                                                    $fields = [
+                                                        'luas_efektif',
+                                                        'jumlah_lantai',
+                                                        'pondasi',
+                                                        'lantai',
+                                                        'konstruksi',
+                                                        'dinding',
+                                                        'dinding_pemisah',
+                                                        'kusen',
+                                                        'pintu',
+                                                        'jendela_ventilasi',
+                                                        'plafond',
+                                                        'konstruksi_atap',
+                                                        'penutup_atap',
+                                                        'instalasi_air',
+                                                        'instalasi_listrik',
+                                                    ];
+                                                    $labels = [
+                                                        'Luas Efektif (m²)',
+                                                        'Jumlah Lantai',
+                                                        'Pondasi',
+                                                        'Lantai',
+                                                        'Konstruksi',
+                                                        'Dinding',
+                                                        'Dinding Pemisah',
+                                                        'Kusen',
+                                                        'Pintu',
+                                                        'Jendela/Ventilasi',
+                                                        'Plafond',
+                                                        'Konstruksi Atap',
+                                                        'Penutup Atap',
+                                                        'Instalasi Air',
+                                                        'Instalasi Listrik',
+                                                    ];
+                                                @endphp
+
+                                                @foreach ($fields as $index => $field)
+                                                    <div class="col-md-3 mt-2">
+                                                        <label>{{ $labels[$index] }}</label>
+                                                        <input type="text" name="{{ $field }}"
+                                                            class="form-control"
+                                                            value="{{ old($field, $pengajuan->$field) }}">
+                                                    </div>
+                                                @endforeach
+
+                                                <div class="col-md-3 mt-2">
+                                                    <label>Perawatan</label>
+                                                    @php
+                                                        $opsiPerawatan = ['Baik', 'Cukup', 'Kurang'];
+                                                    @endphp
+                                                    <select name="perawatan" class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiPerawatan as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('perawatan', $pengajuan->perawatan) == $opsi ? 'selected' : '' }}>
+                                                                {{ $opsi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Kondisi Sarana dan Emplasemen</label>
+                                                    @php
+                                                        $opsiKondisi = ['Baik', 'Cukup', 'Kurang'];
+                                                    @endphp
+                                                    <select name="kondisi_sarana_dan_emplasemen" class="form-control">
+                                                        <option value="">--</option>
+                                                        @foreach ($opsiKondisi as $opsi)
+                                                            <option value="{{ $opsi }}"
+                                                                {{ old('kondisi_sarana_dan_emplasemen', $pengajuan->kondisi_sarana_dan_emplasemen) == $opsi ? 'selected' : '' }}>
+                                                                {{ $opsi }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-6 mt-2">
+                                                    <label>Informasi Lain tentang Kondisi Bangunan di Atas Agunan</label>
+                                                    <textarea name="informasi_lain_kondisi_bangunan" class="form-control" maxlength="50" rows="2">{{ old('informasi_lain_kondisi_bangunan', $pengajuan->informasi_lain_kondisi_bangunan) }}</textarea>
+                                                </div>
+
                                             </div>
 
                                         </div>
@@ -351,5 +592,5 @@
             </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->
+    <!-- [ Main Content ] -->
 @endsection

@@ -645,7 +645,7 @@
                                             </div>
                                             <div class="row g-3 mb-3">
                                                 <div class="col-6">Angsuran Per Bulan <span
-                                                        class="font-italic text-danger">(diambil
+                                                        class="font-italic text-warning">(diambil
                                                         angsuran terkecil
                                                         pada maksimal angsuran)</span></div>
                                                 <div class="col-6 text-left font-weight-bold" id="angsuranPerBulan">Rp.

@@ -8,6 +8,8 @@ use App\Http\Controllers\MultigunaLimacController;
 use App\Http\Controllers\MurabahahLimacController;
 use App\Http\Controllers\MultigunaPengajuanController;
 use App\Http\Controllers\MurabahahPengajuanController;
+use App\Http\Controllers\MultigunaDokumentasiController;
+use App\Http\Controllers\MurabahahDokumentasiController;
 
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
@@ -22,22 +24,32 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
 
     // data nasabah
-    Route::prefix('nasabah/profil')->name('nasabah.profil.')->group(function () {
-        Route::get('/data', [NasabahController::class, 'indexNasabahProfil'])->name('data');
-        Route::get('/tambah', [NasabahController::class, 'createNasabahProfil'])->name('tambah');
-        Route::post('/tambah', [NasabahController::class, 'storeNasabahProfil'])->name('store');
-        Route::get('/edit/{kode_nasabah}', [NasabahController::class, 'editNasabahProfil'])->name('edit');
-        Route::put('/edit/{kode_nasabah}', [NasabahController::class, 'updateNasabahProfil'])->name('update');
-        Route::delete('/hapus/{kode_nasabah}', [NasabahController::class, 'destroyNasabahProfil'])->name('hapus');
+    Route::prefix('nasabah')->name('nasabah.')->group(function () {
+
+        // Profil Nasabah
+        Route::prefix('profil')->name('profil.')->group(function () {
+            Route::get('/data', [NasabahController::class, 'indexNasabahProfil'])->name('data');
+            Route::get('/tambah', [NasabahController::class, 'createNasabahProfil'])->name('tambah');
+            Route::post('/tambah', [NasabahController::class, 'storeNasabahProfil'])->name('store');
+            Route::get('/edit/{kode_nasabah}', [NasabahController::class, 'editNasabahProfil'])->name('edit');
+            Route::put('/edit/{kode_nasabah}', [NasabahController::class, 'updateNasabahProfil'])->name('update');
+            Route::delete('/hapus/{kode_nasabah}', [NasabahController::class, 'destroyNasabahProfil'])->name('hapus');
+        });
+
+        // Pekerjaan Nasabah
+        Route::prefix('pekerjaan')->name('pekerjaan.')->group(function () {
+            Route::get('/data', [NasabahController::class, 'indexNasabahPekerjaan'])->name('data');
+            Route::get('/edit/{kode_nasabah}', [NasabahController::class, 'editNasabahPekerjaan'])->name('edit');
+            Route::put('/edit/{kode_nasabah}', [NasabahController::class, 'updateNasabahPekerjaan'])->name('update');
+        });
+
+        // Dokumen Nasabah
+        Route::prefix('dokumentasi')->name('dokumentasi.')->group(function () {
+            Route::get('/data', [NasabahController::class, 'indexNasabahDokumentasi'])->name('data');
+            Route::get('/upload/{kode_nasabah}', [NasabahController::class, 'uploadNasabahDokumentasi'])->name('upload');
+            Route::put('/upload/{kode_nasabah}', [NasabahController::class, 'updateNasabahDokumentasi'])->name('update');
+        });
     });
-
-    Route::prefix('nasabah/pekerjaan')->name('nasabah.pekerjaan.')->group(function () {
-        Route::get('/data', [NasabahController::class, 'indexNasabahPekerjaan'])->name('data');
-        Route::get('/edit/{kode_nasabah}', [NasabahController::class, 'editNasabahPekerjaan'])->name('edit');
-        Route::put('/edit/{kode_nasabah}', [NasabahController::class, 'updateNasabahPekerjaan'])->name('update');
-    });
-
-
 
     // 1. pembiayaan murabahah
     Route::prefix('murabahah')->name('murabahah.')->group(function () {
@@ -85,6 +97,13 @@ Route::middleware('auth')->group(function () {
                 Route::get('/edit/{kode_pengajuan}', [MurabahahLimacController::class, 'editCondition'])->name('edit');
                 Route::put('/edit/{kode_pengajuan}', [MurabahahLimacController::class, 'updateCondition'])->name('update');
             });
+        });
+
+        // Dokumen Murabahah
+        Route::prefix('dokumentasi')->name('dokumentasi.')->group(function () {
+            Route::get('/data', [MurabahahDokumentasiController::class, 'indexDokumentasi'])->name('data');
+            Route::get('/upload/{kode_nasabah}', [MurabahahDokumentasiController::class, 'uploadDokumentasi'])->name('upload');
+            Route::put('/upload/{kode_nasabah}', [MurabahahDokumentasiController::class, 'updateDokumentasi'])->name('update');
         });
     });
 
@@ -139,6 +158,13 @@ Route::middleware('auth')->group(function () {
                 Route::get('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'editCondition'])->name('edit');
                 Route::put('/edit/{kode_pengajuan}', [MultigunaLimacController::class, 'updateCondition'])->name('update');
             });
+        });
+
+        // Dokumen Multiguna
+        Route::prefix('dokumentasi')->name('dokumentasi.')->group(function () {
+            Route::get('/data', [MultigunaDokumentasiController::class, 'indexDokumentasi'])->name('data');
+            Route::get('/upload/{kode_nasabah}', [MultigunaDokumentasiController::class, 'uploadDokumentasi'])->name('upload');
+            Route::put('/upload/{kode_nasabah}', [MultigunaDokumentasiController::class, 'updateDokumentasi'])->name('update');
         });
     });
 

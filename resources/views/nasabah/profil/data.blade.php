@@ -77,7 +77,7 @@
                                     </thead>
                                     <tbody>
                                         @forelse ($nasabah_profil as $index => $nasabah)
-                                            <tr>
+                                            <tr class="text-center">
                                                 <td class="align-middle text-center p-1">
                                                     <a href="{{ route('nasabah.profil.edit', $nasabah->kode_nasabah) }}"
                                                         class="btn btn-sm btn-link text-warning p-1">

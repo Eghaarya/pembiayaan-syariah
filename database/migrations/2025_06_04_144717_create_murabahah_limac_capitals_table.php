@@ -17,6 +17,33 @@ return new class extends Migration
             $table->string('kode_nasabah');
             $table->string('nama_nasabah', 100)->nullable();
 
+            for ($i = 1; $i <= 3; $i++) {
+                $table->string("aktiva_lancar_keterangan_$i")->nullable();
+                $table->decimal("aktiva_lancar_nilai_$i", 20, 2)->nullable();
+            }
+
+            for ($i = 1; $i <= 3; $i++) {
+                $table->string("tanah_lokasi_$i")->nullable();
+                $table->string("tanah_luas_tanah_bangunan_$i")->nullable();
+                $table->string("tanah_status_$i")->nullable();
+                $table->string("tanah_atas_nama_$i")->nullable();
+                $table->decimal("tanah_nilai_$i", 20, 2)->nullable();
+            }
+
+            for ($i = 1; $i <= 3; $i++) {
+                $table->string("kendaraan_jenis_merek_$i")->nullable();
+                $table->string("kendaraan_tahun_pembuatan_$i")->nullable();
+                $table->string("kendaraan_atas_nama_$i")->nullable();
+                $table->decimal("kendaraan_nilai_$i", 20, 2)->nullable();
+            }
+
+            for ($i = 1; $i <= 3; $i++) {
+                $table->string("lain_jenis_$i")->nullable();
+                $table->string("lain_lokasi_$i")->nullable();
+                $table->string("lain_atas_nama_$i")->nullable();
+                $table->decimal("lain_nilai_$i", 20, 2)->nullable();
+            }
+
             $table->string('jenis_akad', 100)->nullable();
             $table->string('jenis_pembiayaan', 100)->nullable();
             $table->string('tujuan_penggunaan', 100)->nullable();

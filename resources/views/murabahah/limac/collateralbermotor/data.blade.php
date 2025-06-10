@@ -47,7 +47,7 @@
 
                                     <tbody>
                                         @forelse ($murabahah_limac_collateralbermotor as $index => $item)
-                                            <tr>
+                                            <tr class="text-center">
                                                 <td class="text-center align-middle text-wrap p-2">
                                                     <a href="{{ route('murabahah.limac.collateralbermotor.edit', $item->kode_pengajuan) }}"
                                                         class="text-warning" title="Edit">

@@ -33,6 +33,37 @@ return new class extends Migration
             $table->string('batas_selatan_agunan', 100)->nullable();
             $table->string('batas_barat_agunan', 100)->nullable();
 
+            $table->string('aksesibilitas_lokasi_agunan', 50)->nullable();
+            $table->string('keterangan_lingkungan_agunan_tanah', 50)->nullable();
+            $table->string('keterangan_lingkungan_agunan_kawasan', 50)->nullable();
+            $table->string('penggunaan_agunan_saat_ini', 50)->nullable();
+            $table->decimal('harga_sewa_per_tahun', 15, 2)->nullable();
+            $table->string('agunan_punya_akses_jalan_besar', 50)->nullable();
+            $table->string('agunan_aktiva_warisan_belum_dibagi', 50)->nullable();
+
+            $table->string('memiliki_imb', 50)->nullable();
+            $table->string('tahun_pembuatan_bangunan', 50)->nullable();
+            $table->decimal('perkiraan_biaya_pembangunan', 15, 2)->nullable();
+            $table->string('keterangan_konstruksi_bangunan', 50)->nullable();
+            $table->string('luas_efektif', 50)->nullable();
+            $table->string('jumlah_lantai', 50)->nullable();
+            $table->string('pondasi', 50)->nullable();
+            $table->string('lantai', 50)->nullable();
+            $table->string('konstruksi', 50)->nullable();
+            $table->string('dinding', 50)->nullable();
+            $table->string('dinding_pemisah', 50)->nullable();
+            $table->string('kusen', 50)->nullable();
+            $table->string('pintu', 50)->nullable();
+            $table->string('jendela_ventilasi', 50)->nullable();
+            $table->string('plafond', 50)->nullable();
+            $table->string('konstruksi_atap', 50)->nullable();
+            $table->string('penutup_atap', 50)->nullable();
+            $table->string('instalasi_air', 50)->nullable();
+            $table->string('instalasi_listrik', 50)->nullable();
+            $table->string('perawatan', 50)->nullable();
+            $table->string('kondisi_sarana_dan_emplasemen', 50)->nullable();
+            $table->string('informasi_lain_kondisi_bangunan', 100)->nullable();
+
             $table->string('lokasi_perumahan', 100)->nullable();
             $table->string('kenyamanan', 100)->nullable();
             $table->string('lokasi_agunan', 100)->nullable();

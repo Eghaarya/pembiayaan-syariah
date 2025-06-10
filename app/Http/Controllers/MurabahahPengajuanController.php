@@ -12,6 +12,7 @@ use App\Models\Murabahah\Limac\MurabahahLimacCapacity;
 use App\Models\Murabahah\Pengajuan\MurabahahPengajuan;
 use App\Models\Murabahah\Limac\MurabahahLimacCharacter;
 use App\Models\Murabahah\Limac\MurabahahLimacCondition;
+use App\Models\Murabahah\Dokumentasi\MurabahahDokumentasi;
 use App\Models\Murabahah\Limac\MurabahahLimacCollateralKpr;
 use App\Models\Murabahah\Limac\MurabahahLimacCollateralBermotor;
 
@@ -142,6 +143,15 @@ class MurabahahPengajuanController extends Controller
             ]);
 
             MurabahahLimacCondition::create([
+                'kode_pengajuan' => $kodePengajuan,
+                'kode_nasabah'   => $kodeNasabah,
+                'nama_nasabah'   => $namaNasabah,
+
+                'username'       => $user->username,
+                'kode_tempat'    => $user->kode_tempat,
+            ]);
+
+            MurabahahDokumentasi::create([
                 'kode_pengajuan' => $kodePengajuan,
                 'kode_nasabah'   => $kodeNasabah,
                 'nama_nasabah'   => $namaNasabah,

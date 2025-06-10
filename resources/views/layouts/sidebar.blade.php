@@ -13,7 +13,7 @@
 
                 {{-- Data Nasabah --}}
                 <li
-                    class="nav-item pcoded-hasmenu {{ Route::is('nasabah.profil.*') || Route::is('nasabah.pekerjaan.*') ? 'active pcoded-trigger' : '' }}">
+                    class="nav-item pcoded-hasmenu {{ Route::is('nasabah.profil.*') || Route::is('nasabah.pekerjaan.*') || Route::is('nasabah.dokumentasi.*') ? 'active pcoded-trigger' : '' }}">
                     <a href="#!" class="nav-link">
                         <span class="pcoded-micon"><i class="feather icon-user"></i></span>
                         <span class="pcoded-mtext">Data Nasabah</span>
@@ -31,6 +31,12 @@
                                 <span class="pcoded-mtext">Pekerjaan Nasabah</span>
                             </a>
                         </li>
+                        <li class="nav-item {{ Route::is('nasabah.dokumentasi.*') ? 'active' : '' }}">
+                            <a href="{{ route('nasabah.dokumentasi.data') }}"
+                                class="nav-link {{ Route::is('nasabah.dokumentasi.*') ? 'active' : '' }}">
+                                <span class="pcoded-mtext">Dokumentasi</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
@@ -41,7 +47,7 @@
 
                 {{-- (1). Pengajuan Murabahah --}}
                 <li
-                    class="nav-item pcoded-hasmenu {{ Route::is('murabahah.pengajuan.*') || Route::is('murabahah.limac.*') ? 'active pcoded-trigger' : '' }}">
+                    class="nav-item pcoded-hasmenu {{ Route::is('murabahah.pengajuan.*') || Route::is('murabahah.limac.*') || Route::is('murabahah.dokumentasi.*') ? 'active pcoded-trigger' : '' }}">
                     <a href="#!" class="nav-link">
                         <span class="pcoded-micon"><i class="feather icon-credit-card"></i></span>
                         <span class="pcoded-mtext">(1). Murabahah</span>
@@ -96,12 +102,18 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item {{ Route::is('murabahah.dokumentasi.*') ? 'active' : '' }}">
+                            <a href="{{ route('murabahah.dokumentasi.data') }}"
+                                class="nav-link {{ Route::is('murabahah.dokumentasi.*') ? 'active' : '' }}">
+                                <span class="pcoded-mtext">Dokumentasi</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 
                 {{-- (2). Pengajuan Multiguna --}}
                 <li
-                    class="nav-item pcoded-hasmenu {{ Route::is('multiguna.pengajuan.*') || Route::is('multiguna.limac.*') ? 'active pcoded-trigger' : '' }}">
+                    class="nav-item pcoded-hasmenu {{ Route::is('multiguna.pengajuan.*') || Route::is('multiguna.limac.*') || Route::is('multiguna.dokumentasi.*') ? 'active pcoded-trigger' : '' }}">
                     <a href="#!" class="nav-link">
                         <span class="pcoded-micon"><i class="feather icon-credit-card"></i></span>
                         <span class="pcoded-mtext">(2). Multiguna</span>
@@ -134,7 +146,8 @@
                                         <span class="pcoded-mtext">Capital</span>
                                     </a>
                                 </li>
-                                <li class="nav-item {{ Route::is('multiguna.limac.collateralsk.*') ? 'active' : '' }}">
+                                <li
+                                    class="nav-item {{ Route::is('multiguna.limac.collateralsk.*') ? 'active' : '' }}">
                                     <a href="{{ route('multiguna.limac.collateralsk.data') }}"
                                         class="nav-link {{ Route::is('multiguna.limac.collateralsk.*') ? 'active' : '' }}">
                                         <span class="pcoded-mtext">Collateral SK</span>
@@ -161,6 +174,12 @@
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="nav-item {{ Route::is('multiguna.dokumentasi.*') ? 'active' : '' }}">
+                            <a href="{{ route('multiguna.dokumentasi.data') }}"
+                                class="nav-link {{ Route::is('multiguna.dokumentasi.*') ? 'active' : '' }}">
+                                <span class="pcoded-mtext">Dokumentasi</span>
+                            </a>
                         </li>
                     </ul>
                 </li>

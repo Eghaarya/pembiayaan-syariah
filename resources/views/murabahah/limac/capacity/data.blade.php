@@ -25,8 +25,8 @@
                                             <th class="align-middle p-2" rowspan="3">Nama Nasabah</th>
                                             <th class="align-middle p-2" colspan="34">Perincian Tabungan</th>
                                             <th class="align-middle p-2" colspan="60">Kondisi Keuangan</th>
-                                            <th class="align-middle p-2" rowspan="2">Nilai Pembiayaan</th>
                                             <th class="align-middle p-2" rowspan="2" colspan="5">Kemauan Membayar</th>
+                                            <th class="align-middle p-2" rowspan="2">Nilai Pembiayaan</th>
                                         </tr>
                                         <tr class="text-center">
                                             <th class="align-middle bg-white p-2" rowspan="2">Nama</th>
@@ -41,6 +41,7 @@
                                             <th class="align-middle bg-white p-2" colspan="5">Rekening Pasangan Bulan
                                                 ke-2</th>
                                             <th class="align-middle p-2" colspan="5">Rekening Pasangan Bulan ke-3</th>
+
                                             <th class="align-middle bg-white p-2" colspan="6">Hutang/ Pinjaman Nasabah
                                                 ke-1</th>
                                             <th class="align-middle p-2" colspan="6">Hutang/ Pinjaman Nasabah ke-2</th>
@@ -116,7 +117,6 @@
                                             <th class="align-middle bg-white p-2">Pengeluaran Lain</th>
                                             <th class="align-middle bg-white p-2">Keterangan</th>
 
-                                            <th class="align-middle bg-white p-2">Janga Waktu Pembiayaan</th>
                                             <th class="align-middle bg-white text-info p-2">Tempat Kerja ke
                                                 Lokasi
                                                 Bank</th>
@@ -128,9 +128,7 @@
                                             <th class="align-middle bg-white text-info p-2">Pembayaran
                                                 Non-Kolektif
                                             </th>
-                                        </tr>
-                                        <tr>
-
+                                            <th class="align-middle bg-white p-2">Jangka Waktu Pembiayaan</th>
                                         </tr>
                                     </thead>
                                     <tbody>

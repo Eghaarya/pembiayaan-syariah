@@ -28,7 +28,187 @@
                                     <div class="tab-content p-3" id="nav-tabContent">
                                         <div class="tab-pane fade show active" id="nav-1" role="tabpanel"
                                             aria-labelledby="nav-1-tab">
-                                            <h6 class="border-bottom pb-2">Data Aset/ Kekayaan</h6>
+
+                                            <h6 class="border-bottom pb-2">Aktiva Lancar</h6>
+
+                                            <div class="row g-3 mb-3 p-1">
+                                                <div class="table-responsive mb-4">
+                                                    <table class="table table-bordered">
+                                                        <thead class="thead-light">
+                                                            <tr class="text-center">
+                                                                <th class="p-1 bg-white text-center">Keterangan</th>
+                                                                <th class="p-1 bg-white text-center">Nilai (Rp.)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @for ($i = 1; $i <= 3; $i++)
+                                                                <tr>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="aktiva_lancar_keterangan_{{ $i }}"
+                                                                            class="form-control align-middle text-center"
+                                                                            value="{{ old('aktiva_lancar_keterangan_' . $i, $pengajuan->{'aktiva_lancar_keterangan_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="number"
+                                                                            name="aktiva_lancar_nilai_{{ $i }}"
+                                                                            class="form-control align-middle text-center"
+                                                                            value="{{ old('aktiva_lancar_nilai_' . $i, $pengajuan->{'aktiva_lancar_nilai_' . $i}) }}">
+                                                                    </td>
+                                                                </tr>
+                                                            @endfor
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <h6 class="border-bottom pb-2">Tanah dan Bangunan</h6>
+
+                                            <div class="row g-3 mb-3 p-1">
+                                                <div class="table-responsive mb-4">
+                                                    <table class="table table-bordered">
+                                                        <thead class="thead-light">
+                                                            <tr class="text-center">
+                                                                <th class="p-1 bg-white text-center">Lokasi</th>
+                                                                <th class="p-1 bg-white text-center">Luas T/B</th>
+                                                                <th class="p-1 bg-white text-center">Status</th>
+                                                                <th class="p-1 bg-white text-center">Atas Nama</th>
+                                                                <th class="p-1 bg-white text-center">Nilai (Rp.)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @for ($i = 1; $i <= 3; $i++)
+                                                                <tr>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="tanah_lokasi_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('tanah_lokasi_' . $i, $pengajuan->{'tanah_lokasi_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="tanah_luas_tanah_bangunan_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('tanah_luas_tanah_bangunan_' . $i, $pengajuan->{'tanah_luas_tanah_bangunan_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="tanah_status_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('tanah_status_' . $i, $pengajuan->{'tanah_status_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="tanah_atas_nama_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('tanah_atas_nama_' . $i, $pengajuan->{'tanah_atas_nama_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="number"
+                                                                            name="tanah_nilai_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('tanah_nilai_' . $i, $pengajuan->{'tanah_nilai_' . $i}) }}">
+                                                                    </td>
+                                                                </tr>
+                                                            @endfor
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <h6 class="border-bottom pb-2">Kendaraan</h6>
+
+                                            <div class="row g-3 mb-3 p-1">
+                                                <div class="table-responsive mb-4">
+                                                    <table class="table table-bordered">
+                                                        <thead class="thead-light">
+                                                            <tr class="text-center">
+                                                                <th class="p-1 bg-white">Jenis/Merek</th>
+                                                                <th class="p-1 bg-white">Tahun Pembuatan</th>
+                                                                <th class="p-1 bg-white">Atas Nama</th>
+                                                                <th class="p-1 bg-white">Nilai (Rp.)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @for ($i = 1; $i <= 3; $i++)
+                                                                <tr>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="kendaraan_jenis_merek_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('kendaraan_jenis_merek_' . $i, $pengajuan->{'kendaraan_jenis_merek_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="kendaraan_tahun_pembuatan_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('kendaraan_tahun_pembuatan_' . $i, $pengajuan->{'kendaraan_tahun_pembuatan_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="kendaraan_atas_nama_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('kendaraan_atas_nama_' . $i, $pengajuan->{'kendaraan_atas_nama_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="number"
+                                                                            name="kendaraan_nilai_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('kendaraan_nilai_' . $i, $pengajuan->{'kendaraan_nilai_' . $i}) }}">
+                                                                    </td>
+                                                                </tr>
+                                                            @endfor
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                            <h6 class="border-bottom pb-2">Lain - lain (Emas,Saham, Obligasi, dll)</h6>
+
+                                            <div class="row g-3 mb-3 p-1">
+                                                <div class="table-responsive mb-4">
+                                                    <table class="table table-bordered">
+                                                        <thead class="thead-light">
+                                                            <tr class="text-center">
+                                                                <th class="p-1 bg-white">Jenis</th>
+                                                                <th class="p-1 bg-white">Lokasi</th>
+                                                                <th class="p-1 bg-white">Atas Nama</th>
+                                                                <th class="p-1 bg-white">Nilai (Rp.)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @for ($i = 1; $i <= 3; $i++)
+                                                                <tr>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="lain_jenis_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('lain_jenis_' . $i, $pengajuan->{'lain_jenis_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="lain_lokasi_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('lain_lokasi_' . $i, $pengajuan->{'lain_lokasi_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="text"
+                                                                            name="lain_atas_nama_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('lain_atas_nama_' . $i, $pengajuan->{'lain_atas_nama_' . $i}) }}">
+                                                                    </td>
+                                                                    <td class="p-1">
+                                                                        <input type="number"
+                                                                            name="lain_nilai_{{ $i }}"
+                                                                            class="form-control text-center"
+                                                                            value="{{ old('lain_nilai_' . $i, $pengajuan->{'lain_nilai_' . $i}) }}">
+                                                                    </td>
+                                                                </tr>
+                                                            @endfor
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
 
                                             <div class="d-flex gap-2 justify-content-start mt-3" id="nav-tab"
                                                 role="tablist">
@@ -105,14 +285,15 @@
                                                         for="jangka_waktu_pembiayaan">
                                                         Jangka Waktu Pembiayaan (tahun)
                                                     </label>
-                                                    <input type="number" class="form-control" id="jangka_waktu_pembiayaan"
-                                                        name="jangka_waktu_pembiayaan"
+                                                    <input type="number" class="form-control"
+                                                        id="jangka_waktu_pembiayaan" name="jangka_waktu_pembiayaan"
                                                         value="{{ old('jangka_waktu_pembiayaan', $pengajuan->jangka_waktu_pembiayaan ?? '') }}">
                                                 </div>
 
                                                 <!-- Output bulan -->
                                                 <div class="col-md-3 mt-2">
-                                                    <label class="form-label fw-bold text-dark">Jangka Waktu (bulan)</label>
+                                                    <label class="form-label fw-bold text-dark">Jangka Waktu
+                                                        (bulan)</label>
                                                     <div id="jangka_waktu_bulan" class="mt-1">—</div>
                                                 </div>
 

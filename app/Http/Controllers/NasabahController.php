@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Nasabah\NasabahProfil;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Nasabah\NasabahPekerjaan;
-use App\Models\Multiguna\Limac\MultigunaLimacCharacter;
+use App\Models\Nasabah\NasabahDokumentasi;
 
 class NasabahController extends Controller
 {
@@ -111,6 +113,13 @@ class NasabahController extends Controller
                 'kode_tempat'  => $user->kode_tempat,
             ]);
 
+            NasabahDokumentasi::create([
+                'kode_nasabah' => $kodeNasabah,
+                'nama_nasabah' => $request->nama_nasabah,
+                'username'     => $user->username,
+                'kode_tempat'  => $user->kode_tempat,
+            ]);
+
             return redirect()->route('nasabah.profil.data')->with('success', '✅ Data nasabah berhasil ditambahkan.');
         } catch (QueryException $e) {
             // Redirect balik dengan pesan error
@@ -128,7 +137,7 @@ class NasabahController extends Controller
             ->first();
 
         if (!$nasabah_auth) {
-            abort(404, 'Data pengajuan tidak ditemukan.');
+            abort(404, 'Data nasabah tidak ditemukan.');
         }
 
         if ($user->tipe_akun === 'pengajar') {
@@ -155,12 +164,18 @@ class NasabahController extends Controller
                 ->where('kode_nasabah', $kode_nasabah)
                 ->first();
 
-            if (
-                ($nasabah_auth->username !== $user->username &&
-                    $nasabah_auth->kode_tempat !== $user->kode_tempat) &&
-                $user->tipe_akun !== 'admin'
-            ) {
-                abort(404);
+            if (!$nasabah_auth) {
+                abort(404, 'Data nasabah tidak ditemukan.');
+            }
+
+            if ($user->tipe_akun === 'pengajar') {
+                if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
+                    abort(404);
+                }
+            } elseif ($user->tipe_akun === 'siswa') {
+                if ($nasabah_auth->username !== $user->username) {
+                    abort(404);
+                }
             }
 
             $nasabah_profil = NasabahProfil::where('kode_nasabah', $kode_nasabah)->firstOrFail();
@@ -228,7 +243,7 @@ class NasabahController extends Controller
             ->first();
 
         if (!$nasabah_auth) {
-            abort(404, 'Data pengajuan tidak ditemukan.');
+            abort(404, 'Data nasabah tidak ditemukan.');
         }
 
         if ($user->tipe_akun === 'pengajar') {
@@ -278,7 +293,7 @@ class NasabahController extends Controller
             ->first();
 
         if (!$nasabah_auth) {
-            abort(404, 'Data pengajuan tidak ditemukan.');
+            abort(404, 'Data nasabah tidak ditemukan.');
         }
 
         if ($user->tipe_akun === 'pengajar') {
@@ -305,12 +320,18 @@ class NasabahController extends Controller
                 ->where('kode_nasabah', $kode_nasabah)
                 ->first();
 
-            if (
-                ($nasabah_auth->username !== $user->username &&
-                    $nasabah_auth->kode_tempat !== $user->kode_tempat) &&
-                $user->tipe_akun !== 'admin'
-            ) {
-                abort(404);
+            if (!$nasabah_auth) {
+                abort(404, 'Data nasabah tidak ditemukan.');
+            }
+
+            if ($user->tipe_akun === 'pengajar') {
+                if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
+                    abort(404);
+                }
+            } elseif ($user->tipe_akun === 'siswa') {
+                if ($nasabah_auth->username !== $user->username) {
+                    abort(404);
+                }
             }
 
             $nasabah_pekerjaan = NasabahPekerjaan::where('kode_nasabah', $kode_nasabah)->firstOrFail();
@@ -395,7 +416,123 @@ class NasabahController extends Controller
             return redirect()->route('nasabah.pekerjaan.data')->with('success', '✅ Data nasabah berhasil diperbarui.');
         } catch (QueryException $e) {
             // Redirect balik dengan pesan error
-            return redirect()->route('nasabah.pekerjaan.data')->with('error', $e . '❌ Gagal menyimpan perubahan. Silakan coba lagi.');
+            return redirect()->route('nasabah.pekerjaan.data')->with('error', '❌ Gagal menyimpan perubahan. Silakan coba lagi.');
+        }
+    }
+
+    // 3. Dokumentasi Nasabah
+    public function indexNasabahDokumentasi()
+    {
+        $user = Auth::user();
+
+        if ($user->tipe_akun == 'siswa') {
+            $nasabah_dokumentasi = NasabahDokumentasi::where('username', $user->username)
+                ->where('kode_tempat', $user->kode_tempat)
+                ->paginate(5);
+        } elseif ($user->tipe_akun == 'pengajar') {
+            $nasabah_dokumentasi = NasabahDokumentasi::where('kode_tempat', $user->kode_tempat)
+                ->paginate(5);
+        } elseif ($user->tipe_akun == 'admin') {
+            $nasabah_dokumentasi = NasabahDokumentasi::paginate(5);
+        } else {
+            $nasabah_dokumentasi = collect();
+        }
+
+        return view('nasabah.dokumentasi.data', compact('nasabah_dokumentasi'));
+    }
+
+    public function uploadNasabahDokumentasi($kode_nasabah)
+    {
+        // autentikasi
+        $user = Auth::user();
+
+        $nasabah_auth = NasabahProfil::select('username', 'kode_tempat')
+            ->where('kode_nasabah', $kode_nasabah)
+            ->first();
+
+        if (!$nasabah_auth) {
+            abort(404, 'Data nasabah tidak ditemukan.');
+        }
+
+        if ($user->tipe_akun === 'pengajar') {
+            if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
+                abort(404);
+            }
+        } elseif ($user->tipe_akun === 'siswa') {
+            if ($nasabah_auth->username !== $user->username) {
+                abort(404);
+            }
+        }
+
+        $nasabah_dokumentasi = NasabahDokumentasi::where('kode_nasabah', $kode_nasabah)->firstOrFail();
+        return view('nasabah.dokumentasi.ubah', compact('nasabah_dokumentasi'));
+    }
+
+    public function updateNasabahDokumentasi(Request $request, $kode_nasabah)
+    {
+        try {
+            // autentikasi
+            $user = Auth::user();
+
+            $nasabah_auth = NasabahProfil::select('username', 'kode_tempat')
+                ->where('kode_nasabah', $kode_nasabah)
+                ->first();
+
+            if (!$nasabah_auth) {
+                abort(404, 'Data nasabah tidak ditemukan.');
+            }
+
+            if ($user->tipe_akun === 'pengajar') {
+                if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
+                    abort(404);
+                }
+            } elseif ($user->tipe_akun === 'siswa') {
+                if ($nasabah_auth->username !== $user->username) {
+                    abort(404);
+                }
+            }
+
+            $nasabah_dokumentasi = NasabahDokumentasi::where('kode_nasabah', $kode_nasabah)->firstOrFail();
+            $rules = [
+                'foto_nasabah'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'foto_identitas_nasabah'  => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'npwp_nasabah'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'foto_pasangan'           => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'foto_identitas_pasangan' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'npwp_pasangan'           => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ];
+
+            $request->validate($rules);
+            $imageFields = [
+                'foto_nasabah',
+                'foto_identitas_nasabah',
+                'npwp_nasabah',
+                'foto_pasangan',
+                'foto_identitas_pasangan',
+                'npwp_pasangan',
+            ];
+
+            foreach ($imageFields as $field) {
+                if ($request->hasFile($field)) {
+                    $file = $request->file($field);
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = time() . '_' . $field . '.' . $extension;
+
+                    // Hapus file lama jika ada
+                    if ($nasabah_dokumentasi->$field && Storage::disk('public')->exists('uploads/nasabah/' . $nasabah_dokumentasi->$field)) {
+                        Storage::disk('public')->delete('uploads/nasabah/' . $nasabah_dokumentasi->$field);
+                    }
+                    $file->storeAs('uploads/nasabah', $filename, 'public');
+                    $nasabah_dokumentasi->$field = $filename;
+                }
+            }
+
+            $nasabah_dokumentasi->save();
+
+            return redirect()->route('nasabah.dokumentasi.data')->with('success', '✅ Data nasabah berhasil diperbarui.');
+        } catch (QueryException $e) {
+            // Redirect balik dengan pesan error
+            return redirect()->route('nasabah.dokumentasi.data')->with('error', '❌ Gagal menyimpan perubahan. Silakan coba lagi.');
         }
     }
 }

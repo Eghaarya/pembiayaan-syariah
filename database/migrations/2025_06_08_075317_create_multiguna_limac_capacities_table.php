@@ -28,6 +28,60 @@ return new class extends Migration
             $table->string('mendapat_fasilitas_pinjaman_uang', 10)->nullable();
             $table->string('belum_mendapat_fasilitas_dinas', 10)->nullable();
 
+            $table->string('nama_bank_nasabah', 100)->nullable();
+            $table->string('no_bank_account_nasabah', 50)->nullable();
+            $table->string('nama_bank_pasangan', 100)->nullable();
+            $table->string('no_bank_account_pasangan', 50)->nullable();
+
+            for ($i = 1; $i <= 3; $i++) {
+                $table->date("tanggal_nasabah_bulan_{$i}")->nullable();
+                $table->decimal("saldo_awal_nasabah_bulan_{$i}", 18, 2)->nullable();
+                $table->decimal("total_debet_nasabah_bulan_{$i}", 18, 2)->nullable();
+                $table->decimal("total_kredit_nasabah_bulan_{$i}", 18, 2)->nullable();
+                $table->decimal("saldo_akhir_nasabah_bulan_{$i}", 18, 2)->nullable();
+
+                $table->date("tanggal_pasangan_bulan_{$i}")->nullable();
+                $table->decimal("saldo_awal_pasangan_bulan_{$i}", 18, 2)->nullable();
+                $table->decimal("total_debet_pasangan_bulan_{$i}", 18, 2)->nullable();
+                $table->decimal("total_kredit_pasangan_bulan_{$i}", 18, 2)->nullable();
+                $table->decimal("saldo_akhir_pasangan_bulan_{$i}", 18, 2)->nullable();
+            }
+
+            for ($i = 1; $i <= 3; $i++) {
+                $table->string("jenis_pinjaman_nasabah_{$i}", 100)->nullable();
+                $table->string("limit_nasabah_{$i}", 100)->nullable();
+                $table->string("jangka_waktu_nasabah_{$i}", 50)->nullable();
+                $table->decimal("sisa_hutang_nasabah_{$i}", 18, 2)->nullable();
+                $table->string("kreditur_nasabah_{$i}", 100)->nullable();
+                $table->string("agunan_nasabah_{$i}", 100)->nullable();
+
+                $table->string("jenis_pinjaman_pasangan_{$i}", 100)->nullable();
+                $table->string("limit_pasangan_{$i}", 100)->nullable();
+                $table->string("jangka_waktu_pasangan_{$i}", 50)->nullable();
+                $table->decimal("sisa_hutang_pasangan_{$i}", 18, 2)->nullable();
+                $table->string("kreditur_pasangan_{$i}", 100)->nullable();
+                $table->string("agunan_pasangan_{$i}", 100)->nullable();
+            }
+
+            $table->decimal('gaji_pokok', 15, 2)->nullable();
+            $table->decimal('tunjangan_penghasilan', 15, 2)->nullable();
+            $table->decimal('tunjangan_kesejahteraan', 15, 2)->nullable();
+            $table->decimal('tunjangan_struktural', 15, 2)->nullable();
+            $table->decimal('tunjangan_fungsional', 15, 2)->nullable();
+            $table->decimal('tunjangan_suami_istri', 15, 2)->nullable();
+            $table->decimal('tunjangan_anak', 15, 2)->nullable();
+            $table->decimal('tunjangan_beras', 15, 2)->nullable();
+            $table->decimal('tunjangan_lain_lain', 15, 2)->nullable();
+            $table->decimal('tunjangan_pengobatan', 15, 2)->nullable();
+            $table->decimal('penerimaan_lain_lain', 15, 2)->nullable();
+
+            $table->decimal('simpanan_wajib', 15, 2)->nullable();
+            $table->decimal('iuran_koperasi', 15, 2)->nullable();
+            $table->decimal('iuran_bpjs', 15, 2)->nullable();
+            $table->decimal('potongan_lain_lain', 15, 2)->nullable();
+            $table->decimal('pajak_penghasilan_pph21', 15, 2)->nullable();
+            $table->decimal('angsuran_pinjaman_lain', 15, 2)->nullable();
+
             $table->string('username')->nullable();
             $table->string('kode_tempat')->nullable();
             $table->timestamps();

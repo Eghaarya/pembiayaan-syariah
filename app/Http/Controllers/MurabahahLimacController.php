@@ -410,19 +410,47 @@ class MurabahahLimacController extends Controller
         }
 
         // Update data di MurabahahLimacCapital
-        MurabahahLimacCapital::where('kode_pengajuan', $kode_pengajuan)
-            ->update([
-                'jenis_akad' => $request->jenis_akad,
-                'jenis_pembiayaan' => $request->jenis_pembiayaan,
-                'tujuan_penggunaan' => $request->tujuan_penggunaan,
-                'harga_jual_barang' => $request->harga_jual_barang,
-                'urbun_uangmuka' => $request->urbun_uangmuka,
-                'harga_beli_bank' => $request->harga_beli_bank,
-                'jangka_waktu_pembiayaan' => $request->jangka_waktu_pembiayaan,
-                'margin_bank' => $request->margin_bank,
-                'besarnya_urbun' => $request->besarnya_urbun,
+        $dataUpdate = [];
 
-            ]);
+        for ($i = 1; $i <= 3; $i++) {
+            $dataUpdate['aktiva_lancar_keterangan_' . $i] = $request->input('aktiva_lancar_keterangan_' . $i);
+            $dataUpdate['aktiva_lancar_nilai_' . $i] = $request->input('aktiva_lancar_nilai_' . $i);
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            $dataUpdate['tanah_lokasi_' . $i] = $request->input('tanah_lokasi_' . $i);
+            $dataUpdate['tanah_luas_tanah_bangunan_' . $i] = $request->input('tanah_luas_tanah_bangunan_' . $i);
+            $dataUpdate['tanah_status_' . $i] = $request->input('tanah_status_' . $i);
+            $dataUpdate['tanah_atas_nama_' . $i] = $request->input('tanah_atas_nama_' . $i);
+            $dataUpdate['tanah_nilai_' . $i] = $request->input('tanah_nilai_' . $i);
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            $dataUpdate['kendaraan_jenis_merek_' . $i] = $request->input('kendaraan_jenis_merek_' . $i);
+            $dataUpdate['kendaraan_tahun_pembuatan_' . $i] = $request->input('kendaraan_tahun_pembuatan_' . $i);
+            $dataUpdate['kendaraan_atas_nama_' . $i] = $request->input('kendaraan_atas_nama_' . $i);
+            $dataUpdate['kendaraan_nilai_' . $i] = $request->input('kendaraan_nilai_' . $i);
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            $dataUpdate['lain_jenis_' . $i] = $request->input('lain_jenis_' . $i);
+            $dataUpdate['lain_lokasi_' . $i] = $request->input('lain_lokasi_' . $i);
+            $dataUpdate['lain_atas_nama_' . $i] = $request->input('lain_atas_nama_' . $i);
+            $dataUpdate['lain_nilai_' . $i] = $request->input('lain_nilai_' . $i);
+        }
+
+        $dataUpdate['jenis_akad'] = $request->jenis_akad;
+        $dataUpdate['jenis_pembiayaan'] = $request->jenis_pembiayaan;
+        $dataUpdate['tujuan_penggunaan'] = $request->tujuan_penggunaan;
+        $dataUpdate['harga_jual_barang'] = $request->harga_jual_barang;
+        $dataUpdate['urbun_uangmuka'] = $request->urbun_uangmuka;
+        $dataUpdate['harga_beli_bank'] = $request->harga_beli_bank;
+        $dataUpdate['jangka_waktu_pembiayaan'] = $request->jangka_waktu_pembiayaan;
+        $dataUpdate['margin_bank'] = $request->margin_bank;
+        $dataUpdate['besarnya_urbun'] = $request->besarnya_urbun;
+
+        MurabahahLimacCapital::where('kode_pengajuan', $kode_pengajuan)
+            ->update($dataUpdate);
 
         $score = 0;
         $score += (int) (preg_match('/\((\d+)\)/', $request->besarnya_urbun, $m) ? $m[1] : 0);
@@ -524,6 +552,37 @@ class MurabahahLimacController extends Controller
                 'batas_timur_agunan'         => $request->batas_timur_agunan,
                 'batas_selatan_agunan'       => $request->batas_selatan_agunan,
                 'batas_barat_agunan'         => $request->batas_barat_agunan,
+
+                'aksesibilitas_lokasi_agunan' => $request->aksesibilitas_lokasi_agunan,
+                'keterangan_lingkungan_agunan_tanah' => $request->keterangan_lingkungan_agunan_tanah,
+                'keterangan_lingkungan_agunan_kawasan' => $request->keterangan_lingkungan_agunan_kawasan,
+                'penggunaan_agunan_saat_ini' => $request->penggunaan_agunan_saat_ini,
+                'harga_sewa_per_tahun' => $request->harga_sewa_per_tahun,
+                'agunan_punya_akses_jalan_besar' => $request->agunan_punya_akses_jalan_besar,
+                'agunan_aktiva_warisan_belum_dibagi' => $request->agunan_aktiva_warisan_belum_dibagi,
+
+                'memiliki_imb' => $request->memiliki_imb,
+                'tahun_pembuatan_bangunan' => $request->tahun_pembuatan_bangunan,
+                'perkiraan_biaya_pembangunan' => $request->perkiraan_biaya_pembangunan,
+                'keterangan_konstruksi_bangunan' => $request->keterangan_konstruksi_bangunan,
+                'luas_efektif' => $request->luas_efektif,
+                'jumlah_lantai' => $request->jumlah_lantai,
+                'pondasi' => $request->pondasi,
+                'lantai' => $request->lantai,
+                'konstruksi' => $request->konstruksi,
+                'dinding' => $request->dinding,
+                'dinding_pemisah' => $request->dinding_pemisah,
+                'kusen' => $request->kusen,
+                'pintu' => $request->pintu,
+                'jendela_ventilasi' => $request->jendela_ventilasi,
+                'plafond' => $request->plafond,
+                'konstruksi_atap' => $request->konstruksi_atap,
+                'penutup_atap' => $request->penutup_atap,
+                'instalasi_air' => $request->instalasi_air,
+                'instalasi_listrik' => $request->instalasi_listrik,
+                'perawatan' => $request->perawatan,
+                'kondisi_sarana_dan_emplasemen' => $request->kondisi_sarana_dan_emplasemen,
+                'informasi_lain_kondisi_bangunan' => $request->informasi_lain_kondisi_bangunan,
 
                 'lokasi_perumahan'           => $request->lokasi_perumahan,
                 'kenyamanan'                 => $request->kenyamanan,

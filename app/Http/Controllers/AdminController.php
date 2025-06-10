@@ -37,17 +37,13 @@ class AdminController extends Controller
         $user = auth()->user();
 
         if ($user->tipe_akun == 'pengajar') {
-            // Pengajar hanya bisa pilih tipe akun siswa atau pengajar
             $tipe_akun_options = ['siswa', 'pengajar'];
-            // Kode tempat fixed sesuai pengajar yg login, readonly di form
             $kode_tempat = $user->kode_tempat;
-            $tempats = null; // Tidak perlu dropdown kode_tempat
+            $tempats = null;
         } elseif ($user->tipe_akun == 'admin') {
-            // Admin bisa pilih semua tipe akun
             $tipe_akun_options = ['siswa', 'pengajar', 'admin'];
-            // Ambil semua tempats untuk dropdown kode_tempat
             $tempats = \App\Models\Tempat::all();
-            $kode_tempat = null; // Tidak fixed, user pilih dari dropdown
+            $kode_tempat = null;
         } else {
             abort(403, 'Unauthorized');
         }
@@ -82,11 +78,11 @@ class AdminController extends Controller
             if ($akun->kode_tempat !== $user->kode_tempat) {
                 abort(403, 'Unauthorized');
             }
-            $tipe_akun_options = ['siswa', 'pengajar']; // pengajar hanya bisa ubah ke sini
+            $tipe_akun_options = ['siswa', 'pengajar'];
             $kode_tempat = $user->kode_tempat;
-            $tempats = null; // readonly input kode_tempat
+            $tempats = null;
         } elseif ($user->tipe_akun == 'admin') {
-            $tipe_akun_options = ['siswa', 'pengajar', 'admin']; // admin bisa pilih semua
+            $tipe_akun_options = ['siswa', 'pengajar', 'admin'];
             $tempats = \App\Models\Tempat::all();
             $kode_tempat = null;
         } else {
