@@ -15,7 +15,7 @@ class UserAdminSeeder extends Seeder
                 'username' => 'admin',
                 'password' => Hash::make('admin123'),  // password di-hash untuk keamanan
                 'tipe_akun' => 'admin',
-                'kode_tempat' => 'umsida',
+                'kode_tempat' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -23,7 +23,7 @@ class UserAdminSeeder extends Seeder
                 'username' => 'Diah',
                 'password' => Hash::make('Bismillah01'),  // password di-hash untuk keamanan
                 'tipe_akun' => 'admin',
-                'kode_tempat' => 'umsida',
+                'kode_tempat' => null,
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

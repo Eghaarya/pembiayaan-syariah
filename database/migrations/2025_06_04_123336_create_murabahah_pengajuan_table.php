@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('murabahah_pengajuan', function (Blueprint $table) {
             $table->id();
             $table->string('kode_pengajuan')->unique();
-            $table->string('kode_nasabah')->nullable();
-            $table->string('nama_nasabah', 100)->nullable();
+            $table->string('kode_nasabah');
+            $table->string('nama_nasabah', 100);
 
             $table->date('tanggal_pengajuan')->nullable();
 
@@ -37,10 +37,6 @@ return new class extends Migration
                 ->references('kode_nasabah')
                 ->on('nasabah_profil')
                 ->onDelete('cascade');
-            $table->foreign('nama_nasabah')
-                ->references('nama_nasabah')
-                ->on('nasabah_profil')
-                ->onUpdate('cascade');
         });
     }
 

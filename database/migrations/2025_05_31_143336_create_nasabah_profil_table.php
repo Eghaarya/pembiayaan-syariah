@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('kode_nasabah')->unique();
 
             // 1.1 Identitas nasabah
-            $table->string('nama_nasabah', 100)->unique();
+            $table->string('nama_nasabah', 100);
             $table->string('ttl_lahir_nasabah', 50)->nullable();
             $table->string('alamat_ktp_nasabah', 200)->nullable();
             $table->string('kota_ktp_nasabah', 50)->nullable();

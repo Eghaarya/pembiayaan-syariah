@@ -5,15 +5,15 @@
 
 <script>
     // Cari semua alert dengan class 'alert-animate'
-    // document.querySelectorAll('.alert-animate').forEach(alertBox => {
-    //     setTimeout(() => {
-    //         alertBox.classList.remove('alert-animate');
-    //         alertBox.classList.add('alert-hide');
-    //         setTimeout(() => {
-    //             alertBox.remove();
-    //         }, 400);
-    //     }, 3000);
-    // });
+    document.querySelectorAll('.alert-animate').forEach(alertBox => {
+        setTimeout(() => {
+            alertBox.classList.remove('alert-animate');
+            alertBox.classList.add('alert-hide');
+            setTimeout(() => {
+                alertBox.remove();
+            }, 400);
+        }, 3000);
+    });
 </script>
 
 

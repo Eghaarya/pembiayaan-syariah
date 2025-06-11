@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('nasabah_pekerjaan', function (Blueprint $table) {
             $table->id();
             $table->string('kode_nasabah')->unique();
-            $table->string('nama_nasabah', 100)->nullable();
+            $table->string('nama_nasabah', 100);
 
             // 1.1 Pekerjaan nasabah
             $table->string('nama_perusahaan_nasabah', 100)->nullable();
@@ -100,10 +100,6 @@ return new class extends Migration
                 ->references('kode_nasabah')
                 ->on('nasabah_profil')
                 ->onDelete('cascade');
-            $table->foreign('nama_nasabah')
-                ->references('nama_nasabah')
-                ->on('nasabah_profil')
-                ->onUpdate('cascade');
         });
     }
 

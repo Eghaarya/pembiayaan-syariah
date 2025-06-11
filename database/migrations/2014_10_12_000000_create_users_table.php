@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('tipe_akun')->default('siswa');
-            $table->string('kode_tempat');
+            $table->string('kode_tempat')->nullable();
 
             $table->foreign('kode_tempat')
                 ->references('kode_tempat')

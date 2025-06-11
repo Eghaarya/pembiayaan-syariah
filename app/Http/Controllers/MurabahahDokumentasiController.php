@@ -47,11 +47,11 @@ class MurabahahDokumentasiController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($murabahah_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($murabahah_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -75,11 +75,11 @@ class MurabahahDokumentasiController extends Controller
 
             if ($user->tipe_akun === 'pengajar') {
                 if ($murabahah_pengajuan->kode_tempat !== $user->kode_tempat) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             } elseif ($user->tipe_akun === 'siswa') {
                 if ($murabahah_pengajuan->username !== $user->username) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             }
 
@@ -137,7 +137,7 @@ class MurabahahDokumentasiController extends Controller
                 if ($request->hasFile($field)) {
                     $file = $request->file($field);
                     $extension = $file->getClientOriginalExtension();
-                    $filename = time() . '_' . $field . '.' . $extension;
+                    $filename = time() . '_' . $kode_pengajuan . '_' . $field . '.' . $extension;
 
                     // Hapus file lama jika ada
                     if ($murabahah_dokumentasi->$field && Storage::disk('public')->exists('uploads/murabahah/' . $murabahah_dokumentasi->$field)) {

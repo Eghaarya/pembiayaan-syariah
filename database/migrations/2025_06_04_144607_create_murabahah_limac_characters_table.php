@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_pengajuan')->unique();
             $table->string('kode_nasabah');
-            $table->string('nama_nasabah', 100)->nullable();
+            $table->string('nama_nasabah', 100);
 
             // 6 baris data checking untuk Nasabah
             for ($i = 1; $i <= 6; $i++) {
@@ -51,10 +51,6 @@ return new class extends Migration
                 ->references('kode_pengajuan')
                 ->on('murabahah_pengajuan')
                 ->onDelete('cascade');
-            $table->foreign('nama_nasabah')
-                ->references('nama_nasabah')
-                ->on('nasabah_profil')
-                ->onUpdate('cascade');
         });
     }
 

@@ -59,7 +59,7 @@
                                                     class="form-control" value="{{ $kode_tempat }}" readonly>
                                             </div>
                                         @else
-                                            <div class="col-md-6 mt-2">
+                                            <div class="col-md-6 mt-2" id="kode_tempat_container">
                                                 <label for="kode_tempat" class="form-label fw-bold text-dark">Kode Tempat
                                                     <span class="text-danger">*</span></label>
                                                 <select name="kode_tempat" id="kode_tempat"
@@ -99,4 +99,28 @@
         </div>
     </div>
     <!-- [ Main Content ] end -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipeAkunSelect = document.getElementById('tipe_akun');
+            const kodeTempatSelect = document.getElementById('kode_tempat');
+            const kodeTempatContainer = document.getElementById('kode_tempat_container');
+
+            function toggleKodeTempat() {
+                if (tipeAkunSelect.value === 'admin') {
+                    kodeTempatSelect.disabled = true;
+                    kodeTempatContainer.style.display = 'none';
+                } else {
+                    kodeTempatSelect.disabled = false;
+                    kodeTempatContainer.style.display = 'block';
+                }
+            }
+
+            // Jalankan saat load pertama (untuk old value)
+            toggleKodeTempat();
+
+            // Jalankan saat user mengubah tipe akun
+            tipeAkunSelect.addEventListener('change', toggleKodeTempat);
+        });
+    </script>
+
 @endsection

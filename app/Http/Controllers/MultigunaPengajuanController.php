@@ -172,7 +172,7 @@ class MultigunaPengajuanController extends Controller
 
             return redirect()->route('multiguna.pengajuan.data')->with('success', '✅ Data pengajuan berhasil ditambahkan.');
         } catch (QueryException $e) {
-            return redirect()->route('multiguna.pengajuan.data')->with('error', $kodePengajuan . '❌ Gagal menambahkan data pengajuan. Silakan coba lagi.');
+            return redirect()->route('multiguna.pengajuan.data')->with('error', '❌ Gagal menambahkan data pengajuan. Silakan coba lagi.');
         }
     }
 
@@ -191,11 +191,11 @@ class MultigunaPengajuanController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -220,11 +220,11 @@ class MultigunaPengajuanController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -242,7 +242,7 @@ class MultigunaPengajuanController extends Controller
 
             ]);
 
-            return redirect()->route('multiguna.pengajuan.data')->with('success', $request->tanggal_pencairan . '✅ Data pengajuan berhasil diperbarui.');
+            return redirect()->route('multiguna.pengajuan.data')->with('success', '✅ Data pengajuan berhasil diperbarui.');
         } catch (\Exception $e) {
             return redirect()->route('multiguna.pengajuan.data')->with('error', '❌ Gagal memperbarui data pengajuan.');
         }
@@ -263,11 +263,11 @@ class MultigunaPengajuanController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -292,11 +292,11 @@ class MultigunaPengajuanController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 

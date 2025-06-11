@@ -56,14 +56,14 @@ class AdminController extends Controller
         $request->validate([
             'username' => 'required|unique:users',
             'password' => 'required|min:3',
-            'kode_tempat' => 'required|exists:tempats,kode_tempat',
+            'kode_tempat' => 'nullable|exists:tempats,kode_tempat',
         ]);
 
         User::create([
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'kode_tempat' => $request->kode_tempat,
-            'tipe_akun' => 'siswa',
+            'kode_tempat' => $request->tipe_akun == 'admin' ? null : $request->kode_tempat,
+            'tipe_akun' => $request->tipe_akun,
         ]);
 
         return redirect()->route('admin.akun.data')->with('success', 'Akun berhasil ditambah.');
@@ -111,8 +111,8 @@ class AdminController extends Controller
         } elseif ($user->tipe_akun == 'admin') {
             $rules = [
                 'password' => 'nullable|min:3',
-                'kode_tempat' => 'required|exists:tempats,kode_tempat',
-                'tipe_akun' => 'required|in:siswa,pengajar,admin',
+                'kode_tempat' => 'nullable|exists:tempats,kode_tempat',
+                'tipe_akun' => 'nullable|in:siswa,pengajar,admin',
             ];
         } else {
             abort(403, 'Unauthorized');

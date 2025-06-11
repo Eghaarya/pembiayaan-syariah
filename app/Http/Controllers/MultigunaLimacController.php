@@ -55,11 +55,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -82,11 +82,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -238,11 +238,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -265,11 +265,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -431,11 +431,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -458,11 +458,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -555,11 +555,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -582,11 +582,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -665,11 +665,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -692,11 +692,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -834,11 +834,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -861,11 +861,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -948,11 +948,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -975,11 +975,11 @@ class MultigunaLimacController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 

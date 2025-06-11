@@ -18,15 +18,8 @@ class UserSiswaSeeder extends Seeder
                 'kode_tempat' => 'umsida',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'username' => 'siswa2',
-                'password' => Hash::make('123'),  // password di-hash untuk keamanan
-                'tipe_akun' => 'siswa',
-                'kode_tempat' => 'smk1',
-                'created_at' => now(),
-                'updated_at' => now(),
             ]
+
         ]);
     }
 }

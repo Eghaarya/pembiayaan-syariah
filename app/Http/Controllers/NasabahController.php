@@ -4,12 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Models\Nasabah\NasabahProfil;
 use Illuminate\Database\QueryException;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Nasabah\NasabahPekerjaan;
 use App\Models\Nasabah\NasabahDokumentasi;
+use App\Models\Multiguna\Limac\MultigunaLimacCapital;
+use App\Models\Murabahah\Limac\MurabahahLimacCapital;
+use App\Models\Multiguna\Limac\MultigunaLimacCapacity;
+use App\Models\Multiguna\Pengajuan\MultigunaPengajuan;
+use App\Models\Murabahah\Limac\MurabahahLimacCapacity;
+use App\Models\Murabahah\Pengajuan\MurabahahPengajuan;
+use App\Models\Multiguna\Limac\MultigunaLimacCharacter;
+use App\Models\Multiguna\Limac\MultigunaLimacCondition;
+use App\Models\Murabahah\Limac\MurabahahLimacCharacter;
+use App\Models\Murabahah\Limac\MurabahahLimacCondition;
+use App\Models\Multiguna\Dokumentasi\MultigunaDokumentasi;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralSk;
+use App\Models\Murabahah\Dokumentasi\MurabahahDokumentasi;
+use App\Models\Murabahah\Limac\MurabahahLimacCollateralKpr;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralBermotor;
+use App\Models\Multiguna\Limac\MultigunaLimacCollateralProperti;
+use App\Models\Murabahah\Limac\MurabahahLimacCollateralBermotor;
 
 class NasabahController extends Controller
 {
@@ -42,12 +59,23 @@ class NasabahController extends Controller
 
     public function storeNasabahProfil(Request $request)
     {
+
         $user = Auth::user();
+        $lastNasabah = NasabahProfil::where('username', $user->username)
+            ->orderBy('id', 'desc')
+            ->first();
 
-        $lastId = NasabahProfil::max('id');
-        $nextId = $lastId ? $lastId + 1 : 1;
+        if ($lastNasabah) {
+            $kode = $lastNasabah->kode_nasabah;
+            $parts = explode('_', $kode);
+            $lastNumber = intval(end($parts));
 
-        $kodeNasabah = $user->username . '_' . $nextId;
+            $nextNumber = $lastNumber + 1;
+        } else {
+            $nextNumber = 1;
+        }
+
+        $kodeNasabah = $user->username . '_' . $nextNumber;
 
         try {
             NasabahProfil::create([
@@ -123,7 +151,7 @@ class NasabahController extends Controller
             return redirect()->route('nasabah.profil.data')->with('success', '✅ Data nasabah berhasil ditambahkan.');
         } catch (QueryException $e) {
             // Redirect balik dengan pesan error
-            return redirect()->route('nasabah.profil.data')->with('error',  '❌ Gagal menambahkan data nasabah. Silakan coba lagi.');
+            return redirect()->route('nasabah.profil.data')->with('error',  $nextNumber . '❌ Gagal menambahkan data nasabah. Silakan coba lagi.');
         }
     }
 
@@ -142,11 +170,11 @@ class NasabahController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($nasabah_auth->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -170,11 +198,11 @@ class NasabahController extends Controller
 
             if ($user->tipe_akun === 'pengajar') {
                 if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             } elseif ($user->tipe_akun === 'siswa') {
                 if ($nasabah_auth->username !== $user->username) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             }
 
@@ -227,6 +255,42 @@ class NasabahController extends Controller
                 'mutasi_rekening_nasabah'      => $request->mutasi_rekening_nasabah,
             ]);
 
+            NasabahPekerjaan::where('kode_nasabah', $kode_nasabah)->update([
+                'nama_nasabah' => $request->nama_nasabah,
+            ]);
+
+            NasabahDokumentasi::where('kode_nasabah', $kode_nasabah)->update([
+                'nama_nasabah' => $request->nama_nasabah,
+            ]);
+
+            // update nama nasabah pada pembiayaan
+            $models = [
+                MurabahahPengajuan::class,
+                MurabahahLimacCharacter::class,
+                MurabahahLimacCapacity::class,
+                MurabahahLimacCapital::class,
+                MurabahahLimacCollateralKpr::class,
+                MurabahahLimacCollateralBermotor::class,
+                MurabahahLimacCondition::class,
+                MurabahahDokumentasi::class,
+
+                MultigunaPengajuan::class,
+                MultigunaLimacCharacter::class,
+                MultigunaLimacCapacity::class,
+                MultigunaLimacCapital::class,
+                MultigunaLimacCollateralSk::class,
+                MultigunaLimacCollateralProperti::class,
+                MultigunaLimacCollateralBermotor::class,
+                MultigunaLimacCondition::class,
+                MultigunaDokumentasi::class,
+            ];
+
+            foreach ($models as $model) {
+                $model::where('kode_nasabah', $kode_nasabah)->update([
+                    'nama_nasabah' => $request->nama_nasabah,
+                ]);
+            }
+
             return redirect()->route('nasabah.profil.data')->with('success', '✅ Data nasabah berhasil diperbarui.');
         } catch (QueryException $e) {
             // Redirect balik dengan pesan error
@@ -248,11 +312,11 @@ class NasabahController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($nasabah_auth->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -298,11 +362,11 @@ class NasabahController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($nasabah_auth->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -326,11 +390,11 @@ class NasabahController extends Controller
 
             if ($user->tipe_akun === 'pengajar') {
                 if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             } elseif ($user->tipe_akun === 'siswa') {
                 if ($nasabah_auth->username !== $user->username) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             }
 
@@ -456,11 +520,11 @@ class NasabahController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($nasabah_auth->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -484,11 +548,11 @@ class NasabahController extends Controller
 
             if ($user->tipe_akun === 'pengajar') {
                 if ($nasabah_auth->kode_tempat !== $user->kode_tempat) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             } elseif ($user->tipe_akun === 'siswa') {
                 if ($nasabah_auth->username !== $user->username) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             }
 
@@ -516,7 +580,7 @@ class NasabahController extends Controller
                 if ($request->hasFile($field)) {
                     $file = $request->file($field);
                     $extension = $file->getClientOriginalExtension();
-                    $filename = time() . '_' . $field . '.' . $extension;
+                    $filename = time() . '_' . $kode_nasabah . '_' . $field . '.' . $extension;
 
                     // Hapus file lama jika ada
                     if ($nasabah_dokumentasi->$field && Storage::disk('public')->exists('uploads/nasabah/' . $nasabah_dokumentasi->$field)) {

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_pengajuan')->unique();
             $table->string('kode_nasabah');
-            $table->string('nama_nasabah', 100)->nullable();
+            $table->string('nama_nasabah', 100);
 
             $table->string('tujuan_penggunaan', 100)->nullable();
             $table->string('jenis_kendaraan', 100)->nullable();
@@ -41,10 +41,6 @@ return new class extends Migration
                 ->references('kode_pengajuan')
                 ->on('multiguna_pengajuan')
                 ->onDelete('cascade');
-            $table->foreign('nama_nasabah')
-                ->references('nama_nasabah')
-                ->on('nasabah_profil')
-                ->onUpdate('cascade');
         });
     }
 

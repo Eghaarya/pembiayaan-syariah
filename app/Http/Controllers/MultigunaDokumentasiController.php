@@ -47,11 +47,11 @@ class MultigunaDokumentasiController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($multiguna_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -75,11 +75,11 @@ class MultigunaDokumentasiController extends Controller
 
             if ($user->tipe_akun === 'pengajar') {
                 if ($multiguna_pengajuan->kode_tempat !== $user->kode_tempat) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             } elseif ($user->tipe_akun === 'siswa') {
                 if ($multiguna_pengajuan->username !== $user->username) {
-                    abort(404);
+                    abort(403, 'Unauthorized');
                 }
             }
 
@@ -137,7 +137,7 @@ class MultigunaDokumentasiController extends Controller
                 if ($request->hasFile($field)) {
                     $file = $request->file($field);
                     $extension = $file->getClientOriginalExtension();
-                    $filename = time() . '_' . $field . '.' . $extension;
+                    $filename = time() . '_' . $kode_pengajuan . '_' . $field . '.' . $extension;
 
                     // Hapus file lama jika ada
                     if ($multiguna_dokumentasi->$field && Storage::disk('public')->exists('uploads/multiguna/' . $multiguna_dokumentasi->$field)) {

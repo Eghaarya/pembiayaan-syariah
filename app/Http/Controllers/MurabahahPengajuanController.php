@@ -181,11 +181,11 @@ class MurabahahPengajuanController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($murabahah_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($murabahah_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -210,11 +210,11 @@ class MurabahahPengajuanController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($murabahah_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($murabahah_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -232,7 +232,7 @@ class MurabahahPengajuanController extends Controller
 
             ]);
 
-            return redirect()->route('murabahah.pengajuan.data')->with('success', $request->tanggal_pencairan . '✅ Data pengajuan berhasil diperbarui.');
+            return redirect()->route('murabahah.pengajuan.data')->with('success', '✅ Data pengajuan berhasil diperbarui.');
         } catch (\Exception $e) {
             return redirect()->route('murabahah.pengajuan.data')->with('error', '❌ Gagal memperbarui data pengajuan.');
         }
@@ -253,11 +253,11 @@ class MurabahahPengajuanController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($murabahah_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($murabahah_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
@@ -282,11 +282,11 @@ class MurabahahPengajuanController extends Controller
 
         if ($user->tipe_akun === 'pengajar') {
             if ($murabahah_pengajuan->kode_tempat !== $user->kode_tempat) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         } elseif ($user->tipe_akun === 'siswa') {
             if ($murabahah_pengajuan->username !== $user->username) {
-                abort(404);
+                abort(403, 'Unauthorized');
             }
         }
 
